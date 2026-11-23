@@ -202,8 +202,15 @@
             <!-- Botões Utilitários -->
             <div class="flex items-center gap-2 flex-wrap">
                 <span id="save-status" class="text-xs bg-blue-900/60 text-blue-100 px-2.5 py-1 rounded border border-blue-700">
-                    ✓ Salvo no navegador
+                    ☁ Conectando...
                 </span>
+                <button id="google-login-btn" onclick="loginWithGoogle()" class="bg-white hover:bg-gray-100 text-gray-800 text-xs font-semibold px-3 py-1.5 rounded shadow-sm transition flex items-center gap-1.5">
+                    <span>👤</span> Entrar com Google
+                </button>
+                <div id="user-badge" class="hidden items-center gap-2 bg-blue-900/70 text-white text-xs px-2.5 py-1 rounded border border-blue-600">
+                    <span id="user-name-label" class="font-medium max-w-[140px] truncate"></span>
+                    <button onclick="logoutGoogle()" class="text-blue-200 hover:text-white underline font-semibold">Sair</button>
+                </div>
                 <button onclick="exportCSV()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-3 py-1.5 rounded shadow-sm transition flex items-center gap-1.5">
                     <span>⬇</span> Baixar Excel (CSV)
                 </button>
@@ -280,7 +287,59 @@
         </div>
     </div>
 
-    <script>
+    <!-- Notificação Toast (substitui alert) -->
+    <div id="toast-box" class="fixed bottom-4 right-4 z-50 hidden max-w-sm bg-gray-900 text-white text-xs px-4 py-3 rounded-lg shadow-lg border border-gray-700"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import {
+            getAuth,
+            signInAnonymously,
+            signInWithCustomToken,
+            GoogleAuthProvider,
+            signInWithPopup,
+            signOut,
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import {
+            getFirestore,
+            doc,
+            setDoc,
+            onSnapshot
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // ============================================================================
+        // CONFIGURAÇÃO DO FIREBASE PARA O GITHUB PAGES
+        // Cole abaixo os dados do seu projeto obtidos no Firebase Console
+        // ============================================================================
+        const MY_FIREBASE_CONFIG = {
+            apiKey: "COLE_SUA_API_KEY_AQUI",
+            authDomain: "SEU_PROJETO.firebaseapp.com",
+            projectId: "SEU_PROJETO",
+            storageBucket: "SEU_PROJETO.firebasestorage.app",
+            messagingSenderId: "SEU_SENDER_ID",
+            appId: "SEU_APP_ID"
+        };
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'planilha-banestes-v1';
+        let firebaseConfig = null;
+        if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+            try {
+                firebaseConfig = JSON.parse(__firebase_config);
+            } catch (e) {
+                console.error("Erro ao ler configuração do ambiente:", e);
+            }
+        } else if (MY_FIREBASE_CONFIG.apiKey && !MY_FIREBASE_CONFIG.apiKey.includes("COLE_SUA_API_KEY")) {
+            firebaseConfig = MY_FIREBASE_CONFIG;
+        }
+
+        let auth = null;
+        let db = null;
+        let currentUser = null;
+        let unsubscribeSnapshot = null;
+        let saveDebounceTimer = null;
+        let lastSyncedJson = "";
+
         // ============================================================================
         // DADOS EXATOS DO EDITAL VERTICALIZADO BANESTES - TÉCNICO BANCÁRIO (FCC)
         // ============================================================================
@@ -664,10 +723,48 @@
             }
         ];
 
-        const STORAGE_KEY = "banestes_planilha_edital_v1";
         let currentTab = "geral"; // 'geral' ou id da matéria ('01' a '09')
         let userProgress = {};
         let expandedTopics = {}; // Controla quais sub-menus de datas estão abertos (ex: "01-0": true)
+
+        // Exibe mensagem temporária no canto inferior direito
+        function showToast(msg, duration = 4000) {
+            const toast = document.getElementById("toast-box");
+            if (!toast) return;
+            toast.textContent = msg;
+            toast.classList.remove("hidden");
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => {
+                toast.classList.add("hidden");
+            }, duration);
+        }
+
+        // Atualiza o indicador visual de status da nuvem no cabeçalho
+        function updateCloudStatus(text, colorClasses = "bg-blue-900/60 text-blue-100 border-blue-700") {
+            const statusEl = document.getElementById("save-status");
+            if (!statusEl) return;
+            statusEl.textContent = text;
+            statusEl.className = `text-xs px-2.5 py-1 rounded border transition ${colorClasses}`;
+        }
+
+        // Atualiza os botões de Login com Google no cabeçalho
+        function updateAuthUI(user) {
+            const loginBtn = document.getElementById("google-login-btn");
+            const userBadge = document.getElementById("user-badge");
+            const userLabel = document.getElementById("user-name-label");
+            if (!loginBtn || !userBadge || !userLabel) return;
+
+            if (user && !user.isAnonymous) {
+                loginBtn.classList.add("hidden");
+                userBadge.classList.remove("hidden");
+                userBadge.classList.add("flex");
+                userLabel.textContent = user.displayName || user.email || "Conta Google";
+            } else {
+                loginBtn.classList.remove("hidden");
+                userBadge.classList.add("hidden");
+                userBadge.classList.remove("flex");
+            }
+        }
 
         // Retorna data de hoje no formato YYYY-MM-DD (fuso local)
         function getTodayISO() {
@@ -706,19 +803,8 @@
             document.querySelectorAll('.sheet-textarea').forEach(autoResizeTextarea);
         }
 
-        // Inicializa ou carrega os dados do localStorage (mantendo compatibilidade)
-        function loadProgress() {
-            try {
-                const saved = localStorage.getItem(STORAGE_KEY);
-                if (saved) {
-                    userProgress = JSON.parse(saved);
-                }
-            } catch (e) {
-                console.error("Erro ao carregar localStorage", e);
-                userProgress = {};
-            }
-
-            // Garante que todos os tópicos existam no objeto e possuam o array sessions
+        // Garante que todos os tópicos existam no objeto em memória e possuam o array sessions
+        function ensureProgressStructure() {
             EDITAL_DATA.forEach(subj => {
                 if (!userProgress[subj.id]) userProgress[subj.id] = {};
                 subj.topics.forEach((_, idx) => {
@@ -738,18 +824,138 @@
             });
         }
 
+        // Salva o progresso no Firebase Firestore (com debounce para não travar a digitação)
         function saveProgress() {
+            if (!db || !currentUser) {
+                if (!firebaseConfig) {
+                    updateCloudStatus("⚠ Cole sua config Firebase no código", "bg-amber-600 text-white border-amber-500");
+                }
+                return;
+            }
+
+            updateCloudStatus("↻ Salvando na nuvem...", "bg-blue-800 text-blue-100 border-blue-600");
+            clearTimeout(saveDebounceTimer);
+            saveDebounceTimer = setTimeout(async () => {
+                if (!db || !currentUser) return;
+                try {
+                    const serialized = JSON.stringify(userProgress);
+                    lastSyncedJson = serialized;
+                    const docRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'planilha_banestes', 'progresso');
+                    await setDoc(docRef, {
+                        progressJson: serialized,
+                        updatedAt: new Date().toISOString()
+                    });
+                    updateCloudStatus("☁ Salvo na nuvem", "bg-emerald-700 text-white border-emerald-500");
+                } catch (e) {
+                    console.error("Erro ao salvar no Firestore:", e);
+                    updateCloudStatus("⚠ Erro ao salvar na nuvem", "bg-red-700 text-white border-red-500");
+                    showToast("Não foi possível salvar no Firebase. Verifique as regras do Firestore.");
+                }
+            }, 450);
+        }
+
+        // Escuta alterações em tempo real no Firestore para o usuário autenticado
+        function subscribeToCloudProgress(uid) {
+            if (!db || !uid) return;
+            if (unsubscribeSnapshot) {
+                unsubscribeSnapshot();
+                unsubscribeSnapshot = null;
+            }
+
+            const docRef = doc(db, 'artifacts', appId, 'users', uid, 'planilha_banestes', 'progresso');
+            unsubscribeSnapshot = onSnapshot(
+                docRef,
+                (snap) => {
+                    if (snap.exists()) {
+                        const data = snap.data();
+                        if (data && data.progressJson && data.progressJson !== lastSyncedJson) {
+                            try {
+                                userProgress = JSON.parse(data.progressJson);
+                                lastSyncedJson = data.progressJson;
+                                ensureProgressStructure();
+                                renderTabs();
+                                renderCurrentView();
+                            } catch (err) {
+                                console.error("Erro ao interpretar dados da nuvem:", err);
+                            }
+                        }
+                    }
+                    updateCloudStatus("☁ Sincronizado na nuvem", "bg-emerald-700 text-white border-emerald-500");
+                },
+                (err) => {
+                    console.error("Erro no onSnapshot do Firestore:", err);
+                    updateCloudStatus("⚠ Sem permissão no Firestore", "bg-red-700 text-white border-red-500");
+                }
+            );
+        }
+
+        // Login com Conta Google (para sincronizar entre PC e celular no GitHub Pages)
+        async function loginWithGoogle() {
+            if (!auth) {
+                showToast("Cole primeiro as credenciais do seu Firebase no arquivo index.html.");
+                return;
+            }
             try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(userProgress));
-                const statusEl = document.getElementById("save-status");
-                statusEl.textContent = "✓ Salvo agora";
-                statusEl.classList.add("bg-emerald-700");
-                setTimeout(() => {
-                    statusEl.textContent = "✓ Salvo no navegador";
-                    statusEl.classList.remove("bg-emerald-700");
-                }, 1200);
-            } catch (e) {
-                console.error("Erro ao salvar", e);
+                const provider = new GoogleAuthProvider();
+                await signInWithPopup(auth, provider);
+                showToast("Conectado com Google! Seu progresso agora sincroniza em qualquer aparelho.");
+            } catch (err) {
+                console.error("Erro ao entrar com Google:", err);
+                showToast("Erro no login com Google. Verifique se ativou o provedor Google e adicionou seu domínio do GitHub no Firebase.");
+            }
+        }
+
+        // Sair da Conta Google (volta para sessão anônima)
+        async function logoutGoogle() {
+            if (!auth) return;
+            try {
+                if (unsubscribeSnapshot) {
+                    unsubscribeSnapshot();
+                    unsubscribeSnapshot = null;
+                }
+                await signOut(auth);
+                userProgress = {};
+                lastSyncedJson = "";
+                ensureProgressStructure();
+                await signInAnonymously(auth);
+                renderTabs();
+                renderCurrentView();
+                showToast("Você saiu da sua conta Google.");
+            } catch (err) {
+                console.error("Erro ao sair:", err);
+            }
+        }
+
+        // Inicializa o Firebase e realiza autenticação antes de qualquer leitura/escrita
+        async function initFirebase() {
+            if (!firebaseConfig) {
+                updateCloudStatus("⚠ Configure o Firebase no código", "bg-amber-600 text-white border-amber-500");
+                return;
+            }
+            try {
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await auth.authStateReady();
+                    if (!auth.currentUser) {
+                        await signInAnonymously(auth);
+                    }
+                }
+
+                onAuthStateChanged(auth, (user) => {
+                    currentUser = user;
+                    updateAuthUI(user);
+                    if (user) {
+                        subscribeToCloudProgress(user.uid);
+                    }
+                });
+            } catch (err) {
+                console.error("Erro ao conectar ao Firebase:", err);
+                updateCloudStatus("⚠ Erro na conexão Firebase", "bg-red-700 text-white border-red-500");
             }
         }
 
@@ -1572,13 +1778,15 @@
                     const parsed = JSON.parse(e.target.result);
                     if (typeof parsed === "object" && parsed !== null) {
                         userProgress = parsed;
+                        ensureProgressStructure();
                         saveProgress();
-                        loadProgress();
                         renderTabs();
                         renderCurrentView();
+                        showToast("Backup importado e enviado para a nuvem!");
                     }
                 } catch (err) {
                     console.error("Arquivo inválido", err);
+                    showToast("Arquivo JSON inválido.");
                 }
             };
             reader.readAsText(file);
@@ -1597,21 +1805,51 @@
         }
 
         function confirmReset() {
-            localStorage.removeItem(STORAGE_KEY);
             userProgress = {};
-            loadProgress();
+            ensureProgressStructure();
             saveProgress();
             closeResetModal();
             renderTabs();
             renderCurrentView();
+            showToast("Planilha zerada com sucesso.");
         }
 
-        // Inicialização
-        window.onload = function() {
-            loadProgress();
+        // Expõe as funções usadas pelos eventos inline do HTML (necessário em type="module")
+        Object.assign(window, {
+            exportCSV,
+            exportBackup,
+            importBackup,
+            openResetModal,
+            closeResetModal,
+            confirmReset,
+            renderCurrentView,
+            toggleExpandAll,
+            switchTab,
+            toggleExpand,
+            toggleStudied,
+            addSession,
+            removeSession,
+            updateSessionField,
+            autoResizeTextarea,
+            updateNote,
+            updateCell,
+            loginWithGoogle,
+            logoutGoogle
+        });
+
+        // Inicialização da aplicação
+        function startApp() {
+            ensureProgressStructure();
             renderTabs();
             renderCurrentView();
-        };
+            initFirebase();
+        }
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", startApp);
+        } else {
+            startApp();
+        }
     </script>
 </body>
 </html>
