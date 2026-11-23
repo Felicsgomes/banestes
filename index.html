@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planilha Edital Verticalizado - Banestes Técnico Bancário</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        /* Estilo de grade de planilha (Excel / Google Sheets) */
+        .sheet-table {
+            border-collapse: collapse;
+            width: 100%;
+            font-variant-numeric: tabular-nums;
+        }
+        .sheet-table th, .sheet-table td {
+            border: 1px solid #d1d5db;
+            padding: 6px 10px;
+            font-size: 0.85rem;
+            line-height: 1.25rem;
+        }
+        .sheet-table thead th {
+            background-color: #e5e7eb;
+            color: #374151;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 1px 0 #d1d5db;
+        }
+        .sheet-table tbody tr:hover {
+            background-color: #f0f7ff !important;
+        }
+        .sheet-input {
+            width: 100%;
+            background: transparent;
+            border: 1px solid transparent;
+            text-align: center;
+            font-weight: 500;
+            padding: 2px 4px;
+            border-radius: 3px;
+            outline: none;
+            transition: all 0.1s;
+        }
+        .sheet-input:focus {
+            background: #ffffff;
+            border-color: #004B8D;
+            box-shadow: 0 0 0 2px rgba(0, 75, 141, 0.2);
+        }
+        .sheet-note-input {
+            width: 100%;
+            background: transparent;
+            border: 1px solid transparent;
+            text-align: left;
+            padding: 2px 6px;
+            border-radius: 3px;
+            outline: none;
+            font-size: 0.8rem;
+        }
+        .sheet-note-input:focus {
+            background: #ffffff;
+            border-color: #004B8D;
+            box-shadow: 0 0 0 2px rgba(0, 75, 141, 0.2);
+        }
+        /* Textarea que quebra linha e expande somente para baixo */
+        .sheet-textarea {
+            width: 100%;
+            min-height: 30px;
+            background: transparent;
+            border: 1px solid transparent;
+            text-align: left;
+            padding: 4px 6px;
+            border-radius: 4px;
+            outline: none;
+            font-size: 0.8rem;
+            line-height: 1.35;
+            resize: none;
+            overflow: hidden;
+            overflow-x: hidden;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            display: block;
+            transition: background-color 0.15s, border-color 0.15s;
+        }
+        .sheet-textarea:focus {
+            background: #ffffff;
+            border-color: #004B8D;
+            box-shadow: 0 0 0 2px rgba(0, 75, 141, 0.18);
+        }
+        /* Estilo de árvore para o sub-menu de datas/passagens */
+        .sessions-row {
+            background-color: #f8fafc !important;
+        }
+        .sessions-row:hover {
+            background-color: #f8fafc !important;
+        }
+        .tree-wrapper {
+            position: relative;
+            padding-left: 24px;
+        }
+        .tree-wrapper::before {
+            content: "";
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 14px;
+            width: 2px;
+            background-color: #004B8D;
+            border-radius: 2px;
+            opacity: 0.7;
+        }
+        .tree-item-branch {
+            position: relative;
+        }
+        .tree-item-branch::before {
+            content: "";
+            position: absolute;
+            left: -14px;
+            top: 50%;
+            width: 14px;
+            height: 2px;
+            background-color: #004B8D;
+            opacity: 0.7;
+        }
+        .sub-sheet-table {
+            border-collapse: collapse;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .sub-sheet-table th, .sub-sheet-table td {
+            border: 1px solid #cbd5e1;
+            padding: 5px 8px;
+            font-size: 0.8rem;
+            vertical-align: top;
+        }
+        .sub-sheet-table thead th {
+            background-color: #eff6ff;
+            color: #1e3a8a;
+            font-weight: 600;
+            font-size: 0.75rem;
+            position: static;
+            box-shadow: none;
+        }
+        /* Remove setas do input number para parecer célula limpa */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+        /* Abas estilo planilha */
+        .tab-btn {
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+            transition: all 0.15s ease;
+        }
+        .tab-btn.active {
+            background-color: #ffffff;
+            color: #004B8D;
+            border-bottom-color: #004B8D;
+            font-weight: 700;
+        }
+        /* Scrollbar fina para barra de abas */
+        .tabs-scroll::-webkit-scrollbar {
+            height: 5px;
+        }
+        .tabs-scroll::-webkit-scrollbar-track {
+            background: #e5e7eb;
+        }
+        .tabs-scroll::-webkit-scrollbar-thumb {
+            background: #9ca3af;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Top Header / Barra de Ferramentas da Planilha -->
+    <header class="bg-[#004B8D] text-white shadow-md">
+        <div class="max-w-[1600px] mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div class="bg-white text-[#004B8D] font-extrabold px-2.5 py-1 rounded text-sm tracking-tight shadow-sm">
+                    BANESTES
+                </div>
+                <div>
+                    <h1 class="font-bold text-base sm:text-lg leading-tight">Planilha Edital Verticalizado — Técnico Bancário</h1>
+                    <p class="text-xs text-blue-100">Banca FCC • 70 Questões (Gerais Peso 1 | Específicos Peso 2) • Salvo automaticamente</p>
+                </div>
+            </div>
+
+            <!-- Botões Utilitários -->
+            <div class="flex items-center gap-2 flex-wrap">
+                <span id="save-status" class="text-xs bg-blue-900/60 text-blue-100 px-2.5 py-1 rounded border border-blue-700">
+                    ✓ Salvo no navegador
+                </span>
+                <button onclick="exportCSV()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-3 py-1.5 rounded shadow-sm transition flex items-center gap-1.5">
+                    <span>⬇</span> Baixar Excel (CSV)
+                </button>
+                <button onclick="exportBackup()" class="bg-blue-700 hover:bg-blue-600 text-white text-xs font-medium px-2.5 py-1.5 rounded border border-blue-500 transition">
+                    Backup JSON
+                </button>
+                <label class="bg-blue-700 hover:bg-blue-600 text-white text-xs font-medium px-2.5 py-1.5 rounded border border-blue-500 transition cursor-pointer">
+                    Importar
+                    <input type="file" id="import-file" accept=".json" class="hidden" onchange="importBackup(event)">
+                </label>
+                <button onclick="openResetModal()" class="bg-red-600 hover:bg-red-500 text-white text-xs font-medium px-2.5 py-1.5 rounded shadow-sm transition">
+                    Zerar Planilha
+                </button>
+            </div>
+        </div>
+
+        <!-- Barra de Abas (Páginas por Matéria) -->
+        <div class="bg-gray-200 text-gray-700 border-t border-gray-300">
+            <div id="tabs-container" class="max-w-[1600px] mx-auto px-2 flex items-center overflow-x-auto tabs-scroll">
+                <!-- Gerado via JS -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal da Planilha -->
+    <main class="flex-1 max-w-[1600px] w-full mx-auto p-3 sm:p-4 flex flex-col gap-3">
+        
+        <!-- Barra de Filtro (Visível apenas nas abas de matérias) -->
+        <div id="subject-toolbar" class="hidden bg-white border border-gray-300 rounded p-2.5 shadow-sm flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-2 flex-wrap">
+                <span id="subject-badge" class="bg-[#004B8D] text-white text-xs font-bold px-2.5 py-1 rounded"></span>
+                <h2 id="subject-title" class="font-bold text-gray-800 text-sm sm:text-base"></h2>
+                <span id="subject-meta" class="text-xs text-gray-500 font-medium"></span>
+            </div>
+
+            <div class="flex items-center gap-2 flex-wrap w-full sm:w-auto">
+                <input type="text" id="search-input" oninput="renderCurrentView()" placeholder="🔍 Filtrar assunto..." 
+                    class="border border-gray-300 rounded px-2.5 py-1 text-xs focus:outline-none focus:border-[#004B8D] flex-1 sm:w-52">
+                
+                <select id="filter-select" onchange="renderCurrentView()" class="border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:outline-none focus:border-[#004B8D]">
+                    <option value="all">Todos os assuntos</option>
+                    <option value="pending">Pendentes de estudo</option>
+                    <option value="done">Estudados / Com passagem</option>
+                    <option value="low">Desempenho &lt; 70%</option>
+                </select>
+
+                <button id="toggle-all-btn" onclick="toggleExpandAll()" class="border border-gray-300 bg-gray-50 hover:bg-gray-100 text-gray-700 font-medium rounded px-2.5 py-1 text-xs transition whitespace-nowrap">
+                    ▼ Expandir todos
+                </button>
+            </div>
+        </div>
+
+        <!-- Área Principal da Planilha (Tabelas de Desempenho Geral e Matérias) -->
+        <div id="sheet-viewport" class="bg-white border border-gray-300 rounded shadow-sm overflow-x-auto flex-1">
+            <!-- Conteúdo renderizado dinamicamente via JS -->
+        </div>
+    </main>
+
+    <!-- Modal de Confirmação para Zerar Planilha -->
+    <div id="reset-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-5 border border-gray-200">
+            <h3 class="text-base font-bold text-gray-900 mb-2">Zerar toda a planilha?</h3>
+            <p class="text-sm text-gray-600 mb-5">
+                Tem certeza que deseja apagar todas as questões, acertos, erros, anotações e passagens registradas? Essa ação não pode ser desfeita (faça um Backup JSON antes se quiser guardar seus dados).
+            </p>
+            <div class="flex items-center justify-end gap-2">
+                <button type="button" onclick="closeResetModal()" class="px-3.5 py-2 text-xs font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded transition">
+                    Cancelar
+                </button>
+                <button type="button" onclick="confirmReset()" class="px-3.5 py-2 text-xs font-semibold text-white bg-red-600 hover:bg-red-700 rounded shadow-sm transition">
+                    Sim, zerar tudo
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================================
+        // DADOS EXATOS DO EDITAL VERTICALIZADO BANESTES - TÉCNICO BANCÁRIO (FCC)
+        // ============================================================================
+        const EDITAL_DATA = [
+            {
+                id: "01",
+                code: "01",
+                shortName: "01. Português",
+                name: "LÍNGUA PORTUGUESA",
+                block: "Gerais",
+                weight: 1,
+                examQuestions: 10,
+                scoreShare: "11,1%",
+                topics: [
+                    "1 - Ortografia e acentuação.",
+                    "2 - Emprego do sinal indicativo de crase.",
+                    "3 - Compreensão e interpretação de textos de gêneros variados.",
+                    "4 - Relação do texto com seu contexto histórico.",
+                    "5 - Denotação e conotação.",
+                    "6 - Discurso direto, discurso indireto e discurso indireto livre.",
+                    "7 - Intertextualidade.",
+                    "8 - Figuras de linguagem.",
+                    "9 - Morfossintaxe.",
+                    "10 - Elementos estruturais e processos de formação de palavras.",
+                    "11 - Sinonímia e antonímia.",
+                    "12 - Pontuação.",
+                    "13 - Pronomes.",
+                    "14 - Concordância nominal e concordância verbal.",
+                    "15 - Flexão nominal e flexão verbal.",
+                    "16 - Vozes do verbo.",
+                    "17 - Correlação de tempos e modos verbais.",
+                    "18 - Regência nominal e regência verbal.",
+                    "19 - Coordenação e subordinação.",
+                    "20 - Conectivos.",
+                    "21 - Redação.",
+                    "21.1 - Confronto e reconhecimento de frases corretas e incorretas.",
+                    "21.2 - Organização e reorganização de orações e períodos.",
+                    "21.3 - Equivalência e transformação de estruturas."
+                ]
+            },
+            {
+                id: "02",
+                code: "02",
+                shortName: "02. Ética e ESG",
+                name: "ÉTICA, COMPLIANCE E ESG",
+                block: "Gerais",
+                weight: 1,
+                examQuestions: 5,
+                scoreShare: "5,6%",
+                topics: [
+                    "1 - Ética e moral.",
+                    "1.1 - Conceitos.",
+                    "1.2 - Princípios.",
+                    "1.3 - Aplicação no ambiente organizacional.",
+                    "2 - Ética no serviço público e nas instituições financeiras.",
+                    "3 - Integridade, transparência, responsabilidade e conflitos de interesse.",
+                    "4 - Governança corporativa.",
+                    "4.1 - Conceitos.",
+                    "4.2 - Princípios.",
+                    "4.3 - Boas práticas.",
+                    "5 - Compliance.",
+                    "5.1 - Conceito.",
+                    "5.2 - Objetivos.",
+                    "5.3 - Controles internos.",
+                    "5.4 - Gestão de riscos.",
+                    "5.5 - Canais de denúncia.",
+                    "5.6 - Programas de integridade.",
+                    "6 - Prevenção e combate à corrupção, fraudes e lavagem de dinheiro.",
+                    "7 - Proteção de dados pessoais e privacidade.",
+                    "8 - Noções da Lei Geral de Proteção de Dados Pessoais (LGPD).",
+                    "9 - ESG (Environmental, Social and Governance).",
+                    "9.1 - Conceitos e fundamentos.",
+                    "9.2 - Aplicação nas organizações.",
+                    "10 - Sustentabilidade e responsabilidade socioambiental corporativa.",
+                    "11 - Aspectos ambientais, sociais e de governança (ESG) aplicados ao setor financeiro.",
+                    "12 - Desenvolvimento sustentável, Agenda 2030 e Objetivos de Desenvolvimento Sustentável (ODS).",
+                    "13 - Guia de Conduta Ética do Banestes."
+                ]
+            },
+            {
+                id: "03",
+                code: "03",
+                shortName: "03. Matemática e RLM",
+                name: "MATEMÁTICA/RACIOCÍNIO LÓGICO E QUANTITATIVO",
+                block: "Gerais (TB)",
+                weight: 1,
+                examQuestions: 10,
+                scoreShare: "11,1%",
+                topics: [
+                    "1 - Estrutura lógica de relações arbitrárias entre pessoas, lugares, objetos ou eventos fictícios.",
+                    "2 - Deduzir novas informações das relações fornecidas e avaliar as condições usadas para estabelecer a estrutura daquelas relações.",
+                    "3 - Compreensão e elaboração da lógica das situações por meio de:",
+                    "3.1 - Raciocínio verbal.",
+                    "3.2 - Raciocínio matemático.",
+                    "3.3 - Raciocínio sequencial.",
+                    "3.4 - Orientação espacial e temporal.",
+                    "3.5 - Formação de conceitos.",
+                    "3.6 - Discriminação de elementos.",
+                    "4 - Compreensão do processo lógico que, a partir de um conjunto de hipóteses, conduz, de forma válida, a conclusões determinadas.",
+                    "5 - Números inteiros e racionais.",
+                    "5.1 - Operações (adição, subtração, multiplicação, divisão, potenciação).",
+                    "5.2 - Expressões numéricas.",
+                    "5.3 - Múltiplos e divisores de números naturais.",
+                    "5.4 - Problemas.",
+                    "6 - Frações e operações com frações.",
+                    "7 - Números e grandezas proporcionais.",
+                    "7.1 - Razões e proporções.",
+                    "7.2 - Divisão em partes proporcionais.",
+                    "7.3 - Regra de três.",
+                    "7.4 - Porcentagem.",
+                    "7.5 - Problemas envolvendo regra de três simples, cálculos de porcentagem, acréscimos e descontos.",
+                    "8 - Noções de Estatística.",
+                    "8.1 - Medidas de tendência central (moda, mediana, média aritmética simples e ponderada).",
+                    "8.2 - Medidas de dispersão (desvio médio, amplitude, variância, desvio padrão).",
+                    "8.3 - Leitura e interpretação de gráficos (histogramas, setores, infográficos) e tabelas.",
+                    "9 - Contagem.",
+                    "9.1 - Princípio multiplicativo e aditivo.",
+                    "9.2 - Permutações e combinações simples."
+                ]
+            },
+            {
+                id: "04",
+                code: "04",
+                shortName: "04. Atualidades MF",
+                name: "ATUALIDADES DO MERCADO FINANCEIRO",
+                block: "Gerais (TB)",
+                weight: 1,
+                examQuestions: 5,
+                scoreShare: "5,6%",
+                topics: [
+                    "1 - Sistema Financeiro Nacional.",
+                    "1.1 - Estrutura.",
+                    "1.2 - Órgãos normativos.",
+                    "1.3 - Supervisores.",
+                    "1.4 - Operadores.",
+                    "2 - Política monetária e seus impactos na economia.",
+                    "2.1 - Política monetária.",
+                    "2.2 - Comitê de Política Monetária (Copom) do Banco Central do Brasil.",
+                    "2.3 - Taxa Selic.",
+                    "2.4 - Inflação.",
+                    "2.5 - Taxas de juros e seus impactos na economia.",
+                    "3 - Mercado financeiro e de capitais.",
+                    "3.1 - Conceitos.",
+                    "3.2 - Produtos.",
+                    "3.3 - Serviços.",
+                    "3.4 - Principais indicadores.",
+                    "4 - Open Finance, Pix, moedas digitais, inovação e transformação digital no sistema financeiro.",
+                    "5 - Fintechs, bancos digitais, instituições de pagamento e tendências do setor bancário.",
+                    "6 - Educação financeira, inclusão financeira e proteção do consumidor financeiro.",
+                    "7 - Sustentabilidade, finanças sustentáveis e ESG no mercado financeiro.",
+                    "8 - Cenários econômico e geopolítico nacional e internacional e seus reflexos no sistema financeiro.",
+                    "9 - Atualidades e tendências do mercado financeiro brasileiro."
+                ]
+            },
+            {
+                id: "05",
+                code: "05",
+                shortName: "05. Conhec. Bancários",
+                name: "CONHECIMENTOS BANCÁRIOS/SECURITÁRIOS",
+                block: "Específicos",
+                weight: 2,
+                examQuestions: 15,
+                scoreShare: "25,0%",
+                topics: [
+                    "1 - Sistema Financeiro Nacional.",
+                    "1.1 - Estrutura.",
+                    "1.2 - Órgãos normativos.",
+                    "1.3 - Supervisores.",
+                    "1.4 - Operadores.",
+                    "2 - Instituições financeiras e Instituições de Pagamento.",
+                    "2.1 - Conceitos.",
+                    "2.2 - Tipos.",
+                    "2.3 - Funções.",
+                    "2.4 - Operações.",
+                    "3 - Produtos e serviços bancários.",
+                    "3.1 - Contas.",
+                    "3.2 - Meios de pagamento.",
+                    "3.3 - Crédito.",
+                    "3.4 - Investimentos.",
+                    "3.5 - Cartões.",
+                    "3.6 - Canais de atendimento.",
+                    "4 - Captação, intermediação e aplicação de recursos financeiros.",
+                    "5 - Mercado financeiro e de capitais.",
+                    "5.1 - Conceitos básicos.",
+                    "5.2 - Principais instrumentos.",
+                    "6 - Política monetária e indicadores econômicos.",
+                    "6.1 - Política monetária.",
+                    "6.2 - Comitê de Política Monetária (Copom) do Banco Central do Brasil.",
+                    "6.3 - Taxas de juros.",
+                    "6.4 - Inflação.",
+                    "6.5 - Indicadores econômicos.",
+                    "7 - Open Finance, Pix, meios eletrônicos de pagamento e inovação no sistema financeiro.",
+                    "7.1 - Open Finance.",
+                    "7.2 - Pix.",
+                    "7.3 - Meios eletrônicos de pagamento.",
+                    "7.4 - Inovação no sistema financeiro.",
+                    "8 - Prevenção à lavagem de dinheiro e ao financiamento do terrorismo.",
+                    "9 - Conselho de Controle de Atividades Financeiras (COAF).",
+                    "10 - Educação financeira e proteção do consumidor de produtos e serviços financeiros.",
+                    "11 - Noções de seguros.",
+                    "11.1 - Conceitos.",
+                    "11.2 - Princípios.",
+                    "11.3 - Participantes.",
+                    "11.4 - Modalidades de seguros pessoais e empresariais.",
+                    "12 - Previdência complementar aberta.",
+                    "12.1 - Conceitos.",
+                    "12.2 - Características.",
+                    "12.3 - Modalidades.",
+                    "13 - Títulos de capitalização.",
+                    "13.1 - Conceitos.",
+                    "13.2 - Características.",
+                    "13.3 - Funcionamento.",
+                    "14 - Produtos bancassurance: integração entre serviços bancários, seguros, previdência e capitalização.",
+                    "15 - Consórcio.",
+                    "16 - Regulação e supervisão dos mercados financeiro e securitário.",
+                    "17 - Atendimento, comercialização e adequação de produtos financeiros e securitários ao perfil do cliente.",
+                    "18 - Portabilidade.",
+                    "19 - Resolução CMN nº 4.966/2021."
+                ]
+            },
+            {
+                id: "06",
+                code: "06",
+                shortName: "06. Mat. Financeira",
+                name: "MATEMÁTICA FINANCEIRA",
+                block: "Específicos",
+                weight: 2,
+                examQuestions: 5,
+                scoreShare: "8,3%",
+                topics: [
+                    "1 - Razão, proporção, porcentagem e variação percentual.",
+                    "2 - Juros simples e juros compostos.",
+                    "3 - Taxas de juros.",
+                    "3.1 - Nominal.",
+                    "3.2 - Efetiva.",
+                    "3.3 - Proporcional.",
+                    "3.4 - Equivalente.",
+                    "3.5 - Real.",
+                    "4 - Capitalização e desconto simples e composto.",
+                    "4.1 - Capitalização simples e composta.",
+                    "4.2 - Desconto simples e composto.",
+                    "5 - Valor presente e valor futuro.",
+                    "6 - Séries de pagamentos (anuidades) e sistemas de amortização.",
+                    "7 - Fluxo de caixa e equivalência de capitais.",
+                    "8 - Cálculo financeiro aplicado a operações de crédito e investimentos.",
+                    "9 - Análise de financiamentos e empréstimos.",
+                    "10 - Matemática financeira aplicada ao mercado financeiro e bancário."
+                ]
+            },
+            {
+                id: "07",
+                code: "07",
+                shortName: "07. Prob. e Estatística",
+                name: "NOÇÕES DE PROBABILIDADE E ESTATÍSTICA",
+                block: "Específicos",
+                weight: 2,
+                examQuestions: 5,
+                scoreShare: "8,3%",
+                topics: [
+                    "1 - Conceitos básicos de estatística e análise de dados.",
+                    "2 - População, amostra e técnicas de amostragem.",
+                    "3 - Organização, representação e interpretação de dados em tabelas e gráficos.",
+                    "4 - Medidas de tendência central.",
+                    "4.1 - Média.",
+                    "4.2 - Mediana.",
+                    "4.3 - Moda.",
+                    "5 - Medidas de dispersão.",
+                    "5.1 - Amplitude.",
+                    "5.2 - Variância.",
+                    "5.3 - Desvio padrão.",
+                    "5.4 - Coeficiente de variação.",
+                    "6 - Probabilidade.",
+                    "6.1 - Conceitos fundamentais.",
+                    "6.2 - Eventos.",
+                    "6.3 - Espaço amostral.",
+                    "6.4 - Cálculo de probabilidades.",
+                    "7 - Probabilidade condicional e independência de eventos.",
+                    "8 - Distribuições de frequência e distribuição normal.",
+                    "9 - Análise e interpretação de indicadores estatísticos.",
+                    "10 - Aplicações de probabilidade e estatística em contextos financeiros, econômicos e organizacionais."
+                ]
+            },
+            {
+                id: "08",
+                code: "08",
+                shortName: "08. Informática e IA",
+                name: "NOÇÕES DE INFORMÁTICA E COMPORTAMENTOS DIGITAIS",
+                block: "Específicos",
+                weight: 2,
+                examQuestions: 5,
+                scoreShare: "8,3%",
+                topics: [
+                    "1 - Lei Geral de Proteção de Dados Pessoais (LGPD).",
+                    "1.1 - Fundamentos.",
+                    "1.2 - Conceitos.",
+                    "1.3 - Princípios.",
+                    "1.4 - Bases legais.",
+                    "1.5 - Direitos dos titulares.",
+                    "1.6 - Tratamento de dados sensíveis.",
+                    "1.7 - Agentes de tratamento.",
+                    "1.8 - Encarregado.",
+                    "1.9 - Segurança.",
+                    "1.10 - Boas práticas.",
+                    "1.11 - Responsabilidade e sanções.",
+                    "2 - Aplicações da LGPD ao setor bancário.",
+                    "2.1 - Cadastro de clientes.",
+                    "2.2 - Análise de crédito.",
+                    "2.3 - Prevenção à fraude.",
+                    "2.4 - Compartilhamento de dados.",
+                    "2.5 - Proteção do crédito.",
+                    "2.6 - Decisões automatizadas.",
+                    "3 - Noções de Informática, Google Workspace e segurança digital.",
+                    "3.1 - Conceitos básicos de informática.",
+                    "3.2 - Hardware.",
+                    "3.3 - Software.",
+                    "3.4 - Sistemas operacionais (Windows e Linux básico, em suas últimas versões).",
+                    "3.5 - Internet, intranet, navegadores e mecanismos de busca.",
+                    "3.6 - Correio eletrônico.",
+                    "3.7 - Computação em nuvem.",
+                    "3.8 - Redes de computadores.",
+                    "3.9 - Aplicativos de escritório.",
+                    "3.10 - Ferramentas de colaboração digital.",
+                    "3.11 - Segurança da informação, senhas e autenticação.",
+                    "3.12 - Vírus, malware, phishing e engenharia social.",
+                    "3.13 - Privacidade, proteção de dados e boas práticas de uso corporativo.",
+                    "4 - Google Workspace.",
+                    "4.1 - Gmail.",
+                    "4.2 - Drive.",
+                    "4.3 - Docs.",
+                    "4.4 - Sheets.",
+                    "4.5 - Slides.",
+                    "4.6 - Forms.",
+                    "4.7 - Calendar.",
+                    "4.8 - Meet.",
+                    "4.9 - Chat.",
+                    "5 - Inteligência Artificial e novas tecnologias.",
+                    "5.1 - Conceitos básicos de inteligência artificial.",
+                    "5.2 - Aprendizado de máquina.",
+                    "5.3 - IA generativa.",
+                    "5.4 - Automação.",
+                    "5.5 - Chatbots.",
+                    "5.6 - Processamento de linguagem natural.",
+                    "5.7 - Gemini no Google Workspace.",
+                    "5.8 - Aplicações bancárias da IA: análise de crédito, prevenção à fraude e atendimento ao cliente.",
+                    "5.9 - Riscos, vieses e explicabilidade.",
+                    "5.10 - Governança.",
+                    "5.11 - Segurança da informação, LGPD e decisões automatizadas."
+                ]
+            },
+            {
+                id: "09",
+                code: "09",
+                shortName: "09. Vendas e Atend.",
+                name: "VENDAS, NEGOCIAÇÃO E ATENDIMENTO",
+                block: "Específicos",
+                weight: 2,
+                examQuestions: 10,
+                scoreShare: "16,7%",
+                topics: [
+                    "1 - Atendimento ao cliente.",
+                    "1.1 - Conceitos.",
+                    "1.2 - Princípios.",
+                    "1.3 - Qualidade, excelência e satisfação do cliente.",
+                    "2 - Comunicação interpessoal, relacionamento com clientes e técnicas de atendimento presencial e digital.",
+                    "3 - Perfil, necessidades e comportamento do consumidor de produtos e serviços financeiros.",
+                    "4 - Técnicas de vendas e pós-venda.",
+                    "5 - Prospecção, fidelização e retenção de clientes.",
+                    "6 - Negociação.",
+                    "6.1 - Conceitos.",
+                    "6.2 - Etapas.",
+                    "6.3 - Abordagens.",
+                    "6.4 - Técnicas de negociação.",
+                    "7 - Gestão do relacionamento com clientes (CRM).",
+                    "8 - Marketing de relacionamento e experiência do cliente.",
+                    "9 - Produtos e serviços bancários: características, benefícios e adequação ao perfil do cliente.",
+                    "10 - Ética, transparência e responsabilidade no atendimento e na oferta de produtos e serviços financeiros.",
+                    "11 - Resolução de conflitos, tratamento de reclamações e mediação de situações de atendimento.",
+                    "12 - Canais de atendimento e transformação digital no setor bancário.",
+                    "13 - Educação financeira e orientação ao cliente na utilização de produtos e serviços financeiros."
+                ]
+            }
+        ];
+
+        const STORAGE_KEY = "banestes_planilha_edital_v1";
+        let currentTab = "geral"; // 'geral' ou id da matéria ('01' a '09')
+        let userProgress = {};
+        let expandedTopics = {}; // Controla quais sub-menus de datas estão abertos (ex: "01-0": true)
+
+        // Retorna data de hoje no formato YYYY-MM-DD (fuso local)
+        function getTodayISO() {
+            const now = new Date();
+            const y = now.getFullYear();
+            const m = String(now.getMonth() + 1).padStart(2, '0');
+            const d = String(now.getDate()).padStart(2, '0');
+            return `${y}-${m}-${d}`;
+        }
+
+        // Formata YYYY-MM-DD para DD/MM
+        function formatShortDate(isoDate) {
+            if (!isoDate || !isoDate.includes('-')) return "";
+            const parts = isoDate.split('-');
+            if (parts.length !== 3) return isoDate;
+            return `${parts[2]}/${parts[1]}`;
+        }
+
+        // Escapa texto para HTML seguro dentro de atributos e textareas
+        function escapeHtml(str) {
+            return String(str || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        // Faz o textarea crescer automaticamente para baixo sem expandir lateralmente
+        function autoResizeTextarea(el) {
+            if (!el) return;
+            el.style.height = 'auto';
+            el.style.height = Math.max(30, el.scrollHeight) + 'px';
+        }
+
+        function resizeAllVisibleTextareas() {
+            document.querySelectorAll('.sheet-textarea').forEach(autoResizeTextarea);
+        }
+
+        // Inicializa ou carrega os dados do localStorage (mantendo compatibilidade)
+        function loadProgress() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    userProgress = JSON.parse(saved);
+                }
+            } catch (e) {
+                console.error("Erro ao carregar localStorage", e);
+                userProgress = {};
+            }
+
+            // Garante que todos os tópicos existam no objeto e possuam o array sessions
+            EDITAL_DATA.forEach(subj => {
+                if (!userProgress[subj.id]) userProgress[subj.id] = {};
+                subj.topics.forEach((_, idx) => {
+                    if (!userProgress[subj.id][idx]) {
+                        userProgress[subj.id][idx] = {
+                            studied: false,
+                            q: 0,
+                            a: 0,
+                            e: 0,
+                            note: "",
+                            sessions: []
+                        };
+                    } else if (!Array.isArray(userProgress[subj.id][idx].sessions)) {
+                        userProgress[subj.id][idx].sessions = [];
+                    }
+                });
+            });
+        }
+
+        function saveProgress() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(userProgress));
+                const statusEl = document.getElementById("save-status");
+                statusEl.textContent = "✓ Salvo agora";
+                statusEl.classList.add("bg-emerald-700");
+                setTimeout(() => {
+                    statusEl.textContent = "✓ Salvo no navegador";
+                    statusEl.classList.remove("bg-emerald-700");
+                }, 1200);
+            } catch (e) {
+                console.error("Erro ao salvar", e);
+            }
+        }
+
+        // Calcula métricas de um tópico (soma das passagens quando existirem)
+        function getTopicMetrics(row) {
+            const sessions = Array.isArray(row.sessions) ? row.sessions : [];
+            const hasSessions = sessions.length > 0;
+            let q = 0, a = 0, e = 0;
+            let lastDate = "";
+
+            if (hasSessions) {
+                sessions.forEach(s => {
+                    const sa = Number(s.a) || 0;
+                    const se = Number(s.e) || 0;
+                    const sq = sa + se;
+                    a += sa;
+                    e += se;
+                    q += sq;
+                    if (s.date && (!lastDate || s.date > lastDate)) {
+                        lastDate = s.date;
+                    }
+                });
+            } else {
+                q = Number(row.q) || 0;
+                a = Number(row.a) || 0;
+                e = Number(row.e) || 0;
+            }
+
+            const pct = q > 0 ? (a / q) * 100 : null;
+            const isStudied = Boolean(row.studied) || hasSessions;
+
+            return {
+                q,
+                a,
+                e,
+                pct,
+                hasSessions,
+                sessionsCount: sessions.length,
+                lastDate,
+                isStudied
+            };
+        }
+
+        // Calcula estatísticas de uma matéria
+        function getSubjectStats(subjId) {
+            const subj = EDITAL_DATA.find(s => s.id === subjId);
+            const data = userProgress[subjId] || {};
+            let totalTopics = subj.topics.length;
+            let studiedTopics = 0;
+            let totalSessions = 0;
+            let totalQ = 0;
+            let totalA = 0;
+            let totalE = 0;
+
+            subj.topics.forEach((_, idx) => {
+                const row = data[idx] || { studied: false, q: 0, a: 0, e: 0, sessions: [] };
+                const m = getTopicMetrics(row);
+                if (m.isStudied) studiedTopics++;
+                totalSessions += m.sessionsCount;
+                totalQ += m.q;
+                totalA += m.a;
+                totalE += m.e;
+            });
+
+            const pctAccuracy = totalQ > 0 ? (totalA / totalQ) * 100 : null;
+            const pctStudied = totalTopics > 0 ? (studiedTopics / totalTopics) * 100 : 0;
+
+            return {
+                totalTopics,
+                studiedTopics,
+                totalSessions,
+                pctStudied,
+                totalQ,
+                totalA,
+                totalE,
+                pctAccuracy
+            };
+        }
+
+        // Formata badge de percentual de acerto (>=80% verde, 60-79% amarelo, <60% vermelho)
+        function formatAccuracyBadge(pct, questionsCount) {
+            if (!questionsCount || questionsCount === 0 || pct === null) {
+                return `<span class="inline-block px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-400">—</span>`;
+            }
+            const formatted = pct.toFixed(1).replace('.', ',') + '%';
+            let colorClass = "bg-red-100 text-red-800 border-red-300";
+            if (pct >= 80) {
+                colorClass = "bg-emerald-100 text-emerald-800 border-emerald-300";
+            } else if (pct >= 60) {
+                colorClass = "bg-amber-100 text-amber-800 border-amber-300";
+            }
+            return `<span class="inline-block px-2 py-0.5 rounded text-xs font-bold border ${colorClass}">${formatted}</span>`;
+        }
+
+        // Renderiza as abas superiores
+        function renderTabs() {
+            const container = document.getElementById("tabs-container");
+            let html = `
+                <button onclick="switchTab('geral')" class="tab-btn px-3.5 py-2 text-xs sm:text-sm flex items-center gap-1.5 ${currentTab === 'geral' ? 'active' : 'hover:bg-gray-300/60'}">
+                    <span>📊</span> Desempenho Geral
+                </button>
+            `;
+
+            EDITAL_DATA.forEach(subj => {
+                const stats = getSubjectStats(subj.id);
+                const isActive = currentTab === subj.id;
+                let pillColor = "bg-gray-300 text-gray-700";
+                if (stats.totalQ > 0) {
+                    if (stats.pctAccuracy >= 80) pillColor = "bg-emerald-200 text-emerald-900";
+                    else if (stats.pctAccuracy >= 60) pillColor = "bg-amber-200 text-amber-900";
+                    else pillColor = "bg-red-200 text-red-900";
+                }
+
+                html += `
+                    <button onclick="switchTab('${subj.id}')" class="tab-btn px-3 py-2 text-xs sm:text-sm flex items-center gap-1.5 border-l border-gray-300 ${isActive ? 'active' : 'hover:bg-gray-300/60'}">
+                        <span>${subj.shortName}</span>
+                        <span class="text-[10px] font-bold px-1.5 py-0.2 rounded-full ${pillColor}">
+                            ${stats.totalQ > 0 ? Math.round(stats.pctAccuracy) + '%' : stats.studiedTopics + '/' + stats.totalTopics}
+                        </span>
+                    </button>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function switchTab(tabId) {
+            currentTab = tabId;
+            renderTabs();
+            renderCurrentView();
+        }
+
+        // Renderiza a visualização ativa (Desempenho Geral ou Planilha da Matéria)
+        function renderCurrentView() {
+            const toolbar = document.getElementById("subject-toolbar");
+            if (currentTab === "geral") {
+                toolbar.classList.add("hidden");
+                renderGeneralDashboard();
+            } else {
+                toolbar.classList.remove("hidden");
+                renderSubjectSheet(currentTab);
+            }
+        }
+
+        // ============================================================================
+        // ABA 0: DESEMPENHO GERAL E RESUMO POR MATÉRIA
+        // ============================================================================
+        function renderGeneralDashboard() {
+            const viewport = document.getElementById("sheet-viewport");
+
+            let grandTotalTopics = 0;
+            let grandStudiedTopics = 0;
+            let grandSessions = 0;
+            let grandQ = 0;
+            let grandA = 0;
+            let grandE = 0;
+            let grandExamQ = 0;
+
+            let rowsHtml = "";
+
+            EDITAL_DATA.forEach(subj => {
+                const st = getSubjectStats(subj.id);
+                grandTotalTopics += st.totalTopics;
+                grandStudiedTopics += st.studiedTopics;
+                grandSessions += st.totalSessions;
+                grandQ += st.totalQ;
+                grandA += st.totalA;
+                grandE += st.totalE;
+                grandExamQ += subj.examQuestions;
+
+                const pctStudiedFmt = st.pctStudied.toFixed(0) + "%";
+                const accuracyBarWidth = st.pctAccuracy !== null ? Math.min(100, Math.round(st.pctAccuracy)) : 0;
+                let barColor = "bg-gray-300";
+                if (st.totalQ > 0) {
+                    if (st.pctAccuracy >= 80) barColor = "bg-emerald-500";
+                    else if (st.pctAccuracy >= 60) barColor = "bg-amber-500";
+                    else barColor = "bg-red-500";
+                }
+
+                rowsHtml += `
+                    <tr class="bg-white">
+                        <td class="text-center font-bold text-gray-600">${subj.code}</td>
+                        <td>
+                            <button onclick="switchTab('${subj.id}')" class="text-left font-semibold text-[#004B8D] hover:underline flex items-center gap-1.5 w-full">
+                                <span>${subj.name}</span>
+                                <span class="text-xs text-gray-400 font-normal">↗</span>
+                            </button>
+                        </td>
+                        <td class="text-center">
+                            <span class="px-2 py-0.5 rounded text-xs font-medium ${subj.weight === 2 ? 'bg-blue-100 text-blue-900 font-semibold' : 'bg-gray-100 text-gray-700'}">
+                                ${subj.block} (Peso ${subj.weight})
+                            </span>
+                        </td>
+                        <td class="text-center text-gray-700 font-medium">${subj.examQuestions} <span class="text-xs text-gray-400">(${subj.scoreShare})</span></td>
+                        <td>
+                            <div class="flex items-center justify-between text-xs mb-1">
+                                <span class="font-medium text-gray-700">${st.studiedTopics} / ${st.totalTopics}</span>
+                                <span class="text-gray-500">${pctStudiedFmt}</span>
+                            </div>
+                            <div class="w-full bg-gray-200 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-[#004B8D] h-1.5" style="width: ${st.pctStudied}%"></div>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <span class="inline-block px-2 py-0.5 rounded-full text-xs font-semibold ${st.totalSessions > 0 ? 'bg-blue-100 text-[#004B8D]' : 'bg-gray-100 text-gray-400'}">
+                                ${st.totalSessions}
+                            </span>
+                        </td>
+                        <td class="text-center font-bold text-gray-800 bg-gray-50/80">${st.totalQ}</td>
+                        <td class="text-center font-semibold text-emerald-700 bg-emerald-50/40">${st.totalA}</td>
+                        <td class="text-center font-semibold text-red-700 bg-red-50/40">${st.totalE}</td>
+                        <td>
+                            <div class="flex items-center justify-between gap-2">
+                                <div class="flex-1 bg-gray-200 h-2 rounded-full overflow-hidden hidden sm:block">
+                                    <div class="${barColor} h-2" style="width: ${accuracyBarWidth}%"></div>
+                                </div>
+                                <div class="w-16 text-right">
+                                    ${formatAccuracyBadge(st.pctAccuracy, st.totalQ)}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            const grandPctAccuracy = grandQ > 0 ? (grandA / grandQ) * 100 : null;
+            const grandPctStudied = grandTotalTopics > 0 ? (grandStudiedTopics / grandTotalTopics) * 100 : 0;
+
+            viewport.innerHTML = `
+                <div class="p-4 bg-gray-50 border-b border-gray-300">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                        <div class="bg-white p-3 rounded border border-gray-300 shadow-sm">
+                            <p class="text-[11px] font-bold uppercase text-gray-500">Total de Questões</p>
+                            <p class="text-2xl font-extrabold text-gray-900 mt-0.5">${grandQ}</p>
+                            <p class="text-[11px] text-gray-500">Resolvidas no total</p>
+                        </div>
+                        <div class="bg-white p-3 rounded border border-emerald-300 shadow-sm">
+                            <p class="text-[11px] font-bold uppercase text-emerald-700">Total de Acertos</p>
+                            <p class="text-2xl font-extrabold text-emerald-700 mt-0.5">${grandA}</p>
+                            <p class="text-[11px] text-gray-500">Questões corretas</p>
+                        </div>
+                        <div class="bg-white p-3 rounded border border-red-300 shadow-sm">
+                            <p class="text-[11px] font-bold uppercase text-red-700">Total de Erros</p>
+                            <p class="text-2xl font-extrabold text-red-700 mt-0.5">${grandE}</p>
+                            <p class="text-[11px] text-gray-500">Questões erradas</p>
+                        </div>
+                        <div class="bg-white p-3 rounded border border-blue-300 shadow-sm">
+                            <p class="text-[11px] font-bold uppercase text-[#004B8D]">% Acerto Geral</p>
+                            <p class="text-2xl font-extrabold text-[#004B8D] mt-0.5">
+                                ${grandPctAccuracy !== null ? grandPctAccuracy.toFixed(1).replace('.', ',') + '%' : '0,0%'}
+                            </p>
+                            <p class="text-[11px] text-gray-500">Taxa média de acerto</p>
+                        </div>
+                        <div class="bg-white p-3 rounded border border-gray-300 shadow-sm">
+                            <p class="text-[11px] font-bold uppercase text-gray-500">Assuntos Estudados</p>
+                            <p class="text-2xl font-extrabold text-gray-800 mt-0.5">${grandPctStudied.toFixed(1).replace('.', ',')}%</p>
+                            <p class="text-[11px] text-gray-500">${grandStudiedTopics} de ${grandTotalTopics} tópicos</p>
+                        </div>
+                        <div class="bg-white p-3 rounded border border-indigo-300 shadow-sm">
+                            <p class="text-[11px] font-bold uppercase text-indigo-700">Passagens / Dias</p>
+                            <p class="text-2xl font-extrabold text-indigo-700 mt-0.5">${grandSessions}</p>
+                            <p class="text-[11px] text-gray-500">Registros de estudo</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-3 bg-white">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-gray-600">
+                            📋 Tabela de Desempenho Geral e por Matéria (Clique na matéria para abrir seus assuntos e passagens)
+                        </h3>
+                    </div>
+                    <table class="sheet-table">
+                        <thead>
+                            <tr>
+                                <th class="w-10 text-center">Nº</th>
+                                <th class="text-left">Matéria / Disciplina</th>
+                                <th class="w-36 text-center">Bloco / Peso</th>
+                                <th class="w-32 text-center">Prova (% Nota)</th>
+                                <th class="w-40 text-left">Assuntos Estudados</th>
+                                <th class="w-24 text-center">Passagens</th>
+                                <th class="w-24 text-center">Questões</th>
+                                <th class="w-24 text-center">Acertos</th>
+                                <th class="w-24 text-center">Erros</th>
+                                <th class="w-44 text-right">% Acerto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rowsHtml}
+                        </tbody>
+                        <tfoot>
+                            <tr class="bg-gray-200 font-bold text-gray-900 border-t-2 border-gray-400">
+                                <td colspan="3" class="text-right uppercase text-xs tracking-wider">TOTAL GERAL DO EDITAL</td>
+                                <td class="text-center">${grandExamQ} (100%)</td>
+                                <td>
+                                    <div class="flex items-center justify-between text-xs">
+                                        <span>${grandStudiedTopics} / ${grandTotalTopics}</span>
+                                        <span>${grandPctStudied.toFixed(1).replace('.', ',')}%</span>
+                                    </div>
+                                </td>
+                                <td class="text-center text-indigo-900 text-base">${grandSessions}</td>
+                                <td class="text-center text-base">${grandQ}</td>
+                                <td class="text-center text-emerald-800 text-base">${grandA}</td>
+                                <td class="text-center text-red-800 text-base">${grandE}</td>
+                                <td class="text-right">
+                                    ${formatAccuracyBadge(grandPctAccuracy, grandQ)}
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            `;
+        }
+
+        // ============================================================================
+        // ABAS 1 A 9: PLANILHA DE ASSUNTOS + SUB-MENU EXPANSÍVEL DE DATAS/PASSAGENS
+        // ============================================================================
+        function updateToggleAllButton(subjId) {
+            const btn = document.getElementById("toggle-all-btn");
+            if (!btn) return;
+            const subj = EDITAL_DATA.find(s => s.id === subjId);
+            if (!subj) return;
+            const anyOpen = subj.topics.some((_, idx) => expandedTopics[`${subjId}-${idx}`]);
+            btn.textContent = anyOpen ? "▲ Recolher todos" : "▼ Expandir todos";
+        }
+
+        function toggleExpandAll() {
+            const subj = EDITAL_DATA.find(s => s.id === currentTab);
+            if (!subj) return;
+            const anyOpen = subj.topics.some((_, idx) => expandedTopics[`${currentTab}-${idx}`]);
+            subj.topics.forEach((_, idx) => {
+                expandedTopics[`${currentTab}-${idx}`] = !anyOpen;
+            });
+            renderSubjectSheet(currentTab);
+        }
+
+        function toggleExpand(subjId, idx) {
+            const key = `${subjId}-${idx}`;
+            expandedTopics[key] = !expandedTopics[key];
+            renderSubjectSheet(subjId);
+        }
+
+        function renderSubjectSheet(subjId) {
+            const subj = EDITAL_DATA.find(s => s.id === subjId);
+            if (!subj) return;
+
+            document.getElementById("subject-badge").textContent = `DISCIPLINA ${subj.code}`;
+            document.getElementById("subject-title").textContent = subj.name;
+            document.getElementById("subject-meta").textContent = `(${subj.block} • Peso ${subj.weight} • ${subj.examQuestions} questões na prova • ${subj.scoreShare} da nota)`;
+            updateToggleAllButton(subjId);
+
+            const searchQuery = (document.getElementById("search-input")?.value || "").toLowerCase().trim();
+            const filterMode = document.getElementById("filter-select")?.value || "all";
+
+            const st = getSubjectStats(subjId);
+            const viewport = document.getElementById("sheet-viewport");
+
+            let rowsHtml = "";
+            let visibleCount = 0;
+
+            subj.topics.forEach((topicTitle, idx) => {
+                const rowData = userProgress[subjId][idx] || { studied: false, q: 0, a: 0, e: 0, note: "", sessions: [] };
+                const m = getTopicMetrics(rowData);
+                const isExpanded = Boolean(expandedTopics[`${subjId}-${idx}`]);
+
+                // Filtros
+                if (searchQuery && !topicTitle.toLowerCase().includes(searchQuery)) return;
+                if (filterMode === "pending" && m.isStudied) return;
+                if (filterMode === "done" && !m.isStudied) return;
+                if (filterMode === "low" && (m.q === 0 || m.pct >= 70)) return;
+
+                visibleCount++;
+
+                // Identifica se é subtópico (ex: "1.1 - ", "21.2 - ") para indentar estilo planilha verticalizada
+                const isSubtopic = /^\d+\.\d+/.test(topicTitle.trim());
+
+                // Badges de progresso (passagens e última data)
+                let progressBadges = "";
+                if (m.hasSessions) {
+                    const labelPass = m.sessionsCount === 1 ? "1 passagem" : `${m.sessionsCount} passagens`;
+                    progressBadges += `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-100 text-[#004B8D] border border-blue-200">${labelPass}</span>`;
+                    if (m.lastDate) {
+                        progressBadges += `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-600 border border-gray-200">Última: ${formatShortDate(m.lastDate)}</span>`;
+                    }
+                } else if (rowData.studied) {
+                    progressBadges += `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">Concluído</span>`;
+                } else {
+                    progressBadges += `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-400">Não estudado</span>`;
+                }
+
+                // Se houver passagens, os valores principais são somados automaticamente (somente leitura na linha mãe)
+                const qCellHtml = m.hasSessions
+                    ? `<div id="q-${subjId}-${idx}" class="text-center font-bold text-gray-800 py-1 cursor-pointer" onclick="toggleExpand('${subjId}', ${idx})" title="Soma automática das passagens registradas">${m.q}</div>`
+                    : `<input type="number" min="0" value="${m.q}" id="q-${subjId}-${idx}" oninput="updateCell('${subjId}', ${idx}, 'q', this.value)" onfocus="this.select()" class="sheet-input text-gray-800 font-bold" title="Total de Questões">`;
+
+                const aCellHtml = m.hasSessions
+                    ? `<div id="a-${subjId}-${idx}" class="text-center font-semibold text-emerald-700 py-1 cursor-pointer" onclick="toggleExpand('${subjId}', ${idx})" title="Soma automática dos acertos nas passagens">${m.a}</div>`
+                    : `<input type="number" min="0" value="${m.a}" id="a-${subjId}-${idx}" oninput="updateCell('${subjId}', ${idx}, 'a', this.value)" onfocus="this.select()" class="sheet-input text-emerald-700 font-semibold" title="Acertos">`;
+
+                const eCellHtml = m.hasSessions
+                    ? `<div id="e-${subjId}-${idx}" class="text-center font-semibold text-red-600 py-1 cursor-pointer" onclick="toggleExpand('${subjId}', ${idx})" title="Soma automática dos erros nas passagens">${m.e}</div>`
+                    : `<input type="number" min="0" value="${m.e}" id="e-${subjId}-${idx}" oninput="updateCell('${subjId}', ${idx}, 'e', this.value)" onfocus="this.select()" class="sheet-input text-red-600 font-semibold" title="Erros">`;
+
+                rowsHtml += `
+                    <tr id="row-${subjId}-${idx}" class="${rowData.studied ? 'bg-emerald-50/30' : 'bg-white'}">
+                        <td class="text-center w-10 align-top pt-2">
+                            <input type="checkbox" ${rowData.studied ? 'checked' : ''} 
+                                onchange="toggleStudied('${subjId}', ${idx}, this.checked)"
+                                class="w-4 h-4 accent-[#004B8D] rounded cursor-pointer" title="Marcar como concluído">
+                        </td>
+                        <td class="${isSubtopic ? 'pl-6 text-gray-700' : 'font-semibold text-gray-900'} align-top">
+                            <div class="flex items-start justify-between gap-2">
+                                <div class="flex items-start gap-1.5 flex-1 cursor-pointer select-none group" onclick="toggleExpand('${subjId}', ${idx})">
+                                    <button type="button" class="text-[11px] text-[#004B8D] mt-0.5 w-4 h-4 flex items-center justify-center rounded hover:bg-blue-100 shrink-0" title="Abrir/Fechar histórico de datas">
+                                        ${isExpanded ? '▼' : '▶'}
+                                    </button>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="group-hover:text-[#004B8D] transition-colors ${rowData.studied ? 'line-through text-gray-400' : ''}">
+                                            ${escapeHtml(topicTitle)}
+                                        </div>
+                                        <div class="flex items-center flex-wrap gap-1.5 mt-1" id="badges-${subjId}-${idx}">
+                                            ${progressBadges}
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" onclick="addSession('${subjId}', ${idx}); event.stopPropagation();" 
+                                    class="shrink-0 w-6 h-6 rounded bg-blue-50 hover:bg-[#004B8D] text-[#004B8D] hover:text-white border border-blue-200 font-bold text-sm flex items-center justify-center transition" 
+                                    title="Adicionar passagem / data neste assunto">
+                                    +
+                                </button>
+                            </div>
+                        </td>
+                        <td class="w-20 bg-gray-50/70 align-top pt-2">
+                            ${qCellHtml}
+                        </td>
+                        <td class="w-20 bg-emerald-50/30 align-top pt-2">
+                            ${aCellHtml}
+                        </td>
+                        <td class="w-20 bg-red-50/30 align-top pt-2">
+                            ${eCellHtml}
+                        </td>
+                        <td class="w-24 text-center align-top pt-2" id="pct-${subjId}-${idx}">
+                            ${formatAccuracyBadge(m.pct, m.q)}
+                        </td>
+                        <td class="w-72 min-w-[220px] max-w-[320px] align-top">
+                            <textarea rows="1"
+                                placeholder="Anotações gerais (expande para baixo)..."
+                                oninput="autoResizeTextarea(this); updateNote('${subjId}', ${idx}, this.value)"
+                                class="sheet-textarea text-gray-700">${escapeHtml(rowData.note || '')}</textarea>
+                        </td>
+                    </tr>
+                `;
+
+                // Sub-menu expansível estilo árvore com as passagens/datas do assunto
+                if (isExpanded) {
+                    const sessions = rowData.sessions || [];
+                    let sessionRowsHtml = "";
+
+                    if (sessions.length === 0) {
+                        sessionRowsHtml = `
+                            <tr>
+                                <td colspan="7" class="text-center py-3 text-gray-500 text-xs bg-white">
+                                    Nenhuma passagem registrada ainda para este assunto. Clique no botão abaixo para registrar o dia de estudo.
+                                </td>
+                            </tr>
+                        `;
+                    } else {
+                        sessions.forEach((s, sIdx) => {
+                            const sa = Number(s.a) || 0;
+                            const se = Number(s.e) || 0;
+                            const sq = sa + se;
+                            const spct = sq > 0 ? (sa / sq) * 100 : null;
+
+                            sessionRowsHtml += `
+                                <tr class="bg-white">
+                                    <td class="w-32">
+                                        <input type="date" value="${escapeHtml(s.date || '')}"
+                                            onchange="updateSessionField('${subjId}', ${idx}, ${sIdx}, 'date', this.value)"
+                                            class="w-full text-xs border border-gray-200 rounded px-1.5 py-1 focus:outline-none focus:border-[#004B8D]">
+                                    </td>
+                                    <td class="w-36">
+                                        <input type="text" value="${escapeHtml(s.label || '')}"
+                                            placeholder="Ex: 1ª passagem"
+                                            oninput="updateSessionField('${subjId}', ${idx}, ${sIdx}, 'label', this.value)"
+                                            class="w-full text-xs font-medium text-gray-800 border border-gray-200 rounded px-2 py-1 focus:outline-none focus:border-[#004B8D]">
+                                    </td>
+                                    <td class="w-16 text-center font-bold text-gray-700 bg-gray-50 pt-2" id="sq-${subjId}-${idx}-${sIdx}">
+                                        ${sq}
+                                    </td>
+                                    <td class="w-20 bg-emerald-50/40">
+                                        <input type="number" min="0" value="${sa}"
+                                            oninput="updateSessionField('${subjId}', ${idx}, ${sIdx}, 'a', this.value)"
+                                            onfocus="this.select()"
+                                            class="sheet-input text-emerald-700 font-semibold" title="Acertos neste dia">
+                                    </td>
+                                    <td class="w-20 bg-red-50/40">
+                                        <input type="number" min="0" value="${se}"
+                                            oninput="updateSessionField('${subjId}', ${idx}, ${sIdx}, 'e', this.value)"
+                                            onfocus="this.select()"
+                                            class="sheet-input text-red-600 font-semibold" title="Erros neste dia">
+                                    </td>
+                                    <td class="w-20 text-center pt-1.5" id="spct-${subjId}-${idx}-${sIdx}">
+                                        ${formatAccuracyBadge(spct, sq)}
+                                    </td>
+                                    <td class="min-w-[220px]">
+                                        <div class="flex items-start gap-1.5">
+                                            <textarea rows="1"
+                                                placeholder="O que estudou/errou nesse dia..."
+                                                oninput="autoResizeTextarea(this); updateSessionField('${subjId}', ${idx}, ${sIdx}, 'note', this.value)"
+                                                class="sheet-textarea text-gray-700 flex-1 border border-gray-200 bg-gray-50/40">${escapeHtml(s.note || '')}</textarea>
+                                            <button type="button" onclick="removeSession('${subjId}', ${idx}, ${sIdx})"
+                                                class="text-gray-400 hover:text-red-600 hover:bg-red-50 rounded px-1.5 py-0.5 text-sm font-bold leading-none mt-1 transition"
+                                                title="Remover esta passagem">×</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                    }
+
+                    rowsHtml += `
+                        <tr class="sessions-row">
+                            <td colspan="7" class="p-3">
+                                <div class="tree-wrapper">
+                                    <div class="tree-item-branch">
+                                        <table class="sub-sheet-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="w-32 text-left">📅 Data</th>
+                                                    <th class="w-36 text-left">Etapa / Passagem</th>
+                                                    <th class="w-16 text-center">Questões</th>
+                                                    <th class="w-20 text-center text-emerald-800">Acertos</th>
+                                                    <th class="w-20 text-center text-red-800">Erros</th>
+                                                    <th class="w-20 text-center">% Dia</th>
+                                                    <th class="text-left">Anotações da passagem</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                ${sessionRowsHtml}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="mt-2 flex items-center justify-between flex-wrap gap-2">
+                                        <button type="button" onclick="addSession('${subjId}', ${idx})"
+                                            class="inline-flex items-center gap-1.5 bg-[#004B8D] hover:bg-blue-800 text-white text-xs font-semibold px-3 py-1.5 rounded shadow-sm transition">
+                                            <span>+</span> Adicionar passagem / data
+                                        </button>
+                                        <span class="text-[11px] text-gray-500">
+                                            As questões, acertos e erros de cada data são somados automaticamente na linha principal do assunto.
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }
+            });
+
+            if (visibleCount === 0) {
+                rowsHtml = `
+                    <tr>
+                        <td colspan="7" class="text-center py-8 text-gray-500">
+                            Nenhum assunto encontrado para o filtro selecionado.
+                        </td>
+                    </tr>
+                `;
+            }
+
+            viewport.innerHTML = `
+                <table class="sheet-table">
+                    <thead>
+                        <tr>
+                            <th class="w-10 text-center" title="Marcar assunto como concluído">✓</th>
+                            <th class="text-left">Assunto / Tópico do Edital <span class="font-normal text-gray-500 text-xs">(clique para abrir passagens/datas)</span></th>
+                            <th class="w-20 text-center">Questões</th>
+                            <th class="w-20 text-center text-emerald-800">Acertos</th>
+                            <th class="w-20 text-center text-red-800">Erros</th>
+                            <th class="w-24 text-center">% Acerto</th>
+                            <th class="w-72 text-left">Anotações Gerais</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${rowsHtml}
+                    </tbody>
+                    <tfoot>
+                        <tr class="bg-gray-200 font-bold text-gray-900 border-t-2 border-gray-400">
+                            <td class="text-center" id="foot-studied-${subjId}">${st.studiedTopics}/${st.totalTopics}</td>
+                            <td class="text-right uppercase text-xs tracking-wider">TOTAL DA MATÉRIA (${subj.name}) • ${st.totalSessions} passagens</td>
+                            <td class="text-center text-base" id="foot-q-${subjId}">${st.totalQ}</td>
+                            <td class="text-center text-emerald-800 text-base" id="foot-a-${subjId}">${st.totalA}</td>
+                            <td class="text-center text-red-800 text-base" id="foot-e-${subjId}">${st.totalE}</td>
+                            <td class="text-center" id="foot-pct-${subjId}">
+                                ${formatAccuracyBadge(st.pctAccuracy, st.totalQ)}
+                            </td>
+                            <td class="text-xs text-gray-500 font-normal">
+                                Clique no <strong>+</strong> ou no assunto para registrar datas.
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            `;
+
+            // Ajusta a altura inicial de todos os textareas preenchidos
+            requestAnimationFrame(resizeAllVisibleTextareas);
+        }
+
+        // ============================================================================
+        // LÓGICA DE EDIÇÃO DE PASSAGENS (SUB-MENU) E CÉLULAS PRINCIPAIS
+        // ============================================================================
+        function addSession(subjId, idx) {
+            const item = userProgress[subjId][idx];
+            if (!Array.isArray(item.sessions)) item.sessions = [];
+
+            const nextNum = item.sessions.length + 1;
+            item.sessions.push({
+                date: getTodayISO(),
+                label: `${nextNum}ª passagem`,
+                a: 0,
+                e: 0,
+                note: ""
+            });
+
+            expandedTopics[`${subjId}-${idx}`] = true;
+            saveProgress();
+            renderTabs();
+            renderSubjectSheet(subjId);
+        }
+
+        function removeSession(subjId, idx, sIdx) {
+            const item = userProgress[subjId][idx];
+            if (!Array.isArray(item.sessions)) return;
+            item.sessions.splice(sIdx, 1);
+            saveProgress();
+            renderTabs();
+            renderSubjectSheet(subjId);
+        }
+
+        function updateSessionField(subjId, idx, sIdx, field, rawValue) {
+            const item = userProgress[subjId][idx];
+            const session = item.sessions[sIdx];
+            if (!session) return;
+
+            if (field === 'a' || field === 'e') {
+                let val = parseInt(rawValue, 10);
+                if (isNaN(val) || val < 0) val = 0;
+                session[field] = val;
+            } else {
+                session[field] = rawValue;
+            }
+
+            saveProgress();
+
+            // Atualiza a linha da passagem sem perder o foco do cursor
+            const sa = Number(session.a) || 0;
+            const se = Number(session.e) || 0;
+            const sq = sa + se;
+            const spct = sq > 0 ? (sa / sq) * 100 : null;
+
+            const sqEl = document.getElementById(`sq-${subjId}-${idx}-${sIdx}`);
+            const spctEl = document.getElementById(`spct-${subjId}-${idx}-${sIdx}`);
+            if (sqEl) sqEl.textContent = sq;
+            if (spctEl) spctEl.innerHTML = formatAccuracyBadge(spct, sq);
+
+            // Atualiza a linha principal do assunto (soma das passagens + badges de data)
+            const m = getTopicMetrics(item);
+            const qEl = document.getElementById(`q-${subjId}-${idx}`);
+            const aEl = document.getElementById(`a-${subjId}-${idx}`);
+            const eEl = document.getElementById(`e-${subjId}-${idx}`);
+            const pctEl = document.getElementById(`pct-${subjId}-${idx}`);
+            const badgesEl = document.getElementById(`badges-${subjId}-${idx}`);
+
+            if (qEl) qEl.textContent = m.q;
+            if (aEl) aEl.textContent = m.a;
+            if (eEl) eEl.textContent = m.e;
+            if (pctEl) pctEl.innerHTML = formatAccuracyBadge(m.pct, m.q);
+
+            if (badgesEl && field === 'date') {
+                const labelPass = m.sessionsCount === 1 ? "1 passagem" : `${m.sessionsCount} passagens`;
+                let bHtml = `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-100 text-[#004B8D] border border-blue-200">${labelPass}</span>`;
+                if (m.lastDate) {
+                    bHtml += `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-600 border border-gray-200">Última: ${formatShortDate(m.lastDate)}</span>`;
+                }
+                badgesEl.innerHTML = bHtml;
+            }
+
+            // Atualiza rodapé da matéria e abas
+            updateSubjectFooterAndTabs(subjId);
+        }
+
+        function updateSubjectFooterAndTabs(subjId) {
+            const st = getSubjectStats(subjId);
+            const footStudied = document.getElementById(`foot-studied-${subjId}`);
+            const footQ = document.getElementById(`foot-q-${subjId}`);
+            const footA = document.getElementById(`foot-a-${subjId}`);
+            const footE = document.getElementById(`foot-e-${subjId}`);
+            const footPct = document.getElementById(`foot-pct-${subjId}`);
+
+            if (footStudied) footStudied.textContent = `${st.studiedTopics}/${st.totalTopics}`;
+            if (footQ) footQ.textContent = st.totalQ;
+            if (footA) footA.textContent = st.totalA;
+            if (footE) footE.textContent = st.totalE;
+            if (footPct) footPct.innerHTML = formatAccuracyBadge(st.pctAccuracy, st.totalQ);
+
+            renderTabs();
+        }
+
+        function toggleStudied(subjId, idx, isChecked) {
+            userProgress[subjId][idx].studied = isChecked;
+            saveProgress();
+            renderTabs();
+            renderCurrentView();
+        }
+
+        function updateNote(subjId, idx, val) {
+            userProgress[subjId][idx].note = val;
+            saveProgress();
+        }
+
+        function updateCell(subjId, idx, field, rawValue) {
+            let val = parseInt(rawValue, 10);
+            if (isNaN(val) || val < 0) val = 0;
+
+            const item = userProgress[subjId][idx];
+
+            if (field === 'a') {
+                item.a = val;
+                item.q = item.a + item.e;
+                const qInput = document.getElementById(`q-${subjId}-${idx}`);
+                if (qInput) qInput.value = item.q;
+            } else if (field === 'e') {
+                item.e = val;
+                item.q = item.a + item.e;
+                const qInput = document.getElementById(`q-${subjId}-${idx}`);
+                if (qInput) qInput.value = item.q;
+            } else if (field === 'q') {
+                item.q = val;
+                if (item.q >= item.a) {
+                    item.e = item.q - item.a;
+                } else {
+                    item.a = item.q;
+                    item.e = 0;
+                    const aInput = document.getElementById(`a-${subjId}-${idx}`);
+                    if (aInput) aInput.value = item.a;
+                }
+                const eInput = document.getElementById(`e-${subjId}-${idx}`);
+                if (eInput) eInput.value = item.e;
+            }
+
+            saveProgress();
+
+            // Atualiza badge da linha sem perder o foco do cursor
+            const pct = item.q > 0 ? (item.a / item.q) * 100 : null;
+            const pctCell = document.getElementById(`pct-${subjId}-${idx}`);
+            if (pctCell) pctCell.innerHTML = formatAccuracyBadge(pct, item.q);
+
+            updateSubjectFooterAndTabs(subjId);
+        }
+
+        // ============================================================================
+        // EXPORTAR CSV (EXCEL) COM PASSAGENS/DATAS, BACKUP JSON E ZERAR PLANILHA
+        // ============================================================================
+        function exportCSV() {
+            let csv = "\uFEFF"; // BOM para abrir acentos corretamente no Excel
+            csv += "Codigo Materia;Materia;Bloco;Peso;Topico;Tipo Registro;Data;Etapa/Passagem;Concluido;Questoes;Acertos;Erros;% Acerto;Anotacoes\n";
+
+            EDITAL_DATA.forEach(subj => {
+                subj.topics.forEach((topic, idx) => {
+                    const r = userProgress[subj.id][idx] || { studied: false, q: 0, a: 0, e: 0, note: "", sessions: [] };
+                    const m = getTopicMetrics(r);
+                    const pct = m.q > 0 ? m.pct.toFixed(1).replace('.', ',') + "%" : "0%";
+                    const cleanTopic = topic.replace(/;/g, ",");
+                    const cleanNote = (r.note || "").replace(/;/g, ",").replace(/\n/g, " | ");
+
+                    // Linha resumo do tópico
+                    csv += `${subj.code};"${subj.name}";${subj.block};${subj.weight};"${cleanTopic}";RESUMO;${m.lastDate || ''};"${m.sessionsCount} passagens";${m.isStudied ? 'SIM' : 'NAO'};${m.q};${m.a};${m.e};${pct};"${cleanNote}"\n`;
+
+                    // Linhas individuais de cada passagem/data
+                    if (Array.isArray(r.sessions) && r.sessions.length > 0) {
+                        r.sessions.forEach(s => {
+                            const sa = Number(s.a) || 0;
+                            const se = Number(s.e) || 0;
+                            const sq = sa + se;
+                            const spct = sq > 0 ? ((sa / sq) * 100).toFixed(1).replace('.', ',') + "%" : "0%";
+                            const sLabel = (s.label || "").replace(/;/g, ",");
+                            const sNote = (s.note || "").replace(/;/g, ",").replace(/\n/g, " | ");
+                            csv += `${subj.code};"${subj.name}";${subj.block};${subj.weight};"${cleanTopic}";PASSAGEM;${s.date || ''};"${sLabel}";SIM;${sq};${sa};${se};${spct};"${sNote}"\n`;
+                        });
+                    }
+                });
+            });
+
+            const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "Planilha_Banestes_Tecnico_Bancario.csv";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function exportBackup() {
+            const dataStr = JSON.stringify(userProgress, null, 2);
+            const blob = new Blob([dataStr], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "backup_edital_banestes.json";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function importBackup(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    if (typeof parsed === "object" && parsed !== null) {
+                        userProgress = parsed;
+                        saveProgress();
+                        loadProgress();
+                        renderTabs();
+                        renderCurrentView();
+                    }
+                } catch (err) {
+                    console.error("Arquivo inválido", err);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function openResetModal() {
+            const modal = document.getElementById("reset-modal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        }
+
+        function closeResetModal() {
+            const modal = document.getElementById("reset-modal");
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+        }
+
+        function confirmReset() {
+            localStorage.removeItem(STORAGE_KEY);
+            userProgress = {};
+            loadProgress();
+            saveProgress();
+            closeResetModal();
+            renderTabs();
+            renderCurrentView();
+        }
+
+        // Inicialização
+        window.onload = function() {
+            loadProgress();
+            renderTabs();
+            renderCurrentView();
+        };
+    </script>
+</body>
+</html>
