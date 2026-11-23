@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planilha Edital Verticalizado - Banestes Técnico Bancário</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: #f3f4f6;
             color: #1f2937;
         }
-        /* Estilo de grade de planilha (Excel / Google Sheets) */
+        /* Grade estilo Excel / Google Sheets */
         .sheet-table {
             border-collapse: collapse;
             width: 100%;
@@ -52,22 +52,7 @@
             border-color: #004B8D;
             box-shadow: 0 0 0 2px rgba(0, 75, 141, 0.2);
         }
-        .sheet-note-input {
-            width: 100%;
-            background: transparent;
-            border: 1px solid transparent;
-            text-align: left;
-            padding: 2px 6px;
-            border-radius: 3px;
-            outline: none;
-            font-size: 0.8rem;
-        }
-        .sheet-note-input:focus {
-            background: #ffffff;
-            border-color: #004B8D;
-            box-shadow: 0 0 0 2px rgba(0, 75, 141, 0.2);
-        }
-        /* Textarea que quebra linha e expande somente para baixo */
+        /* Textarea que cresce somente para baixo sem empurrar a tabela */
         .sheet-textarea {
             width: 100%;
             min-height: 30px;
@@ -81,7 +66,6 @@
             line-height: 1.35;
             resize: none;
             overflow: hidden;
-            overflow-x: hidden;
             white-space: pre-wrap;
             word-wrap: break-word;
             overflow-wrap: break-word;
@@ -93,7 +77,7 @@
             border-color: #004B8D;
             box-shadow: 0 0 0 2px rgba(0, 75, 141, 0.18);
         }
-        /* Estilo de árvore para o sub-menu de datas/passagens */
+        /* Sub-menu expansível estilo árvore para passagens/datas */
         .sessions-row {
             background-color: #f8fafc !important;
         }
@@ -150,11 +134,11 @@
             position: static;
             box-shadow: none;
         }
-        /* Remove setas do input number para parecer célula limpa */
-        input[type=number]::-webkit-inner-spin-button, 
-        input[type=number]::-webkit-outer-spin-button { 
-            -webkit-appearance: none; 
-            margin: 0; 
+        /* Remove setas nativas do input number */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
         }
         input[type=number] {
             -moz-appearance: textfield;
@@ -171,7 +155,6 @@
             border-bottom-color: #004B8D;
             font-weight: 700;
         }
-        /* Scrollbar fina para barra de abas */
         .tabs-scroll::-webkit-scrollbar {
             height: 5px;
         }
@@ -186,7 +169,7 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- Top Header / Barra de Ferramentas da Planilha -->
+    <!-- Cabeçalho Superior da Planilha -->
     <header class="bg-[#004B8D] text-white shadow-md">
         <div class="max-w-[1600px] mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
             <div class="flex items-center gap-3">
@@ -195,22 +178,28 @@
                 </div>
                 <div>
                     <h1 class="font-bold text-base sm:text-lg leading-tight">Planilha Edital Verticalizado — Técnico Bancário</h1>
-                    <p class="text-xs text-blue-100">Banca FCC • 70 Questões (Gerais Peso 1 | Específicos Peso 2) • Salvo automaticamente</p>
+                    <p class="text-xs text-blue-100">Banca FCC • 70 Questões (Gerais Peso 1 | Específicos Peso 2)</p>
                 </div>
             </div>
 
-            <!-- Botões Utilitários -->
+            <!-- Controles de Conta, Sincronização e Exportação -->
             <div class="flex items-center gap-2 flex-wrap">
                 <span id="save-status" class="text-xs bg-blue-900/60 text-blue-100 px-2.5 py-1 rounded border border-blue-700">
-                    ☁ Conectando...
+                    💾 Salvo localmente
                 </span>
-                <button id="google-login-btn" onclick="loginWithGoogle()" class="bg-white hover:bg-gray-100 text-gray-800 text-xs font-semibold px-3 py-1.5 rounded shadow-sm transition flex items-center gap-1.5">
-                    <span>👤</span> Entrar com Google
+
+                <!-- Botão Entrar / Conta (quando deslogado) -->
+                <button id="open-auth-btn" onclick="openAuthModal('login')" class="bg-white hover:bg-gray-100 text-[#004B8D] text-xs font-bold px-3 py-1.5 rounded shadow-sm transition flex items-center gap-1.5">
+                    <span>👤</span> Entrar / Conta
                 </button>
-                <div id="user-badge" class="hidden items-center gap-2 bg-blue-900/70 text-white text-xs px-2.5 py-1 rounded border border-blue-600">
-                    <span id="user-name-label" class="font-medium max-w-[140px] truncate"></span>
-                    <button onclick="logoutGoogle()" class="text-blue-200 hover:text-white underline font-semibold">Sair</button>
+
+                <!-- Badge do Usuário Logado -->
+                <div id="user-badge" class="hidden items-center gap-2 bg-blue-900/80 text-white text-xs px-2.5 py-1.5 rounded border border-blue-600">
+                    <span class="text-blue-200">👤</span>
+                    <span id="user-email-label" class="font-medium max-w-[170px] truncate"></span>
+                    <button onclick="logoutUser()" class="text-blue-200 hover:text-white underline font-semibold ml-1">Sair</button>
                 </div>
+
                 <button onclick="exportCSV()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-3 py-1.5 rounded shadow-sm transition flex items-center gap-1.5">
                     <span>⬇</span> Baixar Excel (CSV)
                 </button>
@@ -218,7 +207,7 @@
                     Backup JSON
                 </button>
                 <label class="bg-blue-700 hover:bg-blue-600 text-white text-xs font-medium px-2.5 py-1.5 rounded border border-blue-500 transition cursor-pointer">
-                    Importar
+                    Importar JSON
                     <input type="file" id="import-file" accept=".json" class="hidden" onchange="importBackup(event)">
                 </label>
                 <button onclick="openResetModal()" class="bg-red-600 hover:bg-red-500 text-white text-xs font-medium px-2.5 py-1.5 rounded shadow-sm transition">
@@ -227,18 +216,18 @@
             </div>
         </div>
 
-        <!-- Barra de Abas (Páginas por Matéria) -->
+        <!-- Barra de Abas Estilo Excel -->
         <div class="bg-gray-200 text-gray-700 border-t border-gray-300">
             <div id="tabs-container" class="max-w-[1600px] mx-auto px-2 flex items-center overflow-x-auto tabs-scroll">
-                <!-- Gerado via JS -->
+                <!-- Renderizado via JS -->
             </div>
         </div>
     </header>
 
-    <!-- Conteúdo Principal da Planilha -->
+    <!-- Conteúdo Principal -->
     <main class="flex-1 max-w-[1600px] w-full mx-auto p-3 sm:p-4 flex flex-col gap-3">
-        
-        <!-- Barra de Filtro (Visível apenas nas abas de matérias) -->
+
+        <!-- Barra de Filtros da Matéria -->
         <div id="subject-toolbar" class="hidden bg-white border border-gray-300 rounded p-2.5 shadow-sm flex flex-wrap items-center justify-between gap-3">
             <div class="flex items-center gap-2 flex-wrap">
                 <span id="subject-badge" class="bg-[#004B8D] text-white text-xs font-bold px-2.5 py-1 rounded"></span>
@@ -247,9 +236,9 @@
             </div>
 
             <div class="flex items-center gap-2 flex-wrap w-full sm:w-auto">
-                <input type="text" id="search-input" oninput="renderCurrentView()" placeholder="🔍 Filtrar assunto..." 
+                <input type="text" id="search-input" oninput="renderCurrentView()" placeholder="🔍 Filtrar assunto..."
                     class="border border-gray-300 rounded px-2.5 py-1 text-xs focus:outline-none focus:border-[#004B8D] flex-1 sm:w-52">
-                
+
                 <select id="filter-select" onchange="renderCurrentView()" class="border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:outline-none focus:border-[#004B8D]">
                     <option value="all">Todos os assuntos</option>
                     <option value="pending">Pendentes de estudo</option>
@@ -263,11 +252,85 @@
             </div>
         </div>
 
-        <!-- Área Principal da Planilha (Tabelas de Desempenho Geral e Matérias) -->
+        <!-- Viewport da Planilha -->
         <div id="sheet-viewport" class="bg-white border border-gray-300 rounded shadow-sm overflow-x-auto flex-1">
-            <!-- Conteúdo renderizado dinamicamente via JS -->
+            <!-- Renderizado via JS -->
         </div>
     </main>
+
+    <!-- Modal de Autenticação (E-mail/Senha + Google) -->
+    <div id="auth-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-2xl max-w-md w-full overflow-hidden border border-gray-200">
+            <!-- Topo do Modal -->
+            <div class="bg-[#004B8D] text-white px-5 py-4 flex items-center justify-between">
+                <div>
+                    <h3 class="font-bold text-base">Sincronização na Nuvem</h3>
+                    <p class="text-xs text-blue-100">Salve seu progresso no PC e no celular</p>
+                </div>
+                <button type="button" onclick="closeAuthModal()" class="text-blue-200 hover:text-white text-xl font-bold leading-none px-1">×</button>
+            </div>
+
+            <!-- Abas Entrar / Criar Conta -->
+            <div class="grid grid-cols-2 border-b border-gray-200 bg-gray-50">
+                <button type="button" id="auth-tab-login" onclick="setAuthMode('login')" class="py-2.5 text-sm font-bold text-[#004B8D] border-b-2 border-[#004B8D] bg-white transition">
+                    Entrar
+                </button>
+                <button type="button" id="auth-tab-register" onclick="setAuthMode('register')" class="py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 transition">
+                    Criar Conta
+                </button>
+            </div>
+
+            <!-- Formulário -->
+            <form id="auth-form" onsubmit="handleEmailAuth(event)" class="p-5 space-y-4">
+                <!-- Mensagem de Erro / Sucesso -->
+                <div id="auth-feedback" class="hidden text-xs px-3 py-2.5 rounded-lg border font-medium"></div>
+
+                <div>
+                    <label for="auth-email" class="block text-xs font-semibold text-gray-700 mb-1">E-mail</label>
+                    <input type="email" id="auth-email" required autocomplete="email" placeholder="seuemail@exemplo.com"
+                        class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#004B8D] focus:ring-2 focus:ring-blue-100">
+                </div>
+
+                <div>
+                    <label for="auth-password" class="block text-xs font-semibold text-gray-700 mb-1">Senha</label>
+                    <div class="relative">
+                        <input type="password" id="auth-password" required minlength="6" autocomplete="current-password" placeholder="Mínimo 6 caracteres"
+                            class="w-full border border-gray-300 rounded-lg px-3 py-2 pr-16 text-sm focus:outline-none focus:border-[#004B8D] focus:ring-2 focus:ring-blue-100">
+                        <button type="button" id="toggle-pwd-btn" onclick="togglePasswordVisibility()"
+                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-500 hover:text-[#004B8D]">
+                            Mostrar
+                        </button>
+                    </div>
+                </div>
+
+                <div id="forgot-password-wrap" class="flex justify-end -mt-2">
+                    <button type="button" onclick="handleForgotPassword()" class="text-xs font-medium text-[#004B8D] hover:underline">
+                        Esqueci minha senha
+                    </button>
+                </div>
+
+                <button type="submit" id="auth-submit-btn" class="w-full bg-[#004B8D] hover:bg-blue-800 text-white font-bold text-sm py-2.5 rounded-lg shadow-sm transition">
+                    Entrar com E-mail
+                </button>
+
+                <div class="relative flex items-center py-1">
+                    <div class="flex-grow border-t border-gray-200"></div>
+                    <span class="flex-shrink mx-3 text-xs text-gray-400 font-medium">ou</span>
+                    <div class="flex-grow border-t border-gray-200"></div>
+                </div>
+
+                <button type="button" onclick="loginWithGoogle()" class="w-full bg-white hover:bg-gray-50 text-gray-700 font-semibold text-sm py-2.5 px-4 rounded-lg border border-gray-300 shadow-sm transition flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M23.745 12.27c0-.79-.07-1.54-.19-2.27h-11.3v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/>
+                        <path fill="#34A853" d="M12.255 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96h-3.98v3.09C3.515 21.3 7.565 24 12.255 24z"/>
+                        <path fill="#FBBC05" d="M5.525 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62h-3.98a11.86 11.86 0 000 10.76l3.98-3.09z"/>
+                        <path fill="#EA4335" d="M12.255 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C18.205 1.19 15.495 0 12.255 0c-4.69 0-8.74 2.7-10.71 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/>
+                    </svg>
+                    Entrar com Google
+                </button>
+            </form>
+        </div>
+    </div>
 
     <!-- Modal de Confirmação para Zerar Planilha -->
     <div id="reset-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
@@ -287,51 +350,41 @@
         </div>
     </div>
 
-    <!-- Notificação Toast (substitui alert) -->
+    <!-- Notificação Toast -->
     <div id="toast-box" class="fixed bottom-4 right-4 z-50 hidden max-w-sm bg-gray-900 text-white text-xs px-4 py-3 rounded-lg shadow-lg border border-gray-700"></div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
         import {
             getAuth,
-            signInAnonymously,
-            signInWithCustomToken,
             GoogleAuthProvider,
             signInWithPopup,
+            signInWithEmailAndPassword,
+            createUserWithEmailAndPassword,
+            sendPasswordResetEmail,
             signOut,
             onAuthStateChanged
-        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
         import {
             getFirestore,
             doc,
             setDoc,
             onSnapshot
-        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
         // ============================================================================
-        // CONFIGURAÇÃO DO FIREBASE PARA O GITHUB PAGES
-        // Credenciais conectadas ao seu projeto Firebase (planilha-banteses)
+        // CONFIGURAÇÃO DO FIREBASE (EMBUTIDA)
         // ============================================================================
         const MY_FIREBASE_CONFIG = {
             apiKey: "AIzaSyBb-lO-hSafr80eNvFikQRSFR_n6gXOkFk",
-            authDomain: "planilha-banteses.firebaseapp.com",
-            projectId: "planilha-banteses",
-            storageBucket: "planilha-banteses.firebasestorage.app",
+            authDomain: "planilha-banestes.firebaseapp.com",
+            projectId: "planilha-banestes",
+            storageBucket: "planilha-banestes.firebasestorage.app",
             messagingSenderId: "11481329402",
             appId: "1:11481329402:web:08924ee706420806526343"
         };
 
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'planilha-banestes-v1';
-        let firebaseConfig = null;
-        if (typeof __firebase_config !== 'undefined' && __firebase_config) {
-            try {
-                firebaseConfig = JSON.parse(__firebase_config);
-            } catch (e) {
-                console.error("Erro ao ler configuração do ambiente:", e);
-            }
-        } else if (MY_FIREBASE_CONFIG.apiKey && !MY_FIREBASE_CONFIG.apiKey.includes("COLE_SUA_API_KEY")) {
-            firebaseConfig = MY_FIREBASE_CONFIG;
-        }
+        const LOCAL_STORAGE_KEY = "banestes_planilha_progresso_v1";
 
         let auth = null;
         let db = null;
@@ -339,9 +392,10 @@
         let unsubscribeSnapshot = null;
         let saveDebounceTimer = null;
         let lastSyncedJson = "";
+        let authMode = "login"; // 'login' | 'register'
 
         // ============================================================================
-        // DADOS EXATOS DO EDITAL VERTICALIZADO BANESTES - TÉCNICO BANCÁRIO (FCC)
+        // DADOS DO EDITAL VERTICALIZADO BANESTES - TÉCNICO BANCÁRIO (FCC)
         // ============================================================================
         const EDITAL_DATA = [
             {
@@ -423,8 +477,8 @@
                 id: "03",
                 code: "03",
                 shortName: "03. Matemática e RLM",
-                name: "MATEMÁTICA/RACIOCÍNIO LÓGICO E QUANTITATIVO",
-                block: "Gerais (TB)",
+                name: "MATEMÁTICA / RACIOCÍNIO LÓGICO E QUANTITATIVO",
+                block: "Gerais",
                 weight: 1,
                 examQuestions: 10,
                 scoreShare: "11,1%",
@@ -465,7 +519,7 @@
                 code: "04",
                 shortName: "04. Atualidades MF",
                 name: "ATUALIDADES DO MERCADO FINANCEIRO",
-                block: "Gerais (TB)",
+                block: "Gerais",
                 weight: 1,
                 examQuestions: 5,
                 scoreShare: "5,6%",
@@ -498,7 +552,7 @@
                 id: "05",
                 code: "05",
                 shortName: "05. Conhec. Bancários",
-                name: "CONHECIMENTOS BANCÁRIOS/SECURITÁRIOS",
+                name: "CONHECIMENTOS BANCÁRIOS / SECURITÁRIOS",
                 block: "Específicos",
                 weight: 2,
                 examQuestions: 15,
@@ -536,7 +590,7 @@
                     "7.2 - Pix.",
                     "7.3 - Meios eletrônicos de pagamento.",
                     "7.4 - Inovação no sistema financeiro.",
-                    "8 - Prevenção à lavagem de dinheiro e ao financiamento do terrorismo.",
+                    "8 - Prevenção à lavagem de dinheiro e ao financiamento do terrorismo (PLD/FT).",
                     "9 - Conselho de Controle de Atividades Financeiras (COAF).",
                     "10 - Educação financeira e proteção do consumidor de produtos e serviços financeiros.",
                     "11 - Noções de seguros.",
@@ -655,7 +709,7 @@
                     "3.1 - Conceitos básicos de informática.",
                     "3.2 - Hardware.",
                     "3.3 - Software.",
-                    "3.4 - Sistemas operacionais (Windows e Linux básico, em suas últimas versões).",
+                    "3.4 - Sistemas operacionais (Windows e Linux básico).",
                     "3.5 - Internet, intranet, navegadores e mecanismos de busca.",
                     "3.6 - Correio eletrônico.",
                     "3.7 - Computação em nuvem.",
@@ -677,11 +731,11 @@
                     "4.9 - Chat.",
                     "5 - Inteligência Artificial e novas tecnologias.",
                     "5.1 - Conceitos básicos de inteligência artificial.",
-                    "5.2 - Aprendizado de máquina.",
+                    "5.2 - Aprendizado de máquina (Machine Learning).",
                     "5.3 - IA generativa.",
                     "5.4 - Automação.",
                     "5.5 - Chatbots.",
-                    "5.6 - Processamento de linguagem natural.",
+                    "5.6 - Processamento de linguagem natural (PLN).",
                     "5.7 - Gemini no Google Workspace.",
                     "5.8 - Aplicações bancárias da IA: análise de crédito, prevenção à fraude e atendimento ao cliente.",
                     "5.9 - Riscos, vieses e explicabilidade.",
@@ -723,50 +777,29 @@
             }
         ];
 
-        let currentTab = "geral"; // 'geral' ou id da matéria ('01' a '09')
+        let currentTab = "geral";
         let userProgress = {};
-        let expandedTopics = {}; // Controla quais sub-menus de datas estão abertos (ex: "01-0": true)
+        let expandedTopics = {};
 
-        // Exibe mensagem temporária no canto inferior direito
+        // ============================================================================
+        // UTILITÁRIOS DE UI E FORMATAÇÃO
+        // ============================================================================
         function showToast(msg, duration = 4000) {
             const toast = document.getElementById("toast-box");
             if (!toast) return;
             toast.textContent = msg;
             toast.classList.remove("hidden");
             clearTimeout(toast._timer);
-            toast._timer = setTimeout(() => {
-                toast.classList.add("hidden");
-            }, duration);
+            toast._timer = setTimeout(() => toast.classList.add("hidden"), duration);
         }
 
-        // Atualiza o indicador visual de status da nuvem no cabeçalho
-        function updateCloudStatus(text, colorClasses = "bg-blue-900/60 text-blue-100 border-blue-700") {
-            const statusEl = document.getElementById("save-status");
-            if (!statusEl) return;
-            statusEl.textContent = text;
-            statusEl.className = `text-xs px-2.5 py-1 rounded border transition ${colorClasses}`;
+        function updateSyncStatus(text, colorClasses = "bg-blue-900/60 text-blue-100 border-blue-700") {
+            const el = document.getElementById("save-status");
+            if (!el) return;
+            el.textContent = text;
+            el.className = `text-xs px-2.5 py-1 rounded border transition ${colorClasses}`;
         }
 
-        // Atualiza os botões de Login com Google no cabeçalho
-        function updateAuthUI(user) {
-            const loginBtn = document.getElementById("google-login-btn");
-            const userBadge = document.getElementById("user-badge");
-            const userLabel = document.getElementById("user-name-label");
-            if (!loginBtn || !userBadge || !userLabel) return;
-
-            if (user && !user.isAnonymous) {
-                loginBtn.classList.add("hidden");
-                userBadge.classList.remove("hidden");
-                userBadge.classList.add("flex");
-                userLabel.textContent = user.displayName || user.email || "Conta Google";
-            } else {
-                loginBtn.classList.remove("hidden");
-                userBadge.classList.add("hidden");
-                userBadge.classList.remove("flex");
-            }
-        }
-
-        // Retorna data de hoje no formato YYYY-MM-DD (fuso local)
         function getTodayISO() {
             const now = new Date();
             const y = now.getFullYear();
@@ -775,7 +808,6 @@
             return `${y}-${m}-${d}`;
         }
 
-        // Formata YYYY-MM-DD para DD/MM
         function formatShortDate(isoDate) {
             if (!isoDate || !isoDate.includes('-')) return "";
             const parts = isoDate.split('-');
@@ -783,7 +815,6 @@
             return `${parts[2]}/${parts[1]}`;
         }
 
-        // Escapa texto para HTML seguro dentro de atributos e textareas
         function escapeHtml(str) {
             return String(str || '')
                 .replace(/&/g, '&amp;')
@@ -792,7 +823,6 @@
                 .replace(/"/g, '&quot;');
         }
 
-        // Faz o textarea crescer automaticamente para baixo sem expandir lateralmente
         function autoResizeTextarea(el) {
             if (!el) return;
             el.style.height = 'auto';
@@ -803,7 +833,21 @@
             document.querySelectorAll('.sheet-textarea').forEach(autoResizeTextarea);
         }
 
-        // Garante que todos os tópicos existam no objeto em memória e possuam o array sessions
+        function hasAnyProgressData(progressObj) {
+            if (!progressObj || typeof progressObj !== "object") return false;
+            for (const subjId of Object.keys(progressObj)) {
+                const topics = progressObj[subjId] || {};
+                for (const idx of Object.keys(topics)) {
+                    const row = topics[idx];
+                    if (!row) continue;
+                    if (row.studied || Number(row.q) > 0 || Number(row.a) > 0 || Number(row.e) > 0 || (row.note && row.note.trim() !== "") || (Array.isArray(row.sessions) && row.sessions.length > 0)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         function ensureProgressStructure() {
             EDITAL_DATA.forEach(subj => {
                 if (!userProgress[subj.id]) userProgress[subj.id] = {};
@@ -824,48 +868,81 @@
             });
         }
 
-        // Salva o progresso no Firebase Firestore (com debounce para não travar a digitação)
-        function saveProgress() {
-            if (!db || !currentUser) {
-                if (!firebaseConfig) {
-                    updateCloudStatus("⚠ Cole sua config Firebase no código", "bg-amber-600 text-white border-amber-500");
+        // ============================================================================
+        // PERSISTÊNCIA LOCAL + FIREBASE FIRESTORE (COM DEBOUNCE 600ms)
+        // ============================================================================
+        function loadLocalProgress() {
+            try {
+                const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    if (parsed && typeof parsed === "object") {
+                        userProgress = parsed;
+                    }
                 }
+            } catch (e) {
+                console.warn("Não foi possível ler o localStorage:", e);
+            }
+            ensureProgressStructure();
+        }
+
+        function saveToLocalStorage() {
+            try {
+                localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(userProgress));
+            } catch (e) {
+                console.warn("Não foi possível salvar no localStorage:", e);
+            }
+        }
+
+        function getUserProgressDocRef(uid) {
+            return doc(db, "artifacts", "banestes-planilha", "users", uid, "planilha", "progresso");
+        }
+
+        function saveProgress() {
+            // 1. Salva localmente de imediato
+            saveToLocalStorage();
+
+            // 2. Se não estiver logado, mantém status local
+            if (!db || !currentUser) {
+                updateSyncStatus("💾 Salvo localmente", "bg-blue-900/60 text-blue-100 border-blue-700");
                 return;
             }
 
-            updateCloudStatus("↻ Salvando na nuvem...", "bg-blue-800 text-blue-100 border-blue-600");
+            // 3. Se logado, salva na nuvem com debounce de 600ms
+            updateSyncStatus("🔄 Salvando...", "bg-blue-800 text-blue-100 border-blue-500");
             clearTimeout(saveDebounceTimer);
             saveDebounceTimer = setTimeout(async () => {
                 if (!db || !currentUser) return;
                 try {
                     const serialized = JSON.stringify(userProgress);
                     lastSyncedJson = serialized;
-                    const docRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'planilha_banestes', 'progresso');
-                    await setDoc(docRef, {
+                    await setDoc(getUserProgressDocRef(currentUser.uid), {
                         progressJson: serialized,
+                        email: currentUser.email || "",
                         updatedAt: new Date().toISOString()
                     });
-                    updateCloudStatus("☁ Salvo na nuvem", "bg-emerald-700 text-white border-emerald-500");
-                } catch (e) {
-                    console.error("Erro ao salvar no Firestore:", e);
-                    updateCloudStatus("⚠ Erro ao salvar na nuvem", "bg-red-700 text-white border-red-500");
-                    showToast("Não foi possível salvar no Firebase. Verifique as regras do Firestore.");
+                    updateSyncStatus("☁️ Sincronizado na nuvem", "bg-emerald-700 text-white border-emerald-500");
+                } catch (err) {
+                    console.error("Erro ao salvar no Firestore:", err);
+                    updateSyncStatus("⚠ Erro na nuvem (salvo local)", "bg-amber-600 text-white border-amber-500");
+                    showToast("Erro ao salvar na nuvem. Seus dados continuam salvos localmente.");
                 }
-            }, 450);
+            }, 600);
         }
 
-        // Escuta alterações em tempo real no Firestore para o usuário autenticado
-        function subscribeToCloudProgress(uid) {
-            if (!db || !uid) return;
+        function subscribeToCloudProgress(user) {
+            if (!db || !user) return;
             if (unsubscribeSnapshot) {
                 unsubscribeSnapshot();
                 unsubscribeSnapshot = null;
             }
 
-            const docRef = doc(db, 'artifacts', appId, 'users', uid, 'planilha_banestes', 'progresso');
+            updateSyncStatus("🔄 Sincronizando...", "bg-blue-800 text-blue-100 border-blue-500");
+
+            const docRef = getUserProgressDocRef(user.uid);
             unsubscribeSnapshot = onSnapshot(
                 docRef,
-                (snap) => {
+                async (snap) => {
                     if (snap.exists()) {
                         const data = snap.data();
                         if (data && data.progressJson && data.progressJson !== lastSyncedJson) {
@@ -873,40 +950,208 @@
                                 userProgress = JSON.parse(data.progressJson);
                                 lastSyncedJson = data.progressJson;
                                 ensureProgressStructure();
+                                saveToLocalStorage();
                                 renderTabs();
                                 renderCurrentView();
-                            } catch (err) {
-                                console.error("Erro ao interpretar dados da nuvem:", err);
+                            } catch (e) {
+                                console.error("Erro ao ler JSON da nuvem:", e);
                             }
                         }
+                        updateSyncStatus("☁️ Sincronizado na nuvem", "bg-emerald-700 text-white border-emerald-500");
+                    } else {
+                        // Se a nuvem estiver vazia mas o usuário já tiver dados locais, sobe automaticamente
+                        if (hasAnyProgressData(userProgress)) {
+                            try {
+                                const serialized = JSON.stringify(userProgress);
+                                lastSyncedJson = serialized;
+                                await setDoc(docRef, {
+                                    progressJson: serialized,
+                                    email: user.email || "",
+                                    updatedAt: new Date().toISOString()
+                                });
+                                updateSyncStatus("☁️ Sincronizado na nuvem", "bg-emerald-700 text-white border-emerald-500");
+                                showToast("Seus dados locais foram enviados para a nuvem!");
+                            } catch (err) {
+                                console.error("Erro ao subir dados locais:", err);
+                                updateSyncStatus("⚠ Erro ao enviar dados", "bg-red-700 text-white border-red-500");
+                            }
+                        } else {
+                            updateSyncStatus("☁️ Sincronizado na nuvem", "bg-emerald-700 text-white border-emerald-500");
+                        }
                     }
-                    updateCloudStatus("☁ Sincronizado na nuvem", "bg-emerald-700 text-white border-emerald-500");
                 },
                 (err) => {
-                    console.error("Erro no onSnapshot do Firestore:", err);
-                    updateCloudStatus("⚠ Sem permissão no Firestore", "bg-red-700 text-white border-red-500");
+                    console.error("Erro no onSnapshot:", err);
+                    updateSyncStatus("⚠ Sem permissão no Firestore", "bg-red-700 text-white border-red-500");
                 }
             );
         }
 
-        // Login com Conta Google (para sincronizar entre PC e celular no GitHub Pages)
-        async function loginWithGoogle() {
-            if (!auth) {
-                showToast("Cole primeiro as credenciais do seu Firebase no arquivo index.html.");
-                return;
-            }
-            try {
-                const provider = new GoogleAuthProvider();
-                await signInWithPopup(auth, provider);
-                showToast("Conectado com Google! Seu progresso agora sincroniza em qualquer aparelho.");
-            } catch (err) {
-                console.error("Erro ao entrar com Google:", err);
-                showToast("Erro no login com Google. Verifique se ativou o provedor Google e adicionou seu domínio do GitHub no Firebase.");
+        // ============================================================================
+        // AUTENTICAÇÃO (MODAL E-MAIL/SENHA + GOOGLE + TRADUÇÃO DE ERROS)
+        // ============================================================================
+        function translateFirebaseError(errorCode) {
+            const map = {
+                "auth/invalid-email": "O formato do e-mail digitado é inválido.",
+                "auth/user-disabled": "Esta conta foi desativada.",
+                "auth/user-not-found": "Nenhuma conta encontrada com este e-mail.",
+                "auth/wrong-password": "Senha incorreta. Tente novamente ou clique em 'Esqueci minha senha'.",
+                "auth/invalid-credential": "E-mail ou senha incorretos.",
+                "auth/email-already-in-use": "Este e-mail já está cadastrado. Tente fazer login.",
+                "auth/weak-password": "A senha é muito fraca. Use pelo menos 6 caracteres.",
+                "auth/too-many-requests": "Muitas tentativas seguidas. Aguarde alguns minutos e tente novamente.",
+                "auth/network-request-failed": "Sem conexão com a internet. Verifique sua rede.",
+                "auth/popup-closed-by-user": "A janela de login do Google foi fechada antes de concluir.",
+                "auth/unauthorized-domain": "Este domínio não está autorizado no Firebase Authentication.",
+                "auth/operation-not-allowed": "Ative o provedor E-mail/Senha no painel do Firebase Authentication."
+            };
+            return map[errorCode] || `Erro na autenticação (${errorCode || "desconhecido"}).`;
+        }
+
+        function showAuthFeedback(message, isSuccess = false) {
+            const box = document.getElementById("auth-feedback");
+            if (!box) return;
+            box.textContent = message;
+            box.classList.remove("hidden", "bg-red-50", "text-red-700", "border-red-200", "bg-emerald-50", "text-emerald-700", "border-emerald-200");
+            if (isSuccess) {
+                box.classList.add("bg-emerald-50", "text-emerald-700", "border-emerald-200");
+            } else {
+                box.classList.add("bg-red-50", "text-red-700", "border-red-200");
             }
         }
 
-        // Sair da Conta Google (volta para sessão anônima)
-        async function logoutGoogle() {
+        function clearAuthFeedback() {
+            const box = document.getElementById("auth-feedback");
+            if (box) box.classList.add("hidden");
+        }
+
+        function setAuthMode(mode) {
+            authMode = mode;
+            clearAuthFeedback();
+            const tabLogin = document.getElementById("auth-tab-login");
+            const tabRegister = document.getElementById("auth-tab-register");
+            const submitBtn = document.getElementById("auth-submit-btn");
+            const forgotWrap = document.getElementById("forgot-password-wrap");
+            const pwdInput = document.getElementById("auth-password");
+
+            if (mode === "login") {
+                tabLogin.className = "py-2.5 text-sm font-bold text-[#004B8D] border-b-2 border-[#004B8D] bg-white transition";
+                tabRegister.className = "py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 transition";
+                submitBtn.textContent = "Entrar com E-mail";
+                forgotWrap.classList.remove("hidden");
+                pwdInput.setAttribute("autocomplete", "current-password");
+            } else {
+                tabRegister.className = "py-2.5 text-sm font-bold text-[#004B8D] border-b-2 border-[#004B8D] bg-white transition";
+                tabLogin.className = "py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 transition";
+                submitBtn.textContent = "Criar Conta";
+                forgotWrap.classList.add("hidden");
+                pwdInput.setAttribute("autocomplete", "new-password");
+            }
+        }
+
+        function openAuthModal(mode = "login") {
+            setAuthMode(mode);
+            const modal = document.getElementById("auth-modal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+            setTimeout(() => document.getElementById("auth-email")?.focus(), 50);
+        }
+
+        function closeAuthModal() {
+            const modal = document.getElementById("auth-modal");
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+            clearAuthFeedback();
+        }
+
+        function togglePasswordVisibility() {
+            const input = document.getElementById("auth-password");
+            const btn = document.getElementById("toggle-pwd-btn");
+            if (!input || !btn) return;
+            if (input.type === "password") {
+                input.type = "text";
+                btn.textContent = "Ocultar";
+            } else {
+                input.type = "password";
+                btn.textContent = "Mostrar";
+            }
+        }
+
+        async function handleEmailAuth(event) {
+            event.preventDefault();
+            clearAuthFeedback();
+            if (!auth) {
+                showAuthFeedback("Firebase não inicializado.");
+                return;
+            }
+
+            const email = document.getElementById("auth-email").value.trim();
+            const password = document.getElementById("auth-password").value;
+            const submitBtn = document.getElementById("auth-submit-btn");
+
+            if (!email) {
+                showAuthFeedback("Digite seu e-mail.");
+                return;
+            }
+            if (password.length < 6) {
+                showAuthFeedback("A senha precisa ter no mínimo 6 caracteres.");
+                return;
+            }
+
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Aguarde...";
+
+            try {
+                if (authMode === "login") {
+                    await signInWithEmailAndPassword(auth, email, password);
+                    closeAuthModal();
+                    showToast("Login realizado com sucesso!");
+                } else {
+                    await createUserWithEmailAndPassword(auth, email, password);
+                    closeAuthModal();
+                    showToast("Conta criada e conectada com sucesso!");
+                }
+            } catch (err) {
+                console.error("Erro auth e-mail:", err);
+                showAuthFeedback(translateFirebaseError(err.code));
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        }
+
+        async function handleForgotPassword() {
+            clearAuthFeedback();
+            const email = document.getElementById("auth-email").value.trim();
+            if (!email) {
+                showAuthFeedback("Digite seu e-mail no campo acima para receber o link de redefinição.");
+                return;
+            }
+            try {
+                await sendPasswordResetEmail(auth, email);
+                showAuthFeedback("E-mail de redefinição enviado! Verifique sua caixa de entrada e spam.", true);
+            } catch (err) {
+                console.error("Erro reset senha:", err);
+                showAuthFeedback(translateFirebaseError(err.code));
+            }
+        }
+
+        async function loginWithGoogle() {
+            clearAuthFeedback();
+            if (!auth) return;
+            try {
+                const provider = new GoogleAuthProvider();
+                await signInWithPopup(auth, provider);
+                closeAuthModal();
+                showToast("Conectado com Google!");
+            } catch (err) {
+                console.error("Erro Google login:", err);
+                showAuthFeedback(translateFirebaseError(err.code));
+            }
+        }
+
+        async function logoutUser() {
             if (!auth) return;
             try {
                 if (unsubscribeSnapshot) {
@@ -914,52 +1159,59 @@
                     unsubscribeSnapshot = null;
                 }
                 await signOut(auth);
-                userProgress = {};
                 lastSyncedJson = "";
-                ensureProgressStructure();
-                await signInAnonymously(auth);
-                renderTabs();
-                renderCurrentView();
-                showToast("Você saiu da sua conta Google.");
+                updateSyncStatus("💾 Salvo localmente", "bg-blue-900/60 text-blue-100 border-blue-700");
+                showToast("Você saiu da conta. Seus dados continuam salvos localmente.");
             } catch (err) {
                 console.error("Erro ao sair:", err);
             }
         }
 
-        // Inicializa o Firebase e realiza autenticação antes de qualquer leitura/escrita
-        async function initFirebase() {
-            if (!firebaseConfig) {
-                updateCloudStatus("⚠ Configure o Firebase no código", "bg-amber-600 text-white border-amber-500");
-                return;
-            }
-            try {
-                const app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
-                db = getFirestore(app);
+        function updateAuthHeaderUI(user) {
+            const openBtn = document.getElementById("open-auth-btn");
+            const badge = document.getElementById("user-badge");
+            const emailLabel = document.getElementById("user-email-label");
 
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await auth.authStateReady();
-                    if (!auth.currentUser) {
-                        await signInAnonymously(auth);
-                    }
-                }
-
-                onAuthStateChanged(auth, (user) => {
-                    currentUser = user;
-                    updateAuthUI(user);
-                    if (user) {
-                        subscribeToCloudProgress(user.uid);
-                    }
-                });
-            } catch (err) {
-                console.error("Erro ao conectar ao Firebase:", err);
-                updateCloudStatus("⚠ Erro na conexão Firebase", "bg-red-700 text-white border-red-500");
+            if (user) {
+                openBtn.classList.add("hidden");
+                badge.classList.remove("hidden");
+                badge.classList.add("flex");
+                emailLabel.textContent = user.email || user.displayName || "Usuário";
+            } else {
+                openBtn.classList.remove("hidden");
+                badge.classList.add("hidden");
+                badge.classList.remove("flex");
             }
         }
 
-        // Calcula métricas de um tópico (soma das passagens quando existirem)
+        function initFirebase() {
+            try {
+                const app = initializeApp(MY_FIREBASE_CONFIG);
+                auth = getAuth(app);
+                db = getFirestore(app);
+
+                onAuthStateChanged(auth, (user) => {
+                    currentUser = user;
+                    updateAuthHeaderUI(user);
+                    if (user) {
+                        subscribeToCloudProgress(user);
+                    } else {
+                        if (unsubscribeSnapshot) {
+                            unsubscribeSnapshot();
+                            unsubscribeSnapshot = null;
+                        }
+                        updateSyncStatus("💾 Salvo localmente", "bg-blue-900/60 text-blue-100 border-blue-700");
+                    }
+                });
+            } catch (err) {
+                console.error("Erro ao inicializar Firebase:", err);
+                updateSyncStatus("💾 Salvo localmente", "bg-blue-900/60 text-blue-100 border-blue-700");
+            }
+        }
+
+        // ============================================================================
+        // CÁLCULOS DE DESEMPENHO (TÓPICO, MATÉRIA E GERAL)
+        // ============================================================================
         function getTopicMetrics(row) {
             const sessions = Array.isArray(row.sessions) ? row.sessions : [];
             const hasSessions = sessions.length > 0;
@@ -970,10 +1222,9 @@
                 sessions.forEach(s => {
                     const sa = Number(s.a) || 0;
                     const se = Number(s.e) || 0;
-                    const sq = sa + se;
                     a += sa;
                     e += se;
-                    q += sq;
+                    q += (sa + se);
                     if (s.date && (!lastDate || s.date > lastDate)) {
                         lastDate = s.date;
                     }
@@ -987,28 +1238,16 @@
             const pct = q > 0 ? (a / q) * 100 : null;
             const isStudied = Boolean(row.studied) || hasSessions;
 
-            return {
-                q,
-                a,
-                e,
-                pct,
-                hasSessions,
-                sessionsCount: sessions.length,
-                lastDate,
-                isStudied
-            };
+            return { q, a, e, pct, hasSessions, sessionsCount: sessions.length, lastDate, isStudied };
         }
 
-        // Calcula estatísticas de uma matéria
         function getSubjectStats(subjId) {
             const subj = EDITAL_DATA.find(s => s.id === subjId);
             const data = userProgress[subjId] || {};
             let totalTopics = subj.topics.length;
             let studiedTopics = 0;
             let totalSessions = 0;
-            let totalQ = 0;
-            let totalA = 0;
-            let totalE = 0;
+            let totalQ = 0, totalA = 0, totalE = 0;
 
             subj.topics.forEach((_, idx) => {
                 const row = data[idx] || { studied: false, q: 0, a: 0, e: 0, sessions: [] };
@@ -1023,34 +1262,23 @@
             const pctAccuracy = totalQ > 0 ? (totalA / totalQ) * 100 : null;
             const pctStudied = totalTopics > 0 ? (studiedTopics / totalTopics) * 100 : 0;
 
-            return {
-                totalTopics,
-                studiedTopics,
-                totalSessions,
-                pctStudied,
-                totalQ,
-                totalA,
-                totalE,
-                pctAccuracy
-            };
+            return { totalTopics, studiedTopics, totalSessions, pctStudied, totalQ, totalA, totalE, pctAccuracy };
         }
 
-        // Formata badge de percentual de acerto (>=80% verde, 60-79% amarelo, <60% vermelho)
         function formatAccuracyBadge(pct, questionsCount) {
             if (!questionsCount || questionsCount === 0 || pct === null) {
                 return `<span class="inline-block px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-400">—</span>`;
             }
             const formatted = pct.toFixed(1).replace('.', ',') + '%';
             let colorClass = "bg-red-100 text-red-800 border-red-300";
-            if (pct >= 80) {
-                colorClass = "bg-emerald-100 text-emerald-800 border-emerald-300";
-            } else if (pct >= 60) {
-                colorClass = "bg-amber-100 text-amber-800 border-amber-300";
-            }
+            if (pct >= 80) colorClass = "bg-emerald-100 text-emerald-800 border-emerald-300";
+            else if (pct >= 60) colorClass = "bg-amber-100 text-amber-800 border-amber-300";
             return `<span class="inline-block px-2 py-0.5 rounded text-xs font-bold border ${colorClass}">${formatted}</span>`;
         }
 
-        // Renderiza as abas superiores
+        // ============================================================================
+        // RENDERIZAÇÃO DAS ABAS E VISÃO GERAL
+        // ============================================================================
         function renderTabs() {
             const container = document.getElementById("tabs-container");
             let html = `
@@ -1088,7 +1316,6 @@
             renderCurrentView();
         }
 
-        // Renderiza a visualização ativa (Desempenho Geral ou Planilha da Matéria)
         function renderCurrentView() {
             const toolbar = document.getElementById("subject-toolbar");
             if (currentTab === "geral") {
@@ -1100,20 +1327,10 @@
             }
         }
 
-        // ============================================================================
-        // ABA 0: DESEMPENHO GERAL E RESUMO POR MATÉRIA
-        // ============================================================================
         function renderGeneralDashboard() {
             const viewport = document.getElementById("sheet-viewport");
-
-            let grandTotalTopics = 0;
-            let grandStudiedTopics = 0;
-            let grandSessions = 0;
-            let grandQ = 0;
-            let grandA = 0;
-            let grandE = 0;
-            let grandExamQ = 0;
-
+            let grandTotalTopics = 0, grandStudiedTopics = 0, grandSessions = 0;
+            let grandQ = 0, grandA = 0, grandE = 0, grandExamQ = 0;
             let rowsHtml = "";
 
             EDITAL_DATA.forEach(subj => {
@@ -1210,7 +1427,7 @@
                             <p class="text-[11px] text-gray-500">Taxa média de acerto</p>
                         </div>
                         <div class="bg-white p-3 rounded border border-gray-300 shadow-sm">
-                            <p class="text-[11px] font-bold uppercase text-gray-500">Assuntos Estudados</p>
+                            <p class="text-[11px] font-bold uppercase text-gray-500">% Edital Estudado</p>
                             <p class="text-2xl font-extrabold text-gray-800 mt-0.5">${grandPctStudied.toFixed(1).replace('.', ',')}%</p>
                             <p class="text-[11px] text-gray-500">${grandStudiedTopics} de ${grandTotalTopics} tópicos</p>
                         </div>
@@ -1225,7 +1442,7 @@
                 <div class="p-3 bg-white">
                     <div class="flex items-center justify-between mb-2">
                         <h3 class="text-xs font-bold uppercase tracking-wider text-gray-600">
-                            📋 Tabela de Desempenho Geral e por Matéria (Clique na matéria para abrir seus assuntos e passagens)
+                            📋 Tabela de Desempenho Geral e por Matéria (Clique na matéria para abrir seus assuntos)
                         </h3>
                     </div>
                     <table class="sheet-table">
@@ -1271,7 +1488,7 @@
         }
 
         // ============================================================================
-        // ABAS 1 A 9: PLANILHA DE ASSUNTOS + SUB-MENU EXPANSÍVEL DE DATAS/PASSAGENS
+        // RENDERIZAÇÃO DAS MATÉRIAS + SUB-MENU DE PASSAGENS POR DATA
         // ============================================================================
         function updateToggleAllButton(subjId) {
             const btn = document.getElementById("toggle-all-btn");
@@ -1312,7 +1529,6 @@
 
             const st = getSubjectStats(subjId);
             const viewport = document.getElementById("sheet-viewport");
-
             let rowsHtml = "";
             let visibleCount = 0;
 
@@ -1321,18 +1537,14 @@
                 const m = getTopicMetrics(rowData);
                 const isExpanded = Boolean(expandedTopics[`${subjId}-${idx}`]);
 
-                // Filtros
                 if (searchQuery && !topicTitle.toLowerCase().includes(searchQuery)) return;
                 if (filterMode === "pending" && m.isStudied) return;
                 if (filterMode === "done" && !m.isStudied) return;
                 if (filterMode === "low" && (m.q === 0 || m.pct >= 70)) return;
 
                 visibleCount++;
-
-                // Identifica se é subtópico (ex: "1.1 - ", "21.2 - ") para indentar estilo planilha verticalizada
                 const isSubtopic = /^\d+\.\d+/.test(topicTitle.trim());
 
-                // Badges de progresso (passagens e última data)
                 let progressBadges = "";
                 if (m.hasSessions) {
                     const labelPass = m.sessionsCount === 1 ? "1 passagem" : `${m.sessionsCount} passagens`;
@@ -1346,23 +1558,22 @@
                     progressBadges += `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-400">Não estudado</span>`;
                 }
 
-                // Se houver passagens, os valores principais são somados automaticamente (somente leitura na linha mãe)
                 const qCellHtml = m.hasSessions
-                    ? `<div id="q-${subjId}-${idx}" class="text-center font-bold text-gray-800 py-1 cursor-pointer" onclick="toggleExpand('${subjId}', ${idx})" title="Soma automática das passagens registradas">${m.q}</div>`
+                    ? `<div id="q-${subjId}-${idx}" class="text-center font-bold text-gray-800 py-1 cursor-pointer" onclick="toggleExpand('${subjId}', ${idx})" title="Soma automática das passagens">${m.q}</div>`
                     : `<input type="number" min="0" value="${m.q}" id="q-${subjId}-${idx}" oninput="updateCell('${subjId}', ${idx}, 'q', this.value)" onfocus="this.select()" class="sheet-input text-gray-800 font-bold" title="Total de Questões">`;
 
                 const aCellHtml = m.hasSessions
-                    ? `<div id="a-${subjId}-${idx}" class="text-center font-semibold text-emerald-700 py-1 cursor-pointer" onclick="toggleExpand('${subjId}', ${idx})" title="Soma automática dos acertos nas passagens">${m.a}</div>`
+                    ? `<div id="a-${subjId}-${idx}" class="text-center font-semibold text-emerald-700 py-1 cursor-pointer" onclick="toggleExpand('${subjId}', ${idx})" title="Soma automática dos acertos">${m.a}</div>`
                     : `<input type="number" min="0" value="${m.a}" id="a-${subjId}-${idx}" oninput="updateCell('${subjId}', ${idx}, 'a', this.value)" onfocus="this.select()" class="sheet-input text-emerald-700 font-semibold" title="Acertos">`;
 
                 const eCellHtml = m.hasSessions
-                    ? `<div id="e-${subjId}-${idx}" class="text-center font-semibold text-red-600 py-1 cursor-pointer" onclick="toggleExpand('${subjId}', ${idx})" title="Soma automática dos erros nas passagens">${m.e}</div>`
+                    ? `<div id="e-${subjId}-${idx}" class="text-center font-semibold text-red-600 py-1 cursor-pointer" onclick="toggleExpand('${subjId}', ${idx})" title="Soma automática dos erros">${m.e}</div>`
                     : `<input type="number" min="0" value="${m.e}" id="e-${subjId}-${idx}" oninput="updateCell('${subjId}', ${idx}, 'e', this.value)" onfocus="this.select()" class="sheet-input text-red-600 font-semibold" title="Erros">`;
 
                 rowsHtml += `
                     <tr id="row-${subjId}-${idx}" class="${rowData.studied ? 'bg-emerald-50/30' : 'bg-white'}">
                         <td class="text-center w-10 align-top pt-2">
-                            <input type="checkbox" ${rowData.studied ? 'checked' : ''} 
+                            <input type="checkbox" ${rowData.studied ? 'checked' : ''}
                                 onchange="toggleStudied('${subjId}', ${idx}, this.checked)"
                                 class="w-4 h-4 accent-[#004B8D] rounded cursor-pointer" title="Marcar como concluído">
                         </td>
@@ -1381,22 +1592,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="button" onclick="addSession('${subjId}', ${idx}); event.stopPropagation();" 
-                                    class="shrink-0 w-6 h-6 rounded bg-blue-50 hover:bg-[#004B8D] text-[#004B8D] hover:text-white border border-blue-200 font-bold text-sm flex items-center justify-center transition" 
+                                <button type="button" onclick="addSession('${subjId}', ${idx}); event.stopPropagation();"
+                                    class="shrink-0 w-6 h-6 rounded bg-blue-50 hover:bg-[#004B8D] text-[#004B8D] hover:text-white border border-blue-200 font-bold text-sm flex items-center justify-center transition"
                                     title="Adicionar passagem / data neste assunto">
                                     +
                                 </button>
                             </div>
                         </td>
-                        <td class="w-20 bg-gray-50/70 align-top pt-2">
-                            ${qCellHtml}
-                        </td>
-                        <td class="w-20 bg-emerald-50/30 align-top pt-2">
-                            ${aCellHtml}
-                        </td>
-                        <td class="w-20 bg-red-50/30 align-top pt-2">
-                            ${eCellHtml}
-                        </td>
+                        <td class="w-20 bg-gray-50/70 align-top pt-2">${qCellHtml}</td>
+                        <td class="w-20 bg-emerald-50/30 align-top pt-2">${aCellHtml}</td>
+                        <td class="w-20 bg-red-50/30 align-top pt-2">${eCellHtml}</td>
                         <td class="w-24 text-center align-top pt-2" id="pct-${subjId}-${idx}">
                             ${formatAccuracyBadge(m.pct, m.q)}
                         </td>
@@ -1409,7 +1614,6 @@
                     </tr>
                 `;
 
-                // Sub-menu expansível estilo árvore com as passagens/datas do assunto
                 if (isExpanded) {
                     const sessions = rowData.sessions || [];
                     let sessionRowsHtml = "";
@@ -1558,17 +1762,15 @@
                 </table>
             `;
 
-            // Ajusta a altura inicial de todos os textareas preenchidos
             requestAnimationFrame(resizeAllVisibleTextareas);
         }
 
         // ============================================================================
-        // LÓGICA DE EDIÇÃO DE PASSAGENS (SUB-MENU) E CÉLULAS PRINCIPAIS
+        // EDIÇÃO DE PASSAGENS E CÉLULAS
         // ============================================================================
         function addSession(subjId, idx) {
             const item = userProgress[subjId][idx];
             if (!Array.isArray(item.sessions)) item.sessions = [];
-
             const nextNum = item.sessions.length + 1;
             item.sessions.push({
                 date: getTodayISO(),
@@ -1577,7 +1779,6 @@
                 e: 0,
                 note: ""
             });
-
             expandedTopics[`${subjId}-${idx}`] = true;
             saveProgress();
             renderTabs();
@@ -1608,7 +1809,6 @@
 
             saveProgress();
 
-            // Atualiza a linha da passagem sem perder o foco do cursor
             const sa = Number(session.a) || 0;
             const se = Number(session.e) || 0;
             const sq = sa + se;
@@ -1619,7 +1819,6 @@
             if (sqEl) sqEl.textContent = sq;
             if (spctEl) spctEl.innerHTML = formatAccuracyBadge(spct, sq);
 
-            // Atualiza a linha principal do assunto (soma das passagens + badges de data)
             const m = getTopicMetrics(item);
             const qEl = document.getElementById(`q-${subjId}-${idx}`);
             const aEl = document.getElementById(`a-${subjId}-${idx}`);
@@ -1641,7 +1840,6 @@
                 badgesEl.innerHTML = bHtml;
             }
 
-            // Atualiza rodapé da matéria e abas
             updateSubjectFooterAndTabs(subjId);
         }
 
@@ -1677,7 +1875,6 @@
         function updateCell(subjId, idx, field, rawValue) {
             let val = parseInt(rawValue, 10);
             if (isNaN(val) || val < 0) val = 0;
-
             const item = userProgress[subjId][idx];
 
             if (field === 'a') {
@@ -1705,20 +1902,17 @@
             }
 
             saveProgress();
-
-            // Atualiza badge da linha sem perder o foco do cursor
             const pct = item.q > 0 ? (item.a / item.q) * 100 : null;
             const pctCell = document.getElementById(`pct-${subjId}-${idx}`);
             if (pctCell) pctCell.innerHTML = formatAccuracyBadge(pct, item.q);
-
             updateSubjectFooterAndTabs(subjId);
         }
 
         // ============================================================================
-        // EXPORTAR CSV (EXCEL) COM PASSAGENS/DATAS, BACKUP JSON E ZERAR PLANILHA
+        // EXPORTAÇÃO CSV, BACKUP JSON, IMPORTAÇÃO E RESET
         // ============================================================================
         function exportCSV() {
-            let csv = "\uFEFF"; // BOM para abrir acentos corretamente no Excel
+            let csv = "\uFEFF";
             csv += "Codigo Materia;Materia;Bloco;Peso;Topico;Tipo Registro;Data;Etapa/Passagem;Concluido;Questoes;Acertos;Erros;% Acerto;Anotacoes\n";
 
             EDITAL_DATA.forEach(subj => {
@@ -1729,10 +1923,8 @@
                     const cleanTopic = topic.replace(/;/g, ",");
                     const cleanNote = (r.note || "").replace(/;/g, ",").replace(/\n/g, " | ");
 
-                    // Linha resumo do tópico
                     csv += `${subj.code};"${subj.name}";${subj.block};${subj.weight};"${cleanTopic}";RESUMO;${m.lastDate || ''};"${m.sessionsCount} passagens";${m.isStudied ? 'SIM' : 'NAO'};${m.q};${m.a};${m.e};${pct};"${cleanNote}"\n`;
 
-                    // Linhas individuais de cada passagem/data
                     if (Array.isArray(r.sessions) && r.sessions.length > 0) {
                         r.sessions.forEach(s => {
                             const sa = Number(s.a) || 0;
@@ -1782,7 +1974,7 @@
                         saveProgress();
                         renderTabs();
                         renderCurrentView();
-                        showToast("Backup importado e enviado para a nuvem!");
+                        showToast("Backup importado com sucesso!");
                     }
                 } catch (err) {
                     console.error("Arquivo inválido", err);
@@ -1814,8 +2006,16 @@
             showToast("Planilha zerada com sucesso.");
         }
 
-        // Expõe as funções usadas pelos eventos inline do HTML (necessário em type="module")
+        // Expõe funções no escopo global para os eventos HTML inline
         Object.assign(window, {
+            openAuthModal,
+            closeAuthModal,
+            setAuthMode,
+            togglePasswordVisibility,
+            handleEmailAuth,
+            handleForgotPassword,
+            loginWithGoogle,
+            logoutUser,
             exportCSV,
             exportBackup,
             importBackup,
@@ -1832,14 +2032,12 @@
             updateSessionField,
             autoResizeTextarea,
             updateNote,
-            updateCell,
-            loginWithGoogle,
-            logoutGoogle
+            updateCell
         });
 
-        // Inicialização da aplicação
+        // Inicialização
         function startApp() {
-            ensureProgressStructure();
+            loadLocalProgress();
             renderTabs();
             renderCurrentView();
             initFirebase();
