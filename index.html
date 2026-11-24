@@ -7,31 +7,37 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* ====================================================================
+           BASE E TIPOGRAFIA
+           ==================================================================== */
+        * {
+            box-sizing: border-box;
+        }
         body {
-            font-family: 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
             background-color: #f3f4f6;
             color: #1f2937;
             margin: 0;
         }
 
         /* ====================================================================
-           TELA DE LOGIN ESTILO WINDOWS 10 / WINDOWS X (TELA CHEIA)
+           TELA DE LOGIN EM TELA CHEIA ESTILO WINDOWS 10 (WINDOWS X)
            ==================================================================== */
         #win-login-screen {
             position: fixed;
             inset: 0;
-            z-index: 100;
+            z-index: 9999;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             overflow-y: auto;
             background:
-                radial-gradient(circle at 18% 22%, rgba(0, 120, 212, 0.55) 0%, transparent 45%),
-                radial-gradient(circle at 82% 78%, rgba(0, 183, 195, 0.35) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(12, 45, 92, 0.9) 0%, rgba(4, 15, 34, 0.98) 100%),
-                linear-gradient(135deg, #001f4d 0%, #004b8d 50%, #001833 100%);
-            transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease;
+                radial-gradient(circle at 18% 20%, rgba(0, 120, 212, 0.65) 0%, transparent 46%),
+                radial-gradient(circle at 82% 80%, rgba(0, 183, 195, 0.38) 0%, transparent 48%),
+                radial-gradient(circle at 50% 45%, rgba(11, 52, 108, 0.88) 0%, rgba(4, 17, 38, 0.98) 100%),
+                linear-gradient(135deg, #001f4d 0%, #004b8d 52%, #00152e 100%);
+            transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s ease;
         }
         #win-login-screen::before {
             content: "";
@@ -39,7 +45,7 @@
             inset: 0;
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
-            background: rgba(5, 18, 38, 0.28);
+            background: rgba(5, 18, 38, 0.25);
             pointer-events: none;
             z-index: 0;
         }
@@ -50,14 +56,13 @@
             pointer-events: none;
         }
 
-        /* Inputs retangulares estilo Windows 10 */
         .win-input {
             width: 100%;
             height: 40px;
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.94);
             color: #111827;
             border: 2px solid rgba(255, 255, 255, 0.72);
-            border-radius: 2px;
+            border-radius: 3px;
             padding: 0 12px;
             font-size: 0.9rem;
             outline: none;
@@ -68,24 +73,23 @@
         }
         .win-input:hover {
             background: #ffffff;
-            border-color: rgba(255, 255, 255, 0.95);
+            border-color: #ffffff;
         }
         .win-input:focus {
             background: #ffffff;
-            border-color: #0078D4;
-            box-shadow: 0 0 0 1px #0078D4;
+            border-color: #0078d4;
+            box-shadow: 0 0 0 1px #0078d4;
         }
 
-        /* Botão de seta estilo Windows 10 acoplado ao campo de senha */
         .win-arrow-btn {
             height: 40px;
-            width: 44px;
+            width: 46px;
             flex-shrink: 0;
-            background-color: #0078D4;
+            background-color: #0078d4;
             color: #ffffff;
-            border: 2px solid #0078D4;
+            border: 2px solid #0078d4;
             border-left: none;
-            border-radius: 0 2px 2px 0;
+            border-radius: 0 3px 3px 0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -103,12 +107,11 @@
             cursor: not-allowed;
         }
 
-        /* Botões translúcidos estilo Windows 10 */
         .win-tile-btn {
             background: rgba(255, 255, 255, 0.12);
             border: 1px solid rgba(255, 255, 255, 0.28);
             color: #ffffff;
-            border-radius: 2px;
+            border-radius: 3px;
             transition: background-color 0.15s ease, border-color 0.15s ease;
         }
         .win-tile-btn:hover {
@@ -117,57 +120,69 @@
         }
 
         /* ====================================================================
-           ESTILOS DA PLANILHA (EXCEL / GOOGLE SHEETS)
+           ESTILO PLANILHA LIMPA (EXCEL / GOOGLE SHEETS)
            ==================================================================== */
         .sheet-table {
             border-collapse: collapse;
             width: 100%;
             font-variant-numeric: tabular-nums;
+            background-color: #ffffff;
         }
-        .sheet-table th, .sheet-table td {
+        .sheet-table th,
+        .sheet-table td {
             border: 1px solid #d1d5db;
-            padding: 6px 10px;
-            font-size: 0.85rem;
-            line-height: 1.25rem;
+            padding: 6px 9px;
+            font-size: 0.84rem;
+            line-height: 1.3;
         }
         .sheet-table thead th {
             background-color: #e5e7eb;
-            color: #374151;
+            color: #1f2937;
             font-weight: 600;
             position: sticky;
             top: 0;
-            z-index: 10;
-            box-shadow: 0 1px 0 #d1d5db;
+            z-index: 5;
+            box-shadow: 0 1px 0 #cbd5e1;
         }
-        .sheet-table tbody tr:hover {
-            background-color: #f0f7ff !important;
-        }
-        .sheet-input {
-            width: 100%;
-            background: transparent;
-            border: 1px solid transparent;
-            text-align: center;
-            font-weight: 500;
-            padding: 2px 4px;
-            border-radius: 3px;
-            outline: none;
-            transition: all 0.1s;
-        }
-        .sheet-input:focus {
-            background: #ffffff;
-            border-color: #0078D4;
-            box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
+        .sheet-table tbody tr.topic-row:hover {
+            background-color: #f0f7ff;
         }
 
-        /* Textarea que cresce apenas para baixo sem empurrar a tabela */
-        .sheet-textarea {
+        /* Inputs editáveis na linha principal do assunto (quando sem passagens) */
+        .main-num-input {
             width: 100%;
-            min-height: 30px;
-            background: transparent;
-            border: 1px solid transparent;
-            text-align: left;
-            padding: 4px 6px;
+            min-width: 54px;
+            height: 32px;
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
             border-radius: 4px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.84rem;
+            padding: 2px 6px;
+            outline: none;
+            cursor: text;
+            pointer-events: auto;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+        .main-num-input:hover {
+            border-color: #94a3b8;
+        }
+        .main-num-input:focus {
+            background-color: #ffffff;
+            border-color: #004b8d;
+            box-shadow: 0 0 0 2px rgba(0, 75, 141, 0.2);
+        }
+
+        /* Caixas de anotação que crescem verticalmente sem esticar a tabela */
+        .auto-grow {
+            width: 100%;
+            min-height: 32px;
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            text-align: left;
+            padding: 5px 8px;
             outline: none;
             font-size: 0.8rem;
             line-height: 1.35;
@@ -177,73 +192,148 @@
             word-wrap: break-word;
             overflow-wrap: break-word;
             display: block;
-            transition: background-color 0.15s, border-color 0.15s;
+            cursor: text;
+            pointer-events: auto;
+            transition: border-color 0.15s, box-shadow 0.15s;
         }
-        .sheet-textarea:focus {
-            background: #ffffff;
-            border-color: #0078D4;
-            box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.18);
+        .auto-grow:hover {
+            border-color: #94a3b8;
+        }
+        .auto-grow:focus {
+            border-color: #004b8d;
+            box-shadow: 0 0 0 2px rgba(0, 75, 141, 0.2);
         }
 
-        /* Sub-menu expansível estilo árvore para passagens/datas */
+        /* Submenu expansível de passagens por data */
         .sessions-row {
-            background-color: #f8fafc !important;
-        }
-        .sessions-row:hover {
-            background-color: #f8fafc !important;
+            background-color: #f8fafc;
         }
         .tree-wrapper {
             position: relative;
-            padding-left: 24px;
+            padding-left: 22px;
         }
+        /* Pseudo-elementos decorativos com pointer-events: none para nunca bloquear cliques */
         .tree-wrapper::before {
             content: "";
             position: absolute;
-            left: 10px;
+            left: 8px;
             top: 0;
-            bottom: 14px;
+            bottom: 12px;
             width: 2px;
-            background-color: #004B8D;
+            background-color: #004b8d;
+            opacity: 0.65;
             border-radius: 2px;
-            opacity: 0.7;
+            pointer-events: none;
         }
-        .tree-item-branch {
+        .tree-branch {
             position: relative;
         }
-        .tree-item-branch::before {
+        .tree-branch::before {
             content: "";
             position: absolute;
             left: -14px;
-            top: 50%;
+            top: 18px;
             width: 14px;
             height: 2px;
-            background-color: #004B8D;
-            opacity: 0.7;
+            background-color: #004b8d;
+            opacity: 0.65;
+            pointer-events: none;
         }
+
         .sub-sheet-table {
             border-collapse: collapse;
             width: 100%;
             background: #ffffff;
             border-radius: 6px;
             overflow: hidden;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
         }
-        .sub-sheet-table th, .sub-sheet-table td {
+        .sub-sheet-table th,
+        .sub-sheet-table td {
             border: 1px solid #cbd5e1;
-            padding: 5px 8px;
+            padding: 6px 8px;
             font-size: 0.8rem;
-            vertical-align: top;
+            vertical-align: middle;
         }
         .sub-sheet-table thead th {
-            background-color: #eff6ff;
-            color: #1e3a8a;
-            font-weight: 600;
-            font-size: 0.75rem;
+            background-color: #e8f1fb;
+            color: #003a6e;
+            font-weight: 700;
+            font-size: 0.74rem;
             position: static;
             box-shadow: none;
+            z-index: auto;
         }
 
-        /* Remove setas nativas do input number */
+        /* Inputs das linhas de passagem */
+        .p-date,
+        .p-label,
+        .p-total,
+        .p-correct,
+        .p-wrong {
+            width: 100%;
+            height: 32px;
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 3px 7px;
+            font-size: 0.8rem;
+            color: #111827;
+            outline: none;
+            pointer-events: auto;
+            position: relative;
+            z-index: 1;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+        .p-date {
+            cursor: pointer;
+            min-width: 126px;
+        }
+        .p-label {
+            cursor: text;
+            min-width: 120px;
+            font-weight: 500;
+        }
+        .p-total,
+        .p-correct,
+        .p-wrong {
+            cursor: text;
+            text-align: center;
+            font-weight: 700;
+            min-width: 56px;
+        }
+        .p-total {
+            color: #111827;
+            background-color: #f8fafc;
+        }
+        .p-correct {
+            color: #047857;
+            background-color: #f0fdf4;
+            border-color: #86efac;
+        }
+        .p-wrong {
+            color: #b91c1c;
+            background-color: #fef2f2;
+            border-color: #fca5a5;
+        }
+        .p-date:hover,
+        .p-label:hover,
+        .p-total:hover,
+        .p-correct:hover,
+        .p-wrong:hover {
+            border-color: #64748b;
+        }
+        .p-date:focus,
+        .p-label:focus,
+        .p-total:focus,
+        .p-correct:focus,
+        .p-wrong:focus {
+            background-color: #ffffff;
+            border-color: #004b8d;
+            box-shadow: 0 0 0 2px rgba(0, 75, 141, 0.22);
+        }
+
+        /* Remove setas nativas dos inputs numéricos */
         input[type=number]::-webkit-inner-spin-button,
         input[type=number]::-webkit-outer-spin-button {
             -webkit-appearance: none;
@@ -253,7 +343,7 @@
             -moz-appearance: textfield;
         }
 
-        /* Abas estilo planilha */
+        /* Abas estilo Excel */
         .tab-btn {
             white-space: nowrap;
             border-bottom: 3px solid transparent;
@@ -261,12 +351,12 @@
         }
         .tab-btn.active {
             background-color: #ffffff;
-            color: #004B8D;
-            border-bottom-color: #004B8D;
+            color: #004b8d;
+            border-bottom-color: #004b8d;
             font-weight: 700;
         }
         .tabs-scroll::-webkit-scrollbar {
-            height: 5px;
+            height: 6px;
         }
         .tabs-scroll::-webkit-scrollbar-track {
             background: #e5e7eb;
@@ -280,29 +370,31 @@
 <body class="min-h-screen flex flex-col">
 
     <!-- ======================================================================
-         TELA DE LOGIN EM TELA CHEIA ESTILO WINDOWS 10 / WINDOWS X
+         TELA DE LOGIN EM TELA CHEIA ESTILO WINDOWS 10 (WINDOWS X)
          ====================================================================== -->
     <section id="win-login-screen" aria-label="Tela de Login estilo Windows 10">
-        <!-- Relógio e Data no canto inferior esquerdo (estilo Windows 10) -->
+        <!-- Relógio e Data no canto inferior esquerdo -->
         <div class="hidden md:block fixed bottom-8 left-10 z-10 text-white select-none pointer-events-none">
             <div id="win-clock" class="text-6xl font-light tracking-tight leading-none drop-shadow">00:00</div>
-            <div id="win-date" class="text-lg font-light text-blue-100/90 mt-1 capitalize drop-shadow">carregando data...</div>
+            <div id="win-date" class="text-lg font-light text-blue-100/90 mt-1.5 capitalize drop-shadow">carregando data...</div>
         </div>
 
         <!-- Bloco Central de Login -->
-        <div class="relative z-10 w-full max-w-[360px] px-6 py-8 flex flex-col items-center text-white">
+        <div class="relative z-10 w-full max-w-[375px] px-6 py-8 flex flex-col items-center text-white">
             <!-- Avatar Circular Translúcido -->
-            <div class="w-28 h-28 rounded-full bg-white/15 border-2 border-white/30 backdrop-blur-md flex items-center justify-center shadow-2xl mb-4">
+            <div class="w-28 h-28 rounded-full bg-white/15 border-2 border-white/35 backdrop-blur-md flex items-center justify-center shadow-2xl mb-4">
                 <svg class="w-16 h-16 text-white/90" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-3.866 0-7 2.239-7 5v1a1 1 0 001 1h12a1 1 0 001-1v-1c0-2.761-3.134-5-7-5z"/>
                 </svg>
             </div>
 
-            <!-- Título e Subtítulo -->
-            <h1 class="text-2xl font-light tracking-wide text-center drop-shadow">Edital Banestes</h1>
-            <p class="text-xs text-blue-100/80 mt-0.5 mb-5 text-center">Técnico Bancário • Planilha de Estudos</p>
+            <!-- Título -->
+            <h1 class="text-xl sm:text-2xl font-light tracking-wide text-center drop-shadow">
+                Planilha Banestes — Técnico Bancário
+            </h1>
+            <p class="text-xs text-blue-100/80 mt-1 mb-5 text-center">Edital Verticalizado • Banca FCC 2026/2027</p>
 
-            <!-- Alternador Discreto: Entrar / Criar Conta -->
+            <!-- Alternador Entrar / Criar Conta -->
             <div class="flex items-center gap-6 mb-4 text-sm">
                 <button type="button" id="win-tab-login" class="pb-1 font-semibold text-white border-b-2 border-[#38bdf8] transition cursor-pointer">
                     Entrar
@@ -312,26 +404,22 @@
                 </button>
             </div>
 
-            <!-- Caixa de Feedback / Erro Traduzido -->
-            <div id="win-auth-feedback" class="hidden w-full mb-3 text-xs px-3 py-2.5 rounded-sm border backdrop-blur-md leading-relaxed"></div>
+            <!-- Mensagem de Erro / Sucesso -->
+            <div id="win-auth-feedback" class="hidden w-full mb-3 text-xs px-3 py-2.5 rounded border backdrop-blur-md leading-relaxed"></div>
 
-            <!-- Formulário de Login / Cadastro -->
+            <!-- Formulário E-mail + Senha + Botão de Seta Windows -->
             <form id="win-auth-form" class="w-full space-y-2.5" novalidate>
                 <div>
                     <label for="win-email" class="sr-only">E-mail</label>
-                    <input type="email" id="win-email" required autocomplete="email" placeholder="E-mail"
-                        class="win-input">
+                    <input type="email" id="win-email" required autocomplete="email" placeholder="E-mail" class="win-input">
                 </div>
 
-                <!-- Campo Senha + Botão Mostrar + Seta Windows → -->
                 <div class="flex items-center w-full">
                     <div class="relative flex-1">
                         <label for="win-password" class="sr-only">Senha</label>
-                        <input type="password" id="win-password" required minlength="6" autocomplete="current-password" placeholder="Senha"
-                            class="win-input pr-10 rounded-r-none">
-                        <button type="button" id="win-toggle-pwd" title="Mostrar ou ocultar senha"
-                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-800 p-1 cursor-pointer">
-                            <svg id="win-eye-icon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <input type="password" id="win-password" required minlength="6" autocomplete="current-password" placeholder="Senha" class="win-input pr-10 rounded-r-none">
+                        <button type="button" id="win-toggle-pwd" title="Mostrar ou ocultar senha" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-800 p-1 cursor-pointer">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                             </svg>
@@ -344,8 +432,7 @@
                     </button>
                 </div>
 
-                <!-- Link Esqueci minha senha -->
-                <div id="win-forgot-wrap" class="flex justify-between items-center pt-0.5">
+                <div class="flex justify-between items-center pt-0.5">
                     <span id="win-mode-hint" class="text-[11px] text-blue-100/75">Pressione Enter ou clique na seta →</span>
                     <button type="button" id="win-forgot-btn" class="text-xs text-blue-200 hover:text-white hover:underline cursor-pointer">
                         Esqueci minha senha
@@ -360,7 +447,7 @@
                 <div class="flex-1 h-px bg-white/20"></div>
             </div>
 
-            <!-- Botão Entrar com Google -->
+            <!-- Botão Google -->
             <button type="button" id="win-google-btn" class="win-tile-btn w-full py-2.5 px-4 text-sm font-medium flex items-center justify-center gap-2.5 cursor-pointer">
                 <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M23.745 12.27c0-.79-.07-1.54-.19-2.27h-11.3v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/>
@@ -371,20 +458,18 @@
                 <span>Entrar com Google</span>
             </button>
 
-            <!-- Botão Entrar sem Conta (Modo Offline) -->
-            <button type="button" id="win-offline-btn" class="mt-3 w-full py-2 px-4 text-xs font-medium text-blue-100/90 hover:text-white bg-white/5 hover:bg-white/15 border border-white/15 rounded-sm transition cursor-pointer">
+            <!-- Botão Modo Offline -->
+            <button type="button" id="win-offline-btn" class="mt-3 w-full py-2.5 px-4 text-xs font-medium text-blue-100/95 hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 rounded transition cursor-pointer">
                 💻 Entrar sem conta (Modo Offline)
             </button>
         </div>
 
-        <!-- Ícones estilo Windows 10 no canto inferior direito -->
+        <!-- Indicadores no canto inferior direito -->
         <div class="fixed bottom-6 right-6 z-10 flex items-center gap-2 text-white/85">
-            <span id="win-net-indicator" title="Status da conexão com a nuvem"
-                class="w-9 h-9 rounded-sm flex items-center justify-center bg-white/10 border border-white/15 text-xs select-none">
+            <span id="win-net-indicator" title="Status do Firebase" class="w-9 h-9 rounded flex items-center justify-center bg-white/10 border border-white/15 text-sm select-none">
                 🌐
             </span>
-            <button type="button" id="win-corner-offline-btn" title="Entrar sem conta (Modo Offline)"
-                class="w-9 h-9 rounded-sm flex items-center justify-center bg-white/10 hover:bg-white/25 border border-white/15 transition cursor-pointer">
+            <button type="button" id="win-corner-offline-btn" title="Entrar sem conta (Modo Offline)" class="w-9 h-9 rounded flex items-center justify-center bg-white/10 hover:bg-white/25 border border-white/15 transition cursor-pointer">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
@@ -396,32 +481,36 @@
          APLICAÇÃO PRINCIPAL (PLANILHA)
          ====================================================================== -->
     <div id="app-shell" class="min-h-screen flex flex-col">
-        <!-- Cabeçalho Fixo da Planilha -->
-        <header class="bg-[#004B8D] text-white shadow-md sticky top-0 z-30">
-            <div class="max-w-[1600px] mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
+        <!-- Cabeçalho Fixo -->
+        <header class="bg-[#004b8d] text-white shadow-md sticky top-0 z-30">
+            <div class="max-w-[1650px] mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
                 <div class="flex items-center gap-3">
-                    <div class="bg-white text-[#004B8D] font-extrabold px-2.5 py-1 rounded text-sm tracking-tight shadow-sm">
+                    <div class="bg-white text-[#004b8d] font-extrabold px-2.5 py-1 rounded text-sm tracking-tight shadow-sm">
                         BANESTES
                     </div>
                     <div>
-                        <h2 class="font-bold text-base sm:text-lg leading-tight">Planilha Banestes — Técnico Bancário</h2>
-                        <p class="text-xs text-blue-100">Banca FCC • Edital 01/2026 • 70 Questões (Gerais Peso 1 | Específicos Peso 2)</p>
+                        <h2 class="font-bold text-sm sm:text-base leading-tight">
+                            Edital Verticalizado Banestes — Técnico Bancário (FCC)
+                        </h2>
+                        <p class="text-[11px] text-blue-100">
+                            70 Questões • Conhecimentos Gerais (Peso 1) | Específicos (Peso 2)
+                        </p>
                     </div>
                 </div>
 
-                <!-- Barra de Ações e Status -->
+                <!-- Ações do Topo -->
                 <div class="flex items-center gap-2 flex-wrap">
                     <span id="save-status" class="text-xs bg-blue-900/60 text-blue-100 px-2.5 py-1 rounded border border-blue-700 font-medium">
-                        💻 Modo Local
+                        💻 Modo Offline
                     </span>
 
-                    <div id="header-user-pill" class="flex items-center gap-1.5 bg-blue-900/70 text-white text-xs px-2.5 py-1 rounded border border-blue-600">
+                    <div class="flex items-center gap-1.5 bg-blue-900/70 text-white text-xs px-2.5 py-1 rounded border border-blue-600">
                         <span class="text-blue-200">👤</span>
                         <span id="header-user-name" class="font-medium max-w-[160px] truncate">Modo Offline</span>
                     </div>
 
-                    <button type="button" id="btn-export-csv" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-3 py-1.5 rounded shadow-sm transition flex items-center gap-1.5 cursor-pointer">
-                        <span>⬇</span> Baixar Excel (CSV)
+                    <button type="button" id="btn-export-csv" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-3 py-1.5 rounded shadow-sm transition flex items-center gap-1 cursor-pointer">
+                        <span>⬇</span> Exportar Excel (CSV)
                     </button>
                     <button type="button" id="btn-export-json" class="bg-blue-700 hover:bg-blue-600 text-white text-xs font-medium px-2.5 py-1.5 rounded border border-blue-500 transition cursor-pointer">
                         Backup JSON
@@ -431,60 +520,68 @@
                         <input type="file" id="import-file" accept=".json" class="hidden">
                     </label>
                     <button type="button" id="btn-reset-open" class="bg-red-600 hover:bg-red-500 text-white text-xs font-medium px-2.5 py-1.5 rounded shadow-sm transition cursor-pointer">
-                        Zerar Dados
+                        Zerar Planilha
                     </button>
-                    <button type="button" id="btn-lock-logout" class="bg-white hover:bg-gray-100 text-[#004B8D] text-xs font-bold px-3 py-1.5 rounded shadow-sm transition flex items-center gap-1 cursor-pointer">
+                    <button type="button" id="btn-lock-logout" class="bg-white hover:bg-gray-100 text-[#004b8d] text-xs font-bold px-3 py-1.5 rounded shadow-sm transition flex items-center gap-1 cursor-pointer">
                         <span>🔒</span> Bloquear / Sair
                     </button>
                 </div>
             </div>
 
-            <!-- Barra de Abas Estilo Planilha -->
+            <!-- Barra de Abas Estilo Excel -->
             <div class="bg-gray-200 text-gray-700 border-t border-gray-300">
-                <div id="tabs-container" class="max-w-[1600px] mx-auto px-2 flex items-center overflow-x-auto tabs-scroll">
+                <div id="tabs-container" class="max-w-[1650px] mx-auto px-2 flex items-center overflow-x-auto tabs-scroll">
                     <!-- Renderizado via JS -->
                 </div>
             </div>
         </header>
 
         <!-- Conteúdo Principal -->
-        <main class="flex-1 max-w-[1600px] w-full mx-auto p-3 sm:p-4 flex flex-col gap-3">
-            <!-- Barra de Filtros da Matéria -->
-            <div id="subject-toolbar" class="hidden bg-white border border-gray-300 rounded p-2.5 shadow-sm flex flex-wrap items-center justify-between gap-3">
-                <div class="flex items-center gap-2 flex-wrap">
-                    <span id="subject-badge" class="bg-[#004B8D] text-white text-xs font-bold px-2.5 py-1 rounded"></span>
-                    <h3 id="subject-title" class="font-bold text-gray-800 text-sm sm:text-base"></h3>
-                    <span id="subject-meta" class="text-xs text-gray-500 font-medium"></span>
+        <main class="flex-1 max-w-[1650px] w-full mx-auto p-3 sm:p-4 flex flex-col gap-3">
+            <!-- Barra de Resumo + Filtros da Matéria -->
+            <div id="subject-toolbar" class="hidden flex flex-col gap-2.5">
+                <!-- Cards de Resumo da Matéria -->
+                <div id="subject-summary-bar" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+                    <!-- Atualizado via JS -->
                 </div>
 
-                <div class="flex items-center gap-2 flex-wrap w-full sm:w-auto">
-                    <input type="text" id="search-input" placeholder="🔍 Filtrar assunto..."
-                        class="border border-gray-300 rounded px-2.5 py-1 text-xs focus:outline-none focus:border-[#0078D4] flex-1 sm:w-52">
+                <!-- Barra de Busca, Filtro e Expandir/Recolher -->
+                <div class="bg-white border border-gray-300 rounded-md p-2.5 shadow-sm flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span id="subject-badge" class="bg-[#004b8d] text-white text-xs font-bold px-2.5 py-1 rounded"></span>
+                        <h3 id="subject-title" class="font-bold text-gray-800 text-sm sm:text-base"></h3>
+                        <span id="subject-meta" class="text-xs text-gray-500 font-medium"></span>
+                    </div>
 
-                    <select id="filter-select" class="border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:outline-none focus:border-[#0078D4]">
-                        <option value="all">Todos os assuntos</option>
-                        <option value="pending">Pendentes de estudo</option>
-                        <option value="done">Estudados / Com passagem</option>
-                        <option value="low">Desempenho &lt; 70%</option>
-                    </select>
+                    <div class="flex items-center gap-2 flex-wrap w-full sm:w-auto">
+                        <input type="text" id="search-input" placeholder="🔍 Buscar assunto..."
+                            class="border border-gray-300 rounded px-2.5 py-1.5 text-xs focus:outline-none focus:border-[#004b8d] flex-1 sm:w-52">
 
-                    <button type="button" id="toggle-all-btn" class="border border-gray-300 bg-gray-50 hover:bg-gray-100 text-gray-700 font-medium rounded px-2.5 py-1 text-xs transition whitespace-nowrap cursor-pointer">
-                        ▼ Expandir todos
-                    </button>
+                        <select id="filter-select" class="border border-gray-300 rounded px-2.5 py-1.5 text-xs bg-white focus:outline-none focus:border-[#004b8d]">
+                            <option value="all">Todos os assuntos</option>
+                            <option value="pending">Pendentes</option>
+                            <option value="done">Estudados / Com passagem</option>
+                            <option value="low">Desempenho &lt; 70%</option>
+                        </select>
+
+                        <button type="button" id="toggle-all-btn" class="border border-gray-300 bg-gray-50 hover:bg-gray-100 text-gray-700 font-semibold rounded px-3 py-1.5 text-xs transition whitespace-nowrap cursor-pointer">
+                            ▼ Expandir todas
+                        </button>
+                    </div>
                 </div>
             </div>
 
             <!-- Viewport da Planilha -->
-            <div id="sheet-viewport" class="bg-white border border-gray-300 rounded shadow-sm overflow-x-auto flex-1">
+            <div id="sheet-viewport" class="bg-white border border-gray-300 rounded-md shadow-sm overflow-x-auto flex-1">
                 <!-- Renderizado via JS -->
             </div>
         </main>
     </div>
 
-    <!-- Modal de Confirmação para Zerar Dados -->
+    <!-- Modal de Confirmação para Zerar Planilha -->
     <div id="reset-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
         <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-5 border border-gray-200">
-            <h3 class="text-base font-bold text-gray-900 mb-2">Zerar todos os dados da planilha?</h3>
+            <h3 class="text-base font-bold text-gray-900 mb-2">Zerar toda a planilha?</h3>
             <p class="text-sm text-gray-600 mb-5">
                 Tem certeza que deseja apagar todas as questões, acertos, erros, anotações e passagens registradas? Faça um <strong>Backup JSON</strong> antes caso queira guardar seu histórico.
             </p>
@@ -499,12 +596,12 @@
         </div>
     </div>
 
-    <!-- Notificação Toast -->
-    <div id="toast-box" class="fixed bottom-4 right-4 z-[120] hidden max-w-sm bg-gray-900 text-white text-xs px-4 py-3 rounded-lg shadow-lg border border-gray-700"></div>
+    <!-- Toast de Notificações -->
+    <div id="toast-box" class="fixed bottom-4 right-4 z-[10000] hidden max-w-sm bg-gray-900 text-white text-xs px-4 py-3 rounded-lg shadow-lg border border-gray-700"></div>
 
     <script type="module">
         // ============================================================================
-        // CONFIGURAÇÃO EXATA DO FIREBASE (FORNECIDA PELO USUÁRIO)
+        // 1. CONFIGURAÇÃO EXATA DO FIREBASE
         // ============================================================================
         const firebaseConfig = {
             apiKey: "AIzaSyBb-lO-hSafr80eNvFikQRSfR_n6gXOkFk",
@@ -516,21 +613,24 @@
         };
 
         const LOCAL_STORAGE_KEY = "banestes_planilha_progresso_v1";
+        const CLIENT_SESSION_ID = "cli_" + Math.random().toString(36).slice(2, 10);
 
-        // Referências do Firebase carregadas com segurança via CDN oficial 10.12.2
+        // Estado do Firebase e Sincronização
+        let fbModules = null;
         let fbAuth = null;
         let fbDb = null;
-        let fbModules = null;
         let firebaseReady = false;
         let currentUser = null;
         let isOfflineMode = false;
         let unsubscribeSnapshot = null;
         let saveDebounceTimer = null;
-        let lastSyncedJson = "";
+        let lastClientWriteId = "";
+        let lastLocalUpdatedAt = 0;
+        let pendingCloudProgress = null;
         let authMode = "login"; // "login" | "register"
 
         // ============================================================================
-        // CONTEÚDO COMPLETO DO EDITAL VERTICALIZADO BANESTES (FCC EDITAL 01/2026)
+        // 2. CONTEÚDO COMPLETO E EXATO DAS 9 MATÉRIAS DO EDITAL BANESTES (FCC)
         // ============================================================================
         const EDITAL_DATA = [
             {
@@ -613,7 +713,7 @@
                 code: "03",
                 shortName: "03. Matemática / RLM",
                 name: "MATEMÁTICA/RACIOCÍNIO LÓGICO E QUANTITATIVO",
-                block: "Gerais TB",
+                block: "Gerais (TB)",
                 weight: 1,
                 examQuestions: 10,
                 scoreShare: "11,1%",
@@ -654,7 +754,7 @@
                 code: "04",
                 shortName: "04. Atualidades MF",
                 name: "ATUALIDADES DO MERCADO FINANCEIRO",
-                block: "Gerais TB",
+                block: "Gerais (TB)",
                 weight: 1,
                 examQuestions: 5,
                 scoreShare: "5,6%",
@@ -912,12 +1012,13 @@
             }
         ];
 
+        // Estado principal da planilha
         let currentTab = "geral";
         let userProgress = {};
         let expandedTopics = {};
 
         // ============================================================================
-        // RELÓGIO DA TELA DE LOGIN WINDOWS 10
+        // 3. UTILITÁRIOS DE DATA, FORMATAÇÃO, AUTO-GROW E NOTIFICAÇÕES
         // ============================================================================
         function updateWindowsClock() {
             const clockEl = document.getElementById("win-clock");
@@ -933,31 +1034,12 @@
                     day: "numeric",
                     month: "long"
                 });
-            } catch (e) {
+            } catch {
                 dateEl.textContent = now.toLocaleDateString();
             }
         }
 
-        // ============================================================================
-        // UTILITÁRIOS DE UI E FORMATAÇÃO
-        // ============================================================================
-        function showToast(msg, duration = 4000) {
-            const toast = document.getElementById("toast-box");
-            if (!toast) return;
-            toast.textContent = msg;
-            toast.classList.remove("hidden");
-            clearTimeout(toast._timer);
-            toast._timer = setTimeout(() => toast.classList.add("hidden"), duration);
-        }
-
-        function updateSyncStatus(text, colorClasses = "bg-blue-900/60 text-blue-100 border-blue-700") {
-            const el = document.getElementById("save-status");
-            if (!el) return;
-            el.textContent = text;
-            el.className = `text-xs px-2.5 py-1 rounded border font-medium transition ${colorClasses}`;
-        }
-
-        function getTodayISO() {
+        function getTodayLocalISO() {
             const now = new Date();
             const y = now.getFullYear();
             const m = String(now.getMonth() + 1).padStart(2, "0");
@@ -983,11 +1065,142 @@
         function autoResizeTextarea(el) {
             if (!el) return;
             el.style.height = "auto";
-            el.style.height = Math.max(30, el.scrollHeight) + "px";
+            el.style.height = Math.max(32, el.scrollHeight) + "px";
         }
 
         function resizeAllVisibleTextareas() {
-            document.querySelectorAll(".sheet-textarea").forEach(autoResizeTextarea);
+            document.querySelectorAll(".auto-grow").forEach(autoResizeTextarea);
+        }
+
+        function showToast(msg, duration = 3800) {
+            const toast = document.getElementById("toast-box");
+            if (!toast) return;
+            toast.textContent = msg;
+            toast.classList.remove("hidden");
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.add("hidden"), duration);
+        }
+
+        function updateSyncStatus(text, colorClasses) {
+            const el = document.getElementById("save-status");
+            if (!el) return;
+            el.textContent = text;
+            el.className = `text-xs px-2.5 py-1 rounded border font-medium transition ${colorClasses}`;
+        }
+
+        function parseNonNegativeInt(raw) {
+            return Math.max(0, parseInt(raw, 10) || 0);
+        }
+
+        function isEditingInsideSheet() {
+            const active = document.activeElement;
+            const viewport = document.getElementById("sheet-viewport");
+            if (!active || !viewport) return false;
+            const tag = active.tagName;
+            return viewport.contains(active) && (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT");
+        }
+
+        // ============================================================================
+        // 4. NORMALIZAÇÃO DE DADOS, PERSISTÊNCIA LOCAL E FIRESTORE (DEBOUNCE 600ms)
+        // ============================================================================
+        function normalizeRecordNumbers(rawObj) {
+            const rawTotal = rawObj?.total !== undefined ? rawObj.total : rawObj?.q;
+            const rawCorrect = rawObj?.correct !== undefined ? rawObj.correct : rawObj?.a;
+            const rawWrong = rawObj?.wrong !== undefined ? rawObj.wrong : rawObj?.e;
+
+            let total = parseNonNegativeInt(rawTotal);
+            let correct = parseNonNegativeInt(rawCorrect);
+            let wrong = parseNonNegativeInt(rawWrong);
+
+            // Garante consistência ao carregar backups antigos ou dados salvos
+            if (total === 0 && (correct > 0 || wrong > 0)) {
+                total = correct + wrong;
+            } else if (total < correct) {
+                total = correct;
+                wrong = 0;
+            } else if (total >= correct) {
+                wrong = total - correct;
+            }
+
+            return { total, correct, wrong };
+        }
+
+        function ensureProgressStructure() {
+            EDITAL_DATA.forEach(subj => {
+                if (!userProgress[subj.id] || typeof userProgress[subj.id] !== "object") {
+                    userProgress[subj.id] = {};
+                }
+                subj.topics.forEach((_, idx) => {
+                    const rawRow = userProgress[subj.id][idx];
+                    if (!rawRow || typeof rawRow !== "object") {
+                        userProgress[subj.id][idx] = {
+                            studied: false,
+                            total: 0,
+                            correct: 0,
+                            wrong: 0,
+                            notes: "",
+                            manualTotal: false,
+                            sessions: []
+                        };
+                    } else {
+                        const nums = normalizeRecordNumbers(rawRow);
+                        const notes = typeof rawRow.notes === "string"
+                            ? rawRow.notes
+                            : (typeof rawRow.note === "string" ? rawRow.note : "");
+                        const rawSessions = Array.isArray(rawRow.sessions) ? rawRow.sessions : [];
+
+                        userProgress[subj.id][idx] = {
+                            studied: Boolean(rawRow.studied),
+                            total: nums.total,
+                            correct: nums.correct,
+                            wrong: nums.wrong,
+                            notes,
+                            manualTotal: false,
+                            sessions: rawSessions.map((s, sIdx) => {
+                                const sNums = normalizeRecordNumbers(s);
+                                const sNotes = typeof s?.notes === "string"
+                                    ? s.notes
+                                    : (typeof s?.note === "string" ? s.note : "");
+                                return {
+                                    date: (s && s.date) ? s.date : getTodayLocalISO(),
+                                    label: (s && typeof s.label === "string") ? s.label : `${sIdx + 1}ª passagem`,
+                                    total: sNums.total,
+                                    correct: sNums.correct,
+                                    wrong: sNums.wrong,
+                                    notes: sNotes,
+                                    manualTotal: false
+                                };
+                            })
+                        };
+                    }
+                });
+            });
+        }
+
+        function serializeProgressForStorage() {
+            const clean = {};
+            EDITAL_DATA.forEach(subj => {
+                clean[subj.id] = {};
+                subj.topics.forEach((_, idx) => {
+                    const row = userProgress[subj.id][idx];
+                    clean[subj.id][idx] = {
+                        studied: Boolean(row.studied),
+                        total: row.total,
+                        correct: row.correct,
+                        wrong: row.wrong,
+                        notes: row.notes || "",
+                        sessions: (row.sessions || []).map(s => ({
+                            date: s.date || getTodayLocalISO(),
+                            label: s.label || "",
+                            total: s.total,
+                            correct: s.correct,
+                            wrong: s.wrong,
+                            notes: s.notes || ""
+                        }))
+                    };
+                });
+            });
+            return JSON.stringify(clean);
         }
 
         function hasAnyProgressData(progressObj) {
@@ -997,14 +1210,11 @@
                 for (const idx of Object.keys(topics)) {
                     const row = topics[idx];
                     if (!row) continue;
-                    if (
-                        row.studied ||
-                        Number(row.q) > 0 ||
-                        Number(row.a) > 0 ||
-                        Number(row.e) > 0 ||
-                        (row.note && row.note.trim() !== "") ||
-                        (Array.isArray(row.sessions) && row.sessions.length > 0)
-                    ) {
+                    const t = Number(row.total ?? row.q ?? 0);
+                    const c = Number(row.correct ?? row.a ?? 0);
+                    const w = Number(row.wrong ?? row.e ?? 0);
+                    const n = String(row.notes ?? row.note ?? "").trim();
+                    if (row.studied || t > 0 || c > 0 || w > 0 || n !== "" || (Array.isArray(row.sessions) && row.sessions.length > 0)) {
                         return true;
                     }
                 }
@@ -1012,29 +1222,6 @@
             return false;
         }
 
-        function ensureProgressStructure() {
-            EDITAL_DATA.forEach(subj => {
-                if (!userProgress[subj.id]) userProgress[subj.id] = {};
-                subj.topics.forEach((_, idx) => {
-                    if (!userProgress[subj.id][idx]) {
-                        userProgress[subj.id][idx] = {
-                            studied: false,
-                            q: 0,
-                            a: 0,
-                            e: 0,
-                            note: "",
-                            sessions: []
-                        };
-                    } else if (!Array.isArray(userProgress[subj.id][idx].sessions)) {
-                        userProgress[subj.id][idx].sessions = [];
-                    }
-                });
-            });
-        }
-
-        // ============================================================================
-        // PERSISTÊNCIA LOCAL + FIRESTORE (COM DEBOUNCE 600ms)
-        // ============================================================================
         function loadLocalProgress() {
             try {
                 const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -1044,17 +1231,17 @@
                         userProgress = parsed;
                     }
                 }
-            } catch (e) {
-                console.warn("Não foi possível ler o localStorage:", e);
+            } catch (err) {
+                console.warn("Erro ao ler localStorage:", err);
             }
             ensureProgressStructure();
         }
 
         function saveToLocalStorage() {
             try {
-                localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(userProgress));
-            } catch (e) {
-                console.warn("Não foi possível salvar no localStorage:", e);
+                localStorage.setItem(LOCAL_STORAGE_KEY, serializeProgressForStorage());
+            } catch (err) {
+                console.warn("Erro ao salvar no localStorage:", err);
             }
         }
 
@@ -1063,35 +1250,51 @@
         }
 
         function saveProgress() {
-            // 1. Salva localmente de imediato
+            // 1. Salvamento imediato em localStorage
+            lastLocalUpdatedAt = Date.now();
             saveToLocalStorage();
 
-            // 2. Se offline ou sem login, mantém modo local
+            // 2. Se modo offline ou Firebase indisponível, mantém status local
             if (!firebaseReady || !fbDb || !currentUser || isOfflineMode) {
-                updateSyncStatus("💻 Modo Local", "bg-blue-900/60 text-blue-100 border-blue-700");
+                updateSyncStatus("💻 Modo Offline", "bg-blue-900/60 text-blue-100 border-blue-700");
                 return;
             }
 
-            // 3. Sincroniza com Firestore usando debounce de 600ms
+            // 3. Debounce de 600ms para sincronizar no Firestore
             updateSyncStatus("⏳ Salvando...", "bg-blue-800 text-blue-100 border-blue-500");
             clearTimeout(saveDebounceTimer);
             saveDebounceTimer = setTimeout(async () => {
-                if (!firebaseReady || !fbDb || !currentUser) return;
+                if (!firebaseReady || !fbDb || !currentUser || isOfflineMode) return;
                 try {
-                    const serialized = JSON.stringify(userProgress);
-                    lastSyncedJson = serialized;
+                    const writeId = `${CLIENT_SESSION_ID}_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`;
+                    const ts = Date.now();
+                    lastClientWriteId = writeId;
+                    lastLocalUpdatedAt = ts;
+
                     await fbModules.setDoc(getUserProgressDocRef(currentUser.uid), {
-                        progressJson: serialized,
+                        progressJson: serializeProgressForStorage(),
                         email: currentUser.email || "",
-                        updatedAt: new Date().toISOString()
+                        clientWriteId: writeId,
+                        updatedAtMs: ts,
+                        updatedAt: new Date(ts).toISOString()
                     });
-                    updateSyncStatus("☁️ Sincronizado", "bg-emerald-700 text-white border-emerald-500");
+                    updateSyncStatus("☁️ Sincronizado na nuvem", "bg-emerald-700 text-white border-emerald-500");
                 } catch (err) {
                     console.error("Erro ao salvar no Firestore:", err);
-                    updateSyncStatus("⚠ Salvo Local (Erro Nuvem)", "bg-amber-600 text-white border-amber-500");
-                    showToast("Erro ao sincronizar na nuvem. Seus dados continuam salvos localmente.");
+                    updateSyncStatus("⚠ Salvo local (Erro nuvem)", "bg-amber-600 text-white border-amber-500");
                 }
             }, 600);
+        }
+
+        function applyPendingCloudUpdateIfIdle() {
+            if (!pendingCloudProgress || isEditingInsideSheet()) return;
+            userProgress = pendingCloudProgress;
+            pendingCloudProgress = null;
+            ensureProgressStructure();
+            saveToLocalStorage();
+            renderTabs();
+            renderCurrentView();
+            showToast("Planilha atualizada com alterações de outro dispositivo.");
         }
 
         async function subscribeToCloudProgress(user) {
@@ -1105,59 +1308,81 @@
             const docRef = getUserProgressDocRef(user.uid);
 
             try {
-                // Verifica se o documento na nuvem existe; se estiver vazio e houver dados locais, sobe automaticamente
                 const initialSnap = await fbModules.getDoc(docRef);
                 if (!initialSnap.exists() && hasAnyProgressData(userProgress)) {
-                    const serialized = JSON.stringify(userProgress);
-                    lastSyncedJson = serialized;
+                    const writeId = `${CLIENT_SESSION_ID}_init_${Date.now()}`;
+                    const ts = Date.now();
+                    lastClientWriteId = writeId;
+                    lastLocalUpdatedAt = ts;
                     await fbModules.setDoc(docRef, {
-                        progressJson: serialized,
+                        progressJson: serializeProgressForStorage(),
                         email: user.email || "",
-                        updatedAt: new Date().toISOString()
+                        clientWriteId: writeId,
+                        updatedAtMs: ts,
+                        updatedAt: new Date(ts).toISOString()
                     });
-                    showToast("Seus dados locais foram enviados para a nuvem!");
+                    showToast("Seus dados locais foram enviados automaticamente para a nuvem!");
                 }
             } catch (err) {
-                console.warn("Aviso ao verificar documento inicial:", err);
+                console.warn("Aviso ao verificar documento inicial no Firestore:", err);
             }
 
-            // Escuta alterações em tempo real
             unsubscribeSnapshot = fbModules.onSnapshot(
                 docRef,
                 (snap) => {
+                    // Ignora escritas locais pendentes
+                    if (snap.metadata && snap.metadata.hasPendingWrites) return;
+
                     if (snap.exists()) {
                         const data = snap.data();
-                        if (data && data.progressJson && data.progressJson !== lastSyncedJson) {
-                            try {
-                                userProgress = JSON.parse(data.progressJson);
-                                lastSyncedJson = data.progressJson;
+                        if (!data || !data.progressJson) return;
+
+                        // Ignora eco da própria escrita deste cliente
+                        if (data.clientWriteId && data.clientWriteId === lastClientWriteId) {
+                            updateSyncStatus("☁️ Sincronizado na nuvem", "bg-emerald-700 text-white border-emerald-500");
+                            return;
+                        }
+
+                        // Ignora snapshot mais antigo que a edição local mais recente
+                        const remoteTs = Number(data.updatedAtMs) || 0;
+                        if (remoteTs > 0 && remoteTs < lastLocalUpdatedAt) {
+                            return;
+                        }
+
+                        try {
+                            const remoteProgress = JSON.parse(data.progressJson);
+                            if (isEditingInsideSheet()) {
+                                // Nunca recria a tabela enquanto houver input/textarea em foco
+                                pendingCloudProgress = remoteProgress;
+                            } else {
+                                userProgress = remoteProgress;
                                 ensureProgressStructure();
                                 saveToLocalStorage();
                                 renderTabs();
                                 renderCurrentView();
-                            } catch (e) {
-                                console.error("Erro ao interpretar JSON da nuvem:", e);
                             }
+                        } catch (err) {
+                            console.error("Erro ao processar dados remotos:", err);
                         }
                     }
-                    updateSyncStatus("☁️ Sincronizado", "bg-emerald-700 text-white border-emerald-500");
+                    updateSyncStatus("☁️ Sincronizado na nuvem", "bg-emerald-700 text-white border-emerald-500");
                 },
                 (err) => {
-                    console.error("Erro no onSnapshot do Firestore:", err);
-                    updateSyncStatus("⚠ Sem permissão no Firestore", "bg-red-700 text-white border-red-500");
+                    console.error("Erro no listener do Firestore:", err);
+                    updateSyncStatus("⚠ Sem permissão na nuvem", "bg-amber-600 text-white border-amber-500");
                 }
             );
         }
 
         // ============================================================================
-        // CONTROLE DA TELA DE LOGIN WINDOWS 10 E AUTENTICAÇÃO
+        // 5. TELA DE LOGIN WINDOWS 10 E AUTENTICAÇÃO FIREBASE
         // ============================================================================
         function unlockToSpreadsheet(displayName, isCloud) {
             const loginScreen = document.getElementById("win-login-screen");
             const userLabel = document.getElementById("header-user-name");
             if (userLabel) userLabel.textContent = displayName || "Modo Offline";
             if (!isCloud) {
-                updateSyncStatus("💻 Modo Local", "bg-blue-900/60 text-blue-100 border-blue-700");
+                updateSyncStatus("💻 Modo Offline", "bg-blue-900/60 text-blue-100 border-blue-700");
             }
             if (loginScreen) loginScreen.classList.add("unlocked");
             requestAnimationFrame(resizeAllVisibleTextareas);
@@ -1175,13 +1400,13 @@
             box.textContent = message;
             box.classList.remove(
                 "hidden",
-                "bg-red-950/75", "text-red-100", "border-red-400/50",
-                "bg-emerald-950/75", "text-emerald-100", "border-emerald-400/50"
+                "bg-red-950/80", "text-red-100", "border-red-400/50",
+                "bg-emerald-950/80", "text-emerald-100", "border-emerald-400/50"
             );
             if (isSuccess) {
-                box.classList.add("bg-emerald-950/75", "text-emerald-100", "border-emerald-400/50");
+                box.classList.add("bg-emerald-950/80", "text-emerald-100", "border-emerald-400/50");
             } else {
-                box.classList.add("bg-red-950/75", "text-red-100", "border-red-400/50");
+                box.classList.add("bg-red-950/80", "text-red-100", "border-red-400/50");
             }
         }
 
@@ -1198,14 +1423,13 @@
                 "auth/wrong-password": "Senha incorreta. Tente novamente ou clique em 'Esqueci minha senha'.",
                 "auth/invalid-credential": "E-mail ou senha incorretos.",
                 "auth/email-already-in-use": "Este e-mail já está cadastrado. Clique em 'Entrar' para acessar.",
-                "auth/weak-password": "Senha muito curta. Use no mínimo 6 caracteres.",
-                "auth/too-many-requests": "Muitas tentativas seguidas. Aguarde alguns minutos e tente novamente.",
+                "auth/weak-password": "Senha fraca. Use no mínimo 6 caracteres.",
+                "auth/too-many-requests": "Muitas tentativas seguidas. Aguarde alguns instantes e tente novamente.",
                 "auth/network-request-failed": "Sem conexão com a internet. Você pode usar o Modo Offline abaixo.",
                 "auth/popup-closed-by-user": "A janela de login do Google foi fechada antes de concluir.",
-                "auth/popup-blocked": "O navegador bloqueou a janela do Google. Permita pop-ups ou use E-mail/Senha.",
+                "auth/popup-blocked": "O navegador bloqueou o pop-up do Google. Permita pop-ups ou entre com E-mail/Senha.",
                 "auth/unauthorized-domain": "Domínio não autorizado no Firebase. Adicione este domínio em Authentication > Configurações > Domínios autorizados.",
-                "auth/operation-not-allowed": "Provedor não ativado. Ative E-mail/Senha no painel do Firebase Authentication.",
-                "auth/api-key-not-valid.-please-pass-a-valid-api-key.": "Chave da API do Firebase inválida. Verifique o firebaseConfig."
+                "auth/operation-not-allowed": "Método E-mail/Senha não ativado no painel do Firebase Authentication."
             };
             return map[code] || `Erro na autenticação (${code || "verifique sua conexão"}).`;
         }
@@ -1244,7 +1468,7 @@
             clearWinFeedback();
 
             if (!firebaseReady || !fbAuth) {
-                showWinFeedback("Serviço na nuvem indisponível no momento. Clique em 'Entrar sem conta (Modo Offline)' para usar normalmente.");
+                showWinFeedback("Serviço na nuvem indisponível no momento. Clique em 'Entrar sem conta (Modo Offline)' abaixo.");
                 return;
             }
 
@@ -1268,13 +1492,13 @@
                 isOfflineMode = false;
                 if (authMode === "login") {
                     await fbModules.signInWithEmailAndPassword(fbAuth, email, password);
-                    showToast("Bem-vindo de volta! Sincronizando na nuvem...");
+                    showToast("Login realizado! Sincronizando com a nuvem...");
                 } else {
                     await fbModules.createUserWithEmailAndPassword(fbAuth, email, password);
-                    showToast("Conta criada com sucesso! Seus dados agora sincronizam na nuvem.");
+                    showToast("Conta criada com sucesso! Seus estudos agora ficam salvos na nuvem.");
                 }
             } catch (err) {
-                console.error("Erro de login/cadastro:", err);
+                console.error("Erro na autenticação:", err);
                 showWinFeedback(translateFirebaseError(err.code));
             } finally {
                 submitBtn.disabled = false;
@@ -1289,13 +1513,13 @@
             }
             const email = document.getElementById("win-email").value.trim();
             if (!email) {
-                showWinFeedback("Digite seu e-mail no campo acima e clique novamente em 'Esqueci minha senha'.");
+                showWinFeedback("Digite seu e-mail acima e clique novamente em 'Esqueci minha senha'.");
                 document.getElementById("win-email").focus();
                 return;
             }
             try {
                 await fbModules.sendPasswordResetEmail(fbAuth, email);
-                showWinFeedback("Link de redefinição enviado! Verifique sua caixa de entrada e a pasta de spam.", true);
+                showWinFeedback("Link de redefinição enviado! Verifique sua caixa de entrada e o spam.", true);
             } catch (err) {
                 console.error("Erro ao redefinir senha:", err);
                 showWinFeedback(translateFirebaseError(err.code));
@@ -1305,7 +1529,7 @@
         async function handleWinGoogleLogin() {
             clearWinFeedback();
             if (!firebaseReady || !fbAuth) {
-                showWinFeedback("Serviço na nuvem indisponível no momento. Use o Modo Offline abaixo.");
+                showWinFeedback("Firebase indisponível no momento. Use o Modo Offline abaixo.");
                 return;
             }
             try {
@@ -1314,7 +1538,7 @@
                 await fbModules.signInWithPopup(fbAuth, provider);
                 showToast("Conectado com Google!");
             } catch (err) {
-                console.error("Erro no login com Google:", err);
+                console.error("Erro no login Google:", err);
                 showWinFeedback(translateFirebaseError(err.code));
             }
         }
@@ -1322,7 +1546,7 @@
         function enterOfflineMode() {
             isOfflineMode = true;
             unlockToSpreadsheet("Modo Offline", false);
-            showToast("Modo Offline ativado. Suas alterações serão salvas neste navegador.");
+            showToast("Modo Offline ativado. Suas alterações serão salvas automaticamente neste navegador.");
         }
 
         async function handleLockOrLogout() {
@@ -1331,22 +1555,19 @@
                 unsubscribeSnapshot = null;
             }
             isOfflineMode = false;
-            lastSyncedJson = "";
+            pendingCloudProgress = null;
             if (firebaseReady && fbAuth && currentUser) {
                 try {
                     await fbModules.signOut(fbAuth);
                 } catch (err) {
-                    console.error("Erro ao sair:", err);
+                    console.error("Erro ao encerrar sessão:", err);
                 }
             }
             currentUser = null;
             lockToWindowsScreen();
-            showToast("Sessão bloqueada.");
+            showToast("Planilha bloqueada.");
         }
 
-        // ============================================================================
-        // INICIALIZAÇÃO SEGURA DO FIREBASE (CDN OFICIAL 10.12.2 + TRY/CATCH)
-        // ============================================================================
         async function initFirebaseSafely() {
             const netIndicator = document.getElementById("win-net-indicator");
             try {
@@ -1398,45 +1619,121 @@
                     }
                 });
             } catch (err) {
-                console.error("Firebase indisponível (seguindo em modo local seguro):", err);
+                console.error("Firebase indisponível (seguindo no modo local seguro):", err);
                 firebaseReady = false;
                 if (netIndicator) {
                     netIndicator.textContent = "⚠️";
-                    netIndicator.title = "Nuvem indisponível — Modo Offline ativo";
+                    netIndicator.title = "Nuvem indisponível — use Modo Offline";
                 }
             }
         }
 
         // ============================================================================
-        // CÁLCULOS DE DESEMPENHO (TÓPICO, MATÉRIA E GERAL)
+        // 6. LÓGICA EXATA DE CÁLCULO (QUESTÕES / ACERTOS / ERROS) — SEM DUPLICAÇÃO
         // ============================================================================
+        /**
+         * Aplica a regra de cálculo sem duplicar Questões ao digitar Acertos:
+         * - field === "total": define obj.total = val; obj.manualTotal = val > 0;
+         *   se val >= obj.correct -> obj.wrong = val - obj.correct;
+         *   se val < obj.correct -> mantém obj.correct durante digitação e define obj.wrong = 0.
+         * - field === "correct": NUNCA soma correct + wrong;
+         *   se obj.total >= val -> mantém obj.total e calcula obj.wrong = obj.total - val;
+         *   somente se val > obj.total -> obj.total = val e obj.wrong = 0.
+         * - field === "wrong":
+         *   se obj.manualTotal && val <= obj.total -> mantém obj.total e obj.correct = obj.total - val;
+         *   caso contrário -> obj.total = obj.correct + val.
+         */
+        function applyNumericCalculation(obj, field, rawValue) {
+            const val = parseNonNegativeInt(rawValue);
+
+            if (field === "total") {
+                obj.total = val;
+                obj.manualTotal = val > 0;
+                if (val >= obj.correct) {
+                    obj.wrong = val - obj.correct;
+                } else {
+                    // Durante a digitação (ex: apagando "23" para digitar "20"), não apaga correct
+                    obj.wrong = 0;
+                }
+            } else if (field === "correct") {
+                obj.correct = val;
+                if (obj.total >= val) {
+                    // Mantém total inalterado e calcula erros automaticamente
+                    obj.wrong = obj.total - val;
+                } else {
+                    // Somente quando acertos ultrapassam o total atual
+                    obj.total = val;
+                    obj.wrong = 0;
+                }
+            } else if (field === "wrong") {
+                obj.wrong = val;
+                if (obj.manualTotal && val <= obj.total) {
+                    obj.correct = obj.total - val;
+                } else {
+                    obj.total = obj.correct + val;
+                }
+            }
+        }
+
+        /**
+         * Finaliza a consistência no evento blur do campo Questões (total).
+         * Se o usuário terminou de editar e deixou total < correct, ajusta correct = total e wrong = 0.
+         */
+        function reconcileTotalOnBlur(obj) {
+            if (obj.total < obj.correct) {
+                obj.correct = obj.total;
+                obj.wrong = 0;
+                return true;
+            }
+            return false;
+        }
+
+        /**
+         * Atualiza cirurgicamente apenas os outros 2 inputs da mesma linha que NÃO têm foco.
+         */
+        function syncSiblingInputsSurgically(obj, totalEl, correctEl, wrongEl) {
+            const active = document.activeElement;
+            if (totalEl && active !== totalEl) totalEl.value = obj.total;
+            if (correctEl && active !== correctEl) correctEl.value = obj.correct;
+            if (wrongEl && active !== wrongEl) wrongEl.value = obj.wrong;
+        }
+
+        // ============================================================================
+        // 7. CÁLCULOS DE MÉTRICAS (TÓPICO, MATÉRIA E DESEMPENHO GERAL)
+        // ============================================================================
+        function calcPercent(correct, total) {
+            if (!total || total <= 0) return null;
+            const cappedCorrect = Math.min(correct, total);
+            return (cappedCorrect / total) * 100;
+        }
+
         function getTopicMetrics(row) {
             const sessions = Array.isArray(row.sessions) ? row.sessions : [];
             const hasSessions = sessions.length > 0;
-            let q = 0, a = 0, e = 0;
+            let total = 0, correct = 0, wrong = 0;
             let lastDate = "";
 
             if (hasSessions) {
                 sessions.forEach(s => {
-                    const sa = Number(s.a) || 0;
-                    const se = Number(s.e) || 0;
-                    a += sa;
-                    e += se;
-                    q += (sa + se);
+                    const st = parseNonNegativeInt(s.total);
+                    const sc = parseNonNegativeInt(s.correct);
+                    const sw = parseNonNegativeInt(s.wrong);
+                    total += st;
+                    correct += Math.min(sc, st > 0 ? st : sc);
+                    wrong += sw;
                     if (s.date && (!lastDate || s.date > lastDate)) {
                         lastDate = s.date;
                     }
                 });
             } else {
-                q = Number(row.q) || 0;
-                a = Number(row.a) || 0;
-                e = Number(row.e) || 0;
+                total = parseNonNegativeInt(row.total);
+                correct = parseNonNegativeInt(row.correct);
+                wrong = parseNonNegativeInt(row.wrong);
             }
 
-            const pct = q > 0 ? (a / q) * 100 : null;
+            const pct = calcPercent(correct, total);
             const isStudied = Boolean(row.studied) || hasSessions;
-
-            return { q, a, e, pct, hasSessions, sessionsCount: sessions.length, lastDate, isStudied };
+            return { total, correct, wrong, pct, hasSessions, sessionsCount: sessions.length, lastDate, isStudied };
         }
 
         function getSubjectStats(subjId) {
@@ -1448,66 +1745,175 @@
             let totalQ = 0, totalA = 0, totalE = 0;
 
             subj.topics.forEach((_, idx) => {
-                const row = data[idx] || { studied: false, q: 0, a: 0, e: 0, sessions: [] };
+                const row = data[idx] || { studied: false, total: 0, correct: 0, wrong: 0, sessions: [] };
                 const m = getTopicMetrics(row);
                 if (m.isStudied) studiedTopics++;
                 totalSessions += m.sessionsCount;
-                totalQ += m.q;
-                totalA += m.a;
-                totalE += m.e;
+                totalQ += m.total;
+                totalA += m.correct;
+                totalE += m.wrong;
             });
 
-            const pctAccuracy = totalQ > 0 ? (totalA / totalQ) * 100 : null;
+            const pctAccuracy = calcPercent(totalA, totalQ);
             const pctStudied = totalTopics > 0 ? (studiedTopics / totalTopics) * 100 : 0;
-
             return { totalTopics, studiedTopics, totalSessions, pctStudied, totalQ, totalA, totalE, pctAccuracy };
         }
 
-        function formatAccuracyBadge(pct, questionsCount) {
+        function getAccuracyBadgeData(pct, questionsCount) {
             if (!questionsCount || questionsCount === 0 || pct === null) {
-                return `<span class="inline-block px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-400">—</span>`;
+                return {
+                    text: "—",
+                    classes: "inline-block px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-400 border border-gray-200"
+                };
             }
             const formatted = pct.toFixed(1).replace(".", ",") + "%";
-            let colorClass = "bg-red-100 text-red-800 border-red-300";
-            if (pct >= 80) colorClass = "bg-emerald-100 text-emerald-800 border-emerald-300";
-            else if (pct >= 60) colorClass = "bg-amber-100 text-amber-800 border-amber-300";
-            return `<span class="inline-block px-2 py-0.5 rounded text-xs font-bold border ${colorClass}">${formatted}</span>`;
+            if (pct >= 80) {
+                return {
+                    text: formatted,
+                    classes: "inline-block px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300"
+                };
+            }
+            if (pct >= 60) {
+                return {
+                    text: formatted,
+                    classes: "inline-block px-2 py-0.5 rounded text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300"
+                };
+            }
+            return {
+                text: formatted,
+                classes: "inline-block px-2 py-0.5 rounded text-xs font-bold bg-red-100 text-red-800 border border-red-300"
+            };
+        }
+
+        function renderAccuracyBadgeHtml(pct, questionsCount, extraClass = "") {
+            const b = getAccuracyBadgeData(pct, questionsCount);
+            return `<span class="${extraClass} ${b.classes}">${b.text}</span>`;
+        }
+
+        function buildTopicBadgesHtml(rowData, metrics) {
+            if (metrics.hasSessions) {
+                const labelPass = metrics.sessionsCount === 1 ? "1 passagem" : `${metrics.sessionsCount} passagens`;
+                let html = `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-100 text-[#004b8d] border border-blue-200">${labelPass}</span>`;
+                if (metrics.lastDate) {
+                    html += `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-600 border border-gray-200">Última: ${formatShortDate(metrics.lastDate)}</span>`;
+                }
+                return html;
+            }
+            if (rowData.studied) {
+                return `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">Concluído</span>`;
+            }
+            return `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-400">Pendente</span>`;
         }
 
         // ============================================================================
-        // RENDERIZAÇÃO DAS ABAS E PAINEL DE DESEMPENHO GERAL
+        // 8. RENDERIZAÇÃO DAS ABAS E ATUALIZAÇÕES CIRÚRGICAS
         // ============================================================================
         function renderTabs() {
             const container = document.getElementById("tabs-container");
             if (!container) return;
 
             let html = `
-                <button type="button" onclick="switchTab('geral')" class="tab-btn px-3.5 py-2 text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer ${currentTab === "geral" ? "active" : "hover:bg-gray-300/60"}">
+                <button type="button" data-action="switch-tab" data-tab="geral"
+                    class="tab-btn px-3.5 py-2 text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer ${currentTab === "geral" ? "active" : "hover:bg-gray-300/60"}">
                     <span>📊</span> Desempenho Geral
                 </button>
             `;
 
             EDITAL_DATA.forEach(subj => {
-                const stats = getSubjectStats(subj.id);
+                const st = getSubjectStats(subj.id);
                 const isActive = currentTab === subj.id;
                 let pillColor = "bg-gray-300 text-gray-700";
-                if (stats.totalQ > 0) {
-                    if (stats.pctAccuracy >= 80) pillColor = "bg-emerald-200 text-emerald-900";
-                    else if (stats.pctAccuracy >= 60) pillColor = "bg-amber-200 text-amber-900";
+                if (st.totalQ > 0) {
+                    if (st.pctAccuracy >= 80) pillColor = "bg-emerald-200 text-emerald-900";
+                    else if (st.pctAccuracy >= 60) pillColor = "bg-amber-200 text-amber-900";
                     else pillColor = "bg-red-200 text-red-900";
                 }
+                const pillText = st.totalQ > 0 ? `${Math.round(st.pctAccuracy)}%` : `${st.studiedTopics}/${st.totalTopics}`;
 
                 html += `
-                    <button type="button" onclick="switchTab('${subj.id}')" class="tab-btn px-3 py-2 text-xs sm:text-sm flex items-center gap-1.5 border-l border-gray-300 cursor-pointer ${isActive ? "active" : "hover:bg-gray-300/60"}">
+                    <button type="button" data-action="switch-tab" data-tab="${subj.id}"
+                        class="tab-btn px-3 py-2 text-xs sm:text-sm flex items-center gap-1.5 border-l border-gray-300 cursor-pointer ${isActive ? "active" : "hover:bg-gray-300/60"}">
                         <span>${subj.shortName}</span>
-                        <span class="text-[10px] font-bold px-1.5 py-0.2 rounded-full ${pillColor}">
-                            ${stats.totalQ > 0 ? Math.round(stats.pctAccuracy) + "%" : stats.studiedTopics + "/" + stats.totalTopics}
+                        <span id="tab-pill-${subj.id}" class="text-[10px] font-bold px-1.5 py-0.5 rounded-full ${pillColor}">
+                            ${pillText}
                         </span>
                     </button>
                 `;
             });
 
             container.innerHTML = html;
+        }
+
+        function updateTabPillSurgically(subjId) {
+            const pill = document.getElementById(`tab-pill-${subjId}`);
+            if (!pill) return;
+            const st = getSubjectStats(subjId);
+            let pillColor = "bg-gray-300 text-gray-700";
+            if (st.totalQ > 0) {
+                if (st.pctAccuracy >= 80) pillColor = "bg-emerald-200 text-emerald-900";
+                else if (st.pctAccuracy >= 60) pillColor = "bg-amber-200 text-amber-900";
+                else pillColor = "bg-red-200 text-red-900";
+            }
+            pill.className = `text-[10px] font-bold px-1.5 py-0.5 rounded-full ${pillColor}`;
+            pill.textContent = st.totalQ > 0 ? `${Math.round(st.pctAccuracy)}%` : `${st.studiedTopics}/${st.totalTopics}`;
+        }
+
+        function updateSubjectSummaryBar(subjId) {
+            const bar = document.getElementById("subject-summary-bar");
+            if (!bar) return;
+            const st = getSubjectStats(subjId);
+            const pctAccText = st.pctAccuracy !== null ? st.pctAccuracy.toFixed(1).replace(".", ",") + "%" : "0,0%";
+            const pctStudiedText = st.pctStudied.toFixed(1).replace(".", ",") + "%";
+
+            bar.innerHTML = `
+                <div class="bg-white p-2.5 rounded border border-gray-300 shadow-sm">
+                    <div class="text-[10px] font-bold uppercase text-gray-500">Questões</div>
+                    <div class="text-xl font-extrabold text-gray-900">${st.totalQ}</div>
+                </div>
+                <div class="bg-white p-2.5 rounded border border-emerald-300 shadow-sm">
+                    <div class="text-[10px] font-bold uppercase text-emerald-700">Acertos</div>
+                    <div class="text-xl font-extrabold text-emerald-700">${st.totalA}</div>
+                </div>
+                <div class="bg-white p-2.5 rounded border border-red-300 shadow-sm">
+                    <div class="text-[10px] font-bold uppercase text-red-700">Erros</div>
+                    <div class="text-xl font-extrabold text-red-700">${st.totalE}</div>
+                </div>
+                <div class="bg-white p-2.5 rounded border border-blue-300 shadow-sm">
+                    <div class="text-[10px] font-bold uppercase text-[#004b8d]">% Acerto</div>
+                    <div class="text-xl font-extrabold text-[#004b8d]">${pctAccText}</div>
+                </div>
+                <div class="bg-white p-2.5 rounded border border-indigo-300 shadow-sm">
+                    <div class="text-[10px] font-bold uppercase text-indigo-700">Passagens / Dias</div>
+                    <div class="text-xl font-extrabold text-indigo-700">${st.totalSessions}</div>
+                </div>
+                <div class="bg-white p-2.5 rounded border border-gray-300 shadow-sm">
+                    <div class="text-[10px] font-bold uppercase text-gray-500">Progresso</div>
+                    <div class="text-xl font-extrabold text-gray-800">${st.studiedTopics}/${st.totalTopics} <span class="text-xs font-semibold text-gray-500">(${pctStudiedText})</span></div>
+                </div>
+            `;
+        }
+
+        function updateSubjectFooterSurgically(subjId) {
+            const subj = EDITAL_DATA.find(s => s.id === subjId);
+            if (!subj) return;
+            const st = getSubjectStats(subjId);
+
+            const footStudied = document.getElementById(`foot-studied-${subjId}`);
+            const footLabel = document.getElementById(`foot-label-${subjId}`);
+            const footQ = document.getElementById(`foot-q-${subjId}`);
+            const footA = document.getElementById(`foot-a-${subjId}`);
+            const footE = document.getElementById(`foot-e-${subjId}`);
+            const footPct = document.getElementById(`foot-pct-${subjId}`);
+
+            if (footStudied) footStudied.textContent = `${st.studiedTopics}/${st.totalTopics}`;
+            if (footLabel) footLabel.textContent = `TOTAL DA MATÉRIA (${subj.name}) • ${st.totalSessions} passagens`;
+            if (footQ) footQ.textContent = st.totalQ;
+            if (footA) footA.textContent = st.totalA;
+            if (footE) footE.textContent = st.totalE;
+            if (footPct) footPct.innerHTML = renderAccuracyBadgeHtml(st.pctAccuracy, st.totalQ);
+
+            updateSubjectSummaryBar(subjId);
+            updateTabPillSurgically(subjId);
         }
 
         function switchTab(tabId) {
@@ -1527,6 +1933,9 @@
             }
         }
 
+        // ============================================================================
+        // 9. ABA "📊 DESEMPENHO GERAL"
+        // ============================================================================
         function renderGeneralDashboard() {
             const viewport = document.getElementById("sheet-viewport");
             let grandTotalTopics = 0, grandStudiedTopics = 0, grandSessions = 0;
@@ -1553,17 +1962,18 @@
                 }
 
                 rowsHtml += `
-                    <tr class="bg-white">
+                    <tr class="bg-white hover:bg-blue-50/60">
                         <td class="text-center font-bold text-gray-600">${subj.code}</td>
                         <td>
-                            <button type="button" onclick="switchTab('${subj.id}')" class="text-left font-semibold text-[#004B8D] hover:underline flex items-center gap-1.5 w-full cursor-pointer">
+                            <button type="button" data-action="switch-tab" data-tab="${subj.id}"
+                                class="text-left font-semibold text-[#004b8d] hover:underline flex items-center gap-1.5 w-full cursor-pointer">
                                 <span>${subj.name}</span>
                                 <span class="text-xs text-gray-400 font-normal">↗</span>
                             </button>
                         </td>
                         <td class="text-center">
                             <span class="px-2 py-0.5 rounded text-xs font-medium ${subj.weight === 2 ? "bg-blue-100 text-blue-900 font-semibold" : "bg-gray-100 text-gray-700"}">
-                                ${subj.block} (Peso ${subj.weight})
+                                ${subj.block} • Peso ${subj.weight}
                             </span>
                         </td>
                         <td class="text-center text-gray-700 font-medium">${subj.examQuestions} <span class="text-xs text-gray-400">(${subj.scoreShare})</span></td>
@@ -1573,11 +1983,11 @@
                                 <span class="text-gray-500">${pctStudiedFmt}</span>
                             </div>
                             <div class="w-full bg-gray-200 h-1.5 rounded-full overflow-hidden">
-                                <div class="bg-[#004B8D] h-1.5" style="width: ${st.pctStudied}%"></div>
+                                <div class="bg-[#004b8d] h-1.5" style="width: ${st.pctStudied}%"></div>
                             </div>
                         </td>
                         <td class="text-center">
-                            <span class="inline-block px-2 py-0.5 rounded-full text-xs font-semibold ${st.totalSessions > 0 ? "bg-blue-100 text-[#004B8D]" : "bg-gray-100 text-gray-400"}">
+                            <span class="inline-block px-2 py-0.5 rounded-full text-xs font-semibold ${st.totalSessions > 0 ? "bg-blue-100 text-[#004b8d]" : "bg-gray-100 text-gray-400"}">
                                 ${st.totalSessions}
                             </span>
                         </td>
@@ -1590,7 +2000,7 @@
                                     <div class="${barColor} h-2" style="width: ${accuracyBarWidth}%"></div>
                                 </div>
                                 <div class="w-16 text-right">
-                                    ${formatAccuracyBadge(st.pctAccuracy, st.totalQ)}
+                                    ${renderAccuracyBadgeHtml(st.pctAccuracy, st.totalQ)}
                                 </div>
                             </div>
                         </td>
@@ -1598,51 +2008,51 @@
                 `;
             });
 
-            const grandPctAccuracy = grandQ > 0 ? (grandA / grandQ) * 100 : null;
+            const grandPctAccuracy = calcPercent(grandA, grandQ);
             const grandPctStudied = grandTotalTopics > 0 ? (grandStudiedTopics / grandTotalTopics) * 100 : 0;
 
             viewport.innerHTML = `
                 <div class="p-4 bg-gray-50 border-b border-gray-300">
                     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-                        <div class="bg-white p-3 rounded border border-gray-300 shadow-sm">
+                        <div class="bg-white p-3.5 rounded-md border border-gray-300 shadow-sm">
                             <p class="text-[11px] font-bold uppercase text-gray-500">Total de Questões</p>
                             <p class="text-2xl font-extrabold text-gray-900 mt-0.5">${grandQ}</p>
-                            <p class="text-[11px] text-gray-500">Resolvidas no total</p>
+                            <p class="text-[11px] text-gray-500">Resolvidas no edital</p>
                         </div>
-                        <div class="bg-white p-3 rounded border border-emerald-300 shadow-sm">
-                            <p class="text-[11px] font-bold uppercase text-emerald-700">Total de Acertos</p>
+                        <div class="bg-white p-3.5 rounded-md border border-emerald-300 shadow-sm">
+                            <p class="text-[11px] font-bold uppercase text-emerald-700">Acertos</p>
                             <p class="text-2xl font-extrabold text-emerald-700 mt-0.5">${grandA}</p>
                             <p class="text-[11px] text-gray-500">Questões corretas</p>
                         </div>
-                        <div class="bg-white p-3 rounded border border-red-300 shadow-sm">
-                            <p class="text-[11px] font-bold uppercase text-red-700">Total de Erros</p>
+                        <div class="bg-white p-3.5 rounded-md border border-red-300 shadow-sm">
+                            <p class="text-[11px] font-bold uppercase text-red-700">Erros</p>
                             <p class="text-2xl font-extrabold text-red-700 mt-0.5">${grandE}</p>
-                            <p class="text-[11px] text-gray-500">Questões erradas</p>
+                            <p class="text-[11px] text-gray-500">Questões incorretas</p>
                         </div>
-                        <div class="bg-white p-3 rounded border border-blue-300 shadow-sm">
-                            <p class="text-[11px] font-bold uppercase text-[#004B8D]">% Acerto Geral</p>
-                            <p class="text-2xl font-extrabold text-[#004B8D] mt-0.5">
+                        <div class="bg-white p-3.5 rounded-md border border-blue-300 shadow-sm">
+                            <p class="text-[11px] font-bold uppercase text-[#004b8d]">% Acerto Geral</p>
+                            <p class="text-2xl font-extrabold text-[#004b8d] mt-0.5">
                                 ${grandPctAccuracy !== null ? grandPctAccuracy.toFixed(1).replace(".", ",") + "%" : "0,0%"}
                             </p>
-                            <p class="text-[11px] text-gray-500">Taxa média de acerto</p>
+                            <p class="text-[11px] text-gray-500">Aproveitamento médio</p>
                         </div>
-                        <div class="bg-white p-3 rounded border border-indigo-300 shadow-sm">
-                            <p class="text-[11px] font-bold uppercase text-indigo-700">Passagens / Dias</p>
-                            <p class="text-2xl font-extrabold text-indigo-700 mt-0.5">${grandSessions}</p>
-                            <p class="text-[11px] text-gray-500">Registros de estudo</p>
+                        <div class="bg-white p-3.5 rounded-md border border-indigo-300 shadow-sm">
+                            <p class="text-[11px] font-bold uppercase text-indigo-700">Progresso do Edital</p>
+                            <p class="text-2xl font-extrabold text-indigo-800 mt-0.5">${grandPctStudied.toFixed(1).replace(".", ",")}%</p>
+                            <p class="text-[11px] text-gray-600">${grandStudiedTopics}/${grandTotalTopics} tópicos</p>
                         </div>
-                        <div class="bg-white p-3 rounded border border-gray-300 shadow-sm">
-                            <p class="text-[11px] font-bold uppercase text-gray-500">% Edital Estudado</p>
-                            <p class="text-2xl font-extrabold text-gray-800 mt-0.5">${grandPctStudied.toFixed(1).replace(".", ",")}%</p>
-                            <p class="text-[11px] text-gray-500">${grandStudiedTopics} de ${grandTotalTopics} tópicos</p>
+                        <div class="bg-white p-3.5 rounded-md border border-sky-300 shadow-sm">
+                            <p class="text-[11px] font-bold uppercase text-sky-700">Total de Passagens</p>
+                            <p class="text-2xl font-extrabold text-sky-800 mt-0.5">${grandSessions}</p>
+                            <p class="text-[11px] text-gray-600">Registros por data</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="p-3 bg-white">
-                    <div class="flex items-center justify-between mb-2">
+                    <div class="mb-2 flex items-center justify-between flex-wrap gap-2">
                         <h3 class="text-xs font-bold uppercase tracking-wider text-gray-600">
-                            📋 Tabela de Desempenho Geral e por Matéria (Clique na matéria para abrir seus assuntos)
+                            📋 Desempenho Consolidado por Matéria (Clique em qualquer matéria para abrir os assuntos)
                         </h3>
                     </div>
                     <table class="sheet-table">
@@ -1650,13 +2060,13 @@
                             <tr>
                                 <th class="w-10 text-center">Nº</th>
                                 <th class="text-left">Matéria / Disciplina</th>
-                                <th class="w-36 text-center">Bloco / Peso</th>
+                                <th class="w-40 text-center">Bloco / Peso</th>
                                 <th class="w-32 text-center">Prova (% Nota)</th>
                                 <th class="w-40 text-left">Assuntos Estudados</th>
                                 <th class="w-24 text-center">Passagens</th>
                                 <th class="w-24 text-center">Questões</th>
-                                <th class="w-24 text-center">Acertos</th>
-                                <th class="w-24 text-center">Erros</th>
+                                <th class="w-24 text-center text-emerald-800">Acertos</th>
+                                <th class="w-24 text-center text-red-800">Erros</th>
                                 <th class="w-44 text-right">% Acerto</th>
                             </tr>
                         </thead>
@@ -1665,7 +2075,7 @@
                         </tbody>
                         <tfoot>
                             <tr class="bg-gray-200 font-bold text-gray-900 border-t-2 border-gray-400">
-                                <td colspan="3" class="text-right uppercase text-xs tracking-wider">TOTAL GERAL DO EDITAL</td>
+                                <td colspan="3" class="text-right uppercase text-xs tracking-wider">TOTAL GERAL</td>
                                 <td class="text-center">${grandExamQ} (100%)</td>
                                 <td>
                                     <div class="flex items-center justify-between text-xs">
@@ -1678,7 +2088,7 @@
                                 <td class="text-center text-emerald-800 text-base">${grandA}</td>
                                 <td class="text-center text-red-800 text-base">${grandE}</td>
                                 <td class="text-right">
-                                    ${formatAccuracyBadge(grandPctAccuracy, grandQ)}
+                                    ${renderAccuracyBadgeHtml(grandPctAccuracy, grandQ)}
                                 </td>
                             </tr>
                         </tfoot>
@@ -1688,15 +2098,14 @@
         }
 
         // ============================================================================
-        // RENDERIZAÇÃO DAS MATÉRIAS E SUB-MENU EXPANSÍVEL POR DATA
+        // 10. ABAS DAS 9 MATÉRIAS E SUBMENU DE PASSAGENS POR DATA
         // ============================================================================
         function updateToggleAllButton(subjId) {
             const btn = document.getElementById("toggle-all-btn");
-            if (!btn) return;
             const subj = EDITAL_DATA.find(s => s.id === subjId);
-            if (!subj) return;
+            if (!btn || !subj) return;
             const anyOpen = subj.topics.some((_, idx) => expandedTopics[`${subjId}-${idx}`]);
-            btn.textContent = anyOpen ? "▲ Recolher todos" : "▼ Expandir todos";
+            btn.textContent = anyOpen ? "▲ Recolher todas" : "▼ Expandir todas";
         }
 
         function toggleExpandAll() {
@@ -1709,19 +2118,14 @@
             renderSubjectSheet(currentTab);
         }
 
-        function toggleExpand(subjId, idx) {
-            const key = `${subjId}-${idx}`;
-            expandedTopics[key] = !expandedTopics[key];
-            renderSubjectSheet(subjId);
-        }
-
         function renderSubjectSheet(subjId) {
             const subj = EDITAL_DATA.find(s => s.id === subjId);
             if (!subj) return;
 
-            document.getElementById("subject-badge").textContent = `DISCIPLINA ${subj.code}`;
+            document.getElementById("subject-badge").textContent = `MATÉRIA ${subj.code}`;
             document.getElementById("subject-title").textContent = subj.name;
             document.getElementById("subject-meta").textContent = `(${subj.block} • Peso ${subj.weight} • ${subj.examQuestions} questões na prova • ${subj.scoreShare} da nota)`;
+            updateSubjectSummaryBar(subjId);
             updateToggleAllButton(subjId);
 
             const searchQuery = (document.getElementById("search-input")?.value || "").toLowerCase().trim();
@@ -1733,83 +2137,79 @@
             let visibleCount = 0;
 
             subj.topics.forEach((topicTitle, idx) => {
-                const rowData = userProgress[subjId][idx] || { studied: false, q: 0, a: 0, e: 0, note: "", sessions: [] };
+                const rowData = userProgress[subjId][idx];
                 const m = getTopicMetrics(rowData);
                 const isExpanded = Boolean(expandedTopics[`${subjId}-${idx}`]);
 
                 if (searchQuery && !topicTitle.toLowerCase().includes(searchQuery)) return;
                 if (filterMode === "pending" && m.isStudied) return;
                 if (filterMode === "done" && !m.isStudied) return;
-                if (filterMode === "low" && (m.q === 0 || m.pct >= 70)) return;
+                if (filterMode === "low" && (m.total === 0 || m.pct >= 70)) return;
 
                 visibleCount++;
                 const isSubtopic = /^\d+\.\d+/.test(topicTitle.trim());
 
-                let progressBadges = "";
-                if (m.hasSessions) {
-                    const labelPass = m.sessionsCount === 1 ? "1 passagem" : `${m.sessionsCount} passagens`;
-                    progressBadges += `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-100 text-[#004B8D] border border-blue-200">${labelPass}</span>`;
-                    if (m.lastDate) {
-                        progressBadges += `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-600 border border-gray-200">Última: ${formatShortDate(m.lastDate)}</span>`;
-                    }
-                } else if (rowData.studied) {
-                    progressBadges += `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">Concluído</span>`;
-                } else {
-                    progressBadges += `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-400">Não estudado</span>`;
-                }
+                // Se tiver 1 ou mais passagens: linha principal exibe soma automática somente leitura.
+                // Se tiver 0 passagens: usuário pode digitar direto na linha principal (mesma lógica sem duplicação).
+                const totalCellHtml = m.hasSessions
+                    ? `<div id="main-total-${subjId}-${idx}" class="text-center font-bold text-gray-900 py-1 select-none" title="Soma automática das passagens abaixo">${m.total}</div>`
+                    : `<input type="number" min="0" inputmode="numeric" value="${m.total}" id="main-total-${subjId}-${idx}"
+                        data-role="main-num" data-field="total" data-subj="${subjId}" data-idx="${idx}"
+                        class="main-num-input text-gray-900" title="Total de Questões">`;
 
-                const qCellHtml = m.hasSessions
-                    ? `<div id="q-${subjId}-${idx}" class="text-center font-bold text-gray-800 py-1 cursor-pointer" onclick="toggleExpand('${subjId}', ${idx})" title="Soma automática das passagens">${m.q}</div>`
-                    : `<input type="number" min="0" value="${m.q}" id="q-${subjId}-${idx}" oninput="updateCell('${subjId}', ${idx}, 'q', this.value)" onfocus="this.select()" class="sheet-input text-gray-800 font-bold" title="Total de Questões">`;
+                const correctCellHtml = m.hasSessions
+                    ? `<div id="main-correct-${subjId}-${idx}" class="text-center font-bold text-emerald-700 py-1 select-none" title="Soma automática dos acertos abaixo">${m.correct}</div>`
+                    : `<input type="number" min="0" inputmode="numeric" value="${m.correct}" id="main-correct-${subjId}-${idx}"
+                        data-role="main-num" data-field="correct" data-subj="${subjId}" data-idx="${idx}"
+                        class="main-num-input text-emerald-700 bg-emerald-50/40 border-emerald-200" title="Acertos">`;
 
-                const aCellHtml = m.hasSessions
-                    ? `<div id="a-${subjId}-${idx}" class="text-center font-semibold text-emerald-700 py-1 cursor-pointer" onclick="toggleExpand('${subjId}', ${idx})" title="Soma automática dos acertos">${m.a}</div>`
-                    : `<input type="number" min="0" value="${m.a}" id="a-${subjId}-${idx}" oninput="updateCell('${subjId}', ${idx}, 'a', this.value)" onfocus="this.select()" class="sheet-input text-emerald-700 font-semibold" title="Acertos">`;
-
-                const eCellHtml = m.hasSessions
-                    ? `<div id="e-${subjId}-${idx}" class="text-center font-semibold text-red-600 py-1 cursor-pointer" onclick="toggleExpand('${subjId}', ${idx})" title="Soma automática dos erros">${m.e}</div>`
-                    : `<input type="number" min="0" value="${m.e}" id="e-${subjId}-${idx}" oninput="updateCell('${subjId}', ${idx}, 'e', this.value)" onfocus="this.select()" class="sheet-input text-red-600 font-semibold" title="Erros">`;
+                const wrongCellHtml = m.hasSessions
+                    ? `<div id="main-wrong-${subjId}-${idx}" class="text-center font-bold text-red-700 py-1 select-none" title="Soma automática dos erros abaixo">${m.wrong}</div>`
+                    : `<input type="number" min="0" inputmode="numeric" value="${m.wrong}" id="main-wrong-${subjId}-${idx}"
+                        data-role="main-num" data-field="wrong" data-subj="${subjId}" data-idx="${idx}"
+                        class="main-num-input text-red-700 bg-red-50/40 border-red-200" title="Erros">`;
 
                 rowsHtml += `
-                    <tr id="row-${subjId}-${idx}" class="${rowData.studied ? "bg-emerald-50/30" : "bg-white"}">
-                        <td class="text-center w-10 align-top pt-2">
+                    <tr id="topic-row-${subjId}-${idx}" class="topic-row ${rowData.studied ? "bg-emerald-50/35" : "bg-white"}">
+                        <td class="text-center w-11 align-top pt-2.5">
                             <input type="checkbox" ${rowData.studied ? "checked" : ""}
-                                onchange="toggleStudied('${subjId}', ${idx}, this.checked)"
-                                class="w-4 h-4 accent-[#004B8D] rounded cursor-pointer" title="Marcar como concluído">
+                                data-role="topic-studied" data-subj="${subjId}" data-idx="${idx}"
+                                class="w-4 h-4 accent-[#004b8d] rounded cursor-pointer" title="Marcar assunto como estudado">
                         </td>
-                        <td class="${isSubtopic ? "pl-6 text-gray-700" : "font-semibold text-gray-900"} align-top">
+                        <td class="${isSubtopic ? "pl-7 text-gray-700" : "font-semibold text-gray-900"} align-top">
                             <div class="flex items-start justify-between gap-2">
-                                <div class="flex items-start gap-1.5 flex-1 cursor-pointer select-none group" onclick="toggleExpand('${subjId}', ${idx})">
-                                    <button type="button" class="text-[11px] text-[#004B8D] mt-0.5 w-4 h-4 flex items-center justify-center rounded hover:bg-blue-100 shrink-0 cursor-pointer" title="Abrir/Fechar histórico de datas">
+                                <div data-action="toggle-expand" data-subj="${subjId}" data-idx="${idx}"
+                                    class="flex items-start gap-1.5 flex-1 cursor-pointer select-none group">
+                                    <span class="text-[11px] text-[#004b8d] mt-0.5 w-5 h-5 flex items-center justify-center rounded bg-blue-50 group-hover:bg-blue-100 shrink-0 font-bold">
                                         ${isExpanded ? "▼" : "▶"}
-                                    </button>
+                                    </span>
                                     <div class="flex-1 min-w-0">
-                                        <div class="group-hover:text-[#004B8D] transition-colors ${rowData.studied ? "line-through text-gray-400" : ""}">
+                                        <div id="topic-title-txt-${subjId}-${idx}" class="group-hover:text-[#004b8d] transition-colors ${rowData.studied ? "line-through text-gray-400" : ""}">
                                             ${escapeHtml(topicTitle)}
                                         </div>
                                         <div class="flex items-center flex-wrap gap-1.5 mt-1" id="badges-${subjId}-${idx}">
-                                            ${progressBadges}
+                                            ${buildTopicBadgesHtml(rowData, m)}
                                         </div>
                                     </div>
                                 </div>
-                                <button type="button" onclick="addSession('${subjId}', ${idx}); event.stopPropagation();"
-                                    class="shrink-0 px-2 h-6 rounded bg-blue-50 hover:bg-[#004B8D] text-[#004B8D] hover:text-white border border-blue-200 font-semibold text-[11px] flex items-center justify-center gap-1 transition cursor-pointer"
+                                <button type="button" data-action="add-session" data-subj="${subjId}" data-idx="${idx}"
+                                    class="shrink-0 px-2.5 h-7 rounded bg-blue-50 hover:bg-[#004b8d] text-[#004b8d] hover:text-white border border-blue-200 font-semibold text-xs flex items-center gap-1 transition cursor-pointer"
                                     title="Adicionar passagem / data neste assunto">
-                                    <span>+</span><span class="hidden sm:inline">Passagem</span>
+                                    <span>+</span><span>Passagem</span>
                                 </button>
                             </div>
                         </td>
-                        <td class="w-20 bg-gray-50/70 align-top pt-2">${qCellHtml}</td>
-                        <td class="w-20 bg-emerald-50/30 align-top pt-2">${aCellHtml}</td>
-                        <td class="w-20 bg-red-50/30 align-top pt-2">${eCellHtml}</td>
-                        <td class="w-24 text-center align-top pt-2" id="pct-${subjId}-${idx}">
-                            ${formatAccuracyBadge(m.pct, m.q)}
+                        <td class="w-20 bg-gray-50/70 align-top pt-2">${totalCellHtml}</td>
+                        <td class="w-20 bg-emerald-50/35 align-top pt-2">${correctCellHtml}</td>
+                        <td class="w-20 bg-red-50/35 align-top pt-2">${wrongCellHtml}</td>
+                        <td class="w-24 text-center align-top pt-2.5" id="main-pct-${subjId}-${idx}">
+                            ${renderAccuracyBadgeHtml(m.pct, m.total)}
                         </td>
-                        <td class="w-72 min-w-[220px] max-w-[320px] align-top">
+                        <td class="w-72 min-w-[220px] max-w-[330px] align-top">
                             <textarea rows="1"
+                                data-role="main-notes" data-subj="${subjId}" data-idx="${idx}"
                                 placeholder="Anotações gerais (cresce para baixo)..."
-                                oninput="autoResizeTextarea(this); updateNote('${subjId}', ${idx}, this.value)"
-                                class="sheet-textarea text-gray-700">${escapeHtml(rowData.note || "")}</textarea>
+                                class="auto-grow text-gray-700">${escapeHtml(rowData.notes || "")}</textarea>
                         </td>
                     </tr>
                 `;
@@ -1821,59 +2221,71 @@
                     if (sessions.length === 0) {
                         sessionRowsHtml = `
                             <tr>
-                                <td colspan="7" class="text-center py-3 text-gray-500 text-xs bg-white">
-                                    Nenhuma passagem registrada ainda para este assunto. Clique no botão abaixo para registrar o dia de estudo.
+                                <td colspan="8" class="text-center py-3.5 text-gray-500 text-xs bg-white">
+                                    Nenhuma passagem cadastrada ainda para este assunto. Clique em <strong>+ Adicionar passagem / data</strong> abaixo para registrar seu estudo de hoje.
                                 </td>
                             </tr>
                         `;
                     } else {
                         sessions.forEach((s, sIdx) => {
-                            const sa = Number(s.a) || 0;
-                            const se = Number(s.e) || 0;
-                            const sq = sa + se;
-                            const spct = sq > 0 ? (sa / sq) * 100 : null;
+                            const stotal = parseNonNegativeInt(s.total);
+                            const scorrect = parseNonNegativeInt(s.correct);
+                            const swrong = parseNonNegativeInt(s.wrong);
+                            const spct = calcPercent(scorrect, stotal);
+                            const badgeData = getAccuracyBadgeData(spct, stotal);
 
                             sessionRowsHtml += `
-                                <tr class="bg-white">
-                                    <td class="w-32">
-                                        <input type="date" value="${escapeHtml(s.date || "")}"
-                                            onchange="updateSessionField('${subjId}', ${idx}, ${sIdx}, 'date', this.value)"
-                                            class="w-full text-xs border border-gray-200 rounded px-1.5 py-1 focus:outline-none focus:border-[#0078D4]">
+                                <tr class="bg-white" data-session-row="${subjId}-${idx}-${sIdx}">
+                                    <td class="w-36">
+                                        <input type="date"
+                                            value="${escapeHtml(s.date || getTodayLocalISO())}"
+                                            data-role="session-field" data-field="date" data-subj="${subjId}" data-idx="${idx}" data-sidx="${sIdx}"
+                                            class="p-date" aria-label="Data da passagem">
                                     </td>
                                     <td class="w-36">
-                                        <input type="text" value="${escapeHtml(s.label || "")}"
+                                        <input type="text"
+                                            value="${escapeHtml(s.label || "")}"
                                             placeholder="Ex: 1ª passagem"
-                                            oninput="updateSessionField('${subjId}', ${idx}, ${sIdx}, 'label', this.value)"
-                                            class="w-full text-xs font-medium text-gray-800 border border-gray-200 rounded px-2 py-1 focus:outline-none focus:border-[#0078D4]">
+                                            data-role="session-field" data-field="label" data-subj="${subjId}" data-idx="${idx}" data-sidx="${sIdx}"
+                                            class="p-label" aria-label="Etapa ou passagem">
                                     </td>
-                                    <td class="w-16 text-center font-bold text-gray-700 bg-gray-50 pt-2" id="sq-${subjId}-${idx}-${sIdx}">
-                                        ${sq}
+                                    <td class="w-20">
+                                        <input type="number" min="0" inputmode="numeric"
+                                            value="${stotal}"
+                                            id="p-total-${subjId}-${idx}-${sIdx}"
+                                            data-role="session-field" data-field="total" data-subj="${subjId}" data-idx="${idx}" data-sidx="${sIdx}"
+                                            class="p-total" aria-label="Total de questões do dia" title="Total de questões feitas">
                                     </td>
-                                    <td class="w-20 bg-emerald-50/40">
-                                        <input type="number" min="0" value="${sa}"
-                                            oninput="updateSessionField('${subjId}', ${idx}, ${sIdx}, 'a', this.value)"
-                                            onfocus="this.select()"
-                                            class="sheet-input text-emerald-700 font-semibold" title="Acertos neste dia">
+                                    <td class="w-20">
+                                        <input type="number" min="0" inputmode="numeric"
+                                            value="${scorrect}"
+                                            id="p-correct-${subjId}-${idx}-${sIdx}"
+                                            data-role="session-field" data-field="correct" data-subj="${subjId}" data-idx="${idx}" data-sidx="${sIdx}"
+                                            class="p-correct" aria-label="Acertos do dia" title="Acertos neste dia">
                                     </td>
-                                    <td class="w-20 bg-red-50/40">
-                                        <input type="number" min="0" value="${se}"
-                                            oninput="updateSessionField('${subjId}', ${idx}, ${sIdx}, 'e', this.value)"
-                                            onfocus="this.select()"
-                                            class="sheet-input text-red-600 font-semibold" title="Erros neste dia">
+                                    <td class="w-20">
+                                        <input type="number" min="0" inputmode="numeric"
+                                            value="${swrong}"
+                                            id="p-wrong-${subjId}-${idx}-${sIdx}"
+                                            data-role="session-field" data-field="wrong" data-subj="${subjId}" data-idx="${idx}" data-sidx="${sIdx}"
+                                            class="p-wrong" aria-label="Erros do dia" title="Erros neste dia">
                                     </td>
-                                    <td class="w-20 text-center pt-1.5" id="spct-${subjId}-${idx}-${sIdx}">
-                                        ${formatAccuracyBadge(spct, sq)}
+                                    <td class="w-20 text-center">
+                                        <span id="p-pct-${subjId}-${idx}-${sIdx}" class="p-pct badge ${badgeData.classes}">
+                                            ${badgeData.text}
+                                        </span>
                                     </td>
-                                    <td class="min-w-[220px]">
-                                        <div class="flex items-start gap-1.5">
-                                            <textarea rows="1"
-                                                placeholder="O que estudou/errou nesse dia..."
-                                                oninput="autoResizeTextarea(this); updateSessionField('${subjId}', ${idx}, ${sIdx}, 'note', this.value)"
-                                                class="sheet-textarea text-gray-700 flex-1 border border-gray-200 bg-gray-50/40">${escapeHtml(s.note || "")}</textarea>
-                                            <button type="button" onclick="removeSession('${subjId}', ${idx}, ${sIdx})"
-                                                class="text-gray-400 hover:text-red-600 hover:bg-red-50 rounded px-1.5 py-0.5 text-sm font-bold leading-none mt-1 transition cursor-pointer"
-                                                title="Remover esta passagem">×</button>
-                                        </div>
+                                    <td class="min-w-[210px]">
+                                        <textarea rows="1"
+                                            placeholder="O que estudou, revisou ou errou nesse dia..."
+                                            data-role="session-field" data-field="notes" data-subj="${subjId}" data-idx="${idx}" data-sidx="${sIdx}"
+                                            class="p-notes auto-grow text-gray-700">${escapeHtml(s.notes || "")}</textarea>
+                                    </td>
+                                    <td class="w-10 text-center">
+                                        <button type="button"
+                                            data-action="remove-session" data-subj="${subjId}" data-idx="${idx}" data-sidx="${sIdx}"
+                                            class="p-del w-7 h-7 inline-flex items-center justify-center rounded text-gray-500 hover:text-red-700 hover:bg-red-100 font-bold text-base transition cursor-pointer"
+                                            title="Excluir esta passagem">×</button>
                                     </td>
                                 </tr>
                             `;
@@ -1881,20 +2293,21 @@
                     }
 
                     rowsHtml += `
-                        <tr class="sessions-row">
+                        <tr class="sessions-row" data-submenu-for="${subjId}-${idx}">
                             <td colspan="7" class="p-3">
                                 <div class="tree-wrapper">
-                                    <div class="tree-item-branch">
+                                    <div class="tree-branch">
                                         <table class="sub-sheet-table">
                                             <thead>
                                                 <tr>
-                                                    <th class="w-32 text-left">📅 Data</th>
+                                                    <th class="w-36 text-left">📅 Data</th>
                                                     <th class="w-36 text-left">Etapa / Passagem</th>
-                                                    <th class="w-16 text-center">Questões</th>
+                                                    <th class="w-20 text-center">Questões</th>
                                                     <th class="w-20 text-center text-emerald-800">Acertos</th>
                                                     <th class="w-20 text-center text-red-800">Erros</th>
                                                     <th class="w-20 text-center">% Dia</th>
                                                     <th class="text-left">Anotações da passagem</th>
+                                                    <th class="w-10 text-center">Ação</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1902,13 +2315,13 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="mt-2 flex items-center justify-between flex-wrap gap-2">
-                                        <button type="button" onclick="addSession('${subjId}', ${idx})"
-                                            class="inline-flex items-center gap-1.5 bg-[#004B8D] hover:bg-blue-800 text-white text-xs font-semibold px-3 py-1.5 rounded shadow-sm transition cursor-pointer">
+                                    <div class="mt-2.5 flex items-center justify-between flex-wrap gap-2">
+                                        <button type="button" data-action="add-session" data-subj="${subjId}" data-idx="${idx}"
+                                            class="inline-flex items-center gap-1.5 bg-[#004b8d] hover:bg-blue-800 text-white text-xs font-semibold px-3 py-1.5 rounded shadow-sm transition cursor-pointer">
                                             <span>+</span> Adicionar passagem / data
                                         </button>
                                         <span class="text-[11px] text-gray-500">
-                                            As questões, acertos e erros de cada data são somados automaticamente na linha principal.
+                                            Fluxo rápido: digite <strong>Questões</strong> → Tab → digite <strong>Acertos</strong> → <strong>Erros</strong> e <strong>% Dia</strong> calculam na hora!
                                         </span>
                                     </div>
                                 </div>
@@ -1921,8 +2334,8 @@
             if (visibleCount === 0) {
                 rowsHtml = `
                     <tr>
-                        <td colspan="7" class="text-center py-8 text-gray-500">
-                            Nenhum assunto encontrado para o filtro selecionado.
+                        <td colspan="7" class="text-center py-8 text-gray-500 text-sm">
+                            Nenhum assunto encontrado para o filtro aplicado.
                         </td>
                     </tr>
                 `;
@@ -1932,8 +2345,8 @@
                 <table class="sheet-table">
                     <thead>
                         <tr>
-                            <th class="w-10 text-center" title="Marcar assunto como concluído">✓</th>
-                            <th class="text-left">Assunto / Tópico do Edital <span class="font-normal text-gray-500 text-xs">(clique para abrir passagens/datas)</span></th>
+                            <th class="w-11 text-center" title="Estudado">✓</th>
+                            <th class="text-left">Assunto / Tópico do Edital <span class="font-normal text-gray-500 text-xs">(clique no assunto para expandir/recolher passagens)</span></th>
                             <th class="w-20 text-center">Questões</th>
                             <th class="w-20 text-center text-emerald-800">Acertos</th>
                             <th class="w-20 text-center text-red-800">Erros</th>
@@ -1947,15 +2360,17 @@
                     <tfoot>
                         <tr class="bg-gray-200 font-bold text-gray-900 border-t-2 border-gray-400">
                             <td class="text-center" id="foot-studied-${subjId}">${st.studiedTopics}/${st.totalTopics}</td>
-                            <td class="text-right uppercase text-xs tracking-wider">TOTAL DA MATÉRIA (${subj.name}) • ${st.totalSessions} passagens</td>
+                            <td class="text-right uppercase text-xs tracking-wider" id="foot-label-${subjId}">
+                                TOTAL DA MATÉRIA (${subj.name}) • ${st.totalSessions} passagens
+                            </td>
                             <td class="text-center text-base" id="foot-q-${subjId}">${st.totalQ}</td>
                             <td class="text-center text-emerald-800 text-base" id="foot-a-${subjId}">${st.totalA}</td>
                             <td class="text-center text-red-800 text-base" id="foot-e-${subjId}">${st.totalE}</td>
                             <td class="text-center" id="foot-pct-${subjId}">
-                                ${formatAccuracyBadge(st.pctAccuracy, st.totalQ)}
+                                ${renderAccuracyBadgeHtml(st.pctAccuracy, st.totalQ)}
                             </td>
                             <td class="text-xs text-gray-500 font-normal">
-                                Clique em <strong>+ Passagem</strong> ou no assunto para registrar datas.
+                                Clique em <strong>+ Passagem</strong> para registrar por dia.
                             </td>
                         </tr>
                     </tfoot>
@@ -1966,23 +2381,34 @@
         }
 
         // ============================================================================
-        // EDIÇÃO DE PASSAGENS E CÉLULAS
+        // 11. MANIPULAÇÃO CIRÚRGICA DE PASSAGENS E CÉLULAS (ZERO PERDA DE FOCO)
         // ============================================================================
         function addSession(subjId, idx) {
             const item = userProgress[subjId][idx];
             if (!Array.isArray(item.sessions)) item.sessions = [];
-            const nextNum = item.sessions.length + 1;
+            const newIndex = item.sessions.length;
             item.sessions.push({
-                date: getTodayISO(),
-                label: `${nextNum}ª passagem`,
-                a: 0,
-                e: 0,
-                note: ""
+                date: getTodayLocalISO(),
+                label: `${newIndex + 1}ª passagem`,
+                total: 0,
+                correct: 0,
+                wrong: 0,
+                notes: "",
+                manualTotal: false
             });
             expandedTopics[`${subjId}-${idx}`] = true;
             saveProgress();
-            renderTabs();
+            updateTabPillSurgically(subjId);
             renderSubjectSheet(subjId);
+
+            // Coloca foco selecionado no campo Questões para o fluxo rápido: Questões -> Tab -> Acertos
+            requestAnimationFrame(() => {
+                const targetInput = document.getElementById(`p-total-${subjId}-${idx}-${newIndex}`);
+                if (targetInput) {
+                    targetInput.focus();
+                    targetInput.select();
+                }
+            });
         }
 
         function removeSession(subjId, idx, sIdx) {
@@ -1990,126 +2416,174 @@
             if (!Array.isArray(item.sessions)) return;
             item.sessions.splice(sIdx, 1);
             saveProgress();
-            renderTabs();
+            updateTabPillSurgically(subjId);
             renderSubjectSheet(subjId);
         }
 
-        function updateSessionField(subjId, idx, sIdx, field, rawValue) {
-            const item = userProgress[subjId][idx];
-            const session = item.sessions[sIdx];
-            if (!session) return;
+        function refreshSessionRowAndParentUI(subjId, idx, sIdx, updateDateBadges = false) {
+            const item = userProgress[subjId]?.[idx];
+            const session = item?.sessions?.[sIdx];
+            if (!item || !session) return;
 
-            if (field === "a" || field === "e") {
-                let val = parseInt(rawValue, 10);
-                if (isNaN(val) || val < 0) val = 0;
-                session[field] = val;
-            } else {
-                session[field] = rawValue;
+            const totalEl = document.getElementById(`p-total-${subjId}-${idx}-${sIdx}`);
+            const correctEl = document.getElementById(`p-correct-${subjId}-${idx}-${sIdx}`);
+            const wrongEl = document.getElementById(`p-wrong-${subjId}-${idx}-${sIdx}`);
+            syncSiblingInputsSurgically(session, totalEl, correctEl, wrongEl);
+
+            // Atualiza badge % Dia desta passagem
+            const spct = calcPercent(session.correct, session.total);
+            const pctSpan = document.getElementById(`p-pct-${subjId}-${idx}-${sIdx}`);
+            if (pctSpan) {
+                const b = getAccuracyBadgeData(spct, session.total);
+                pctSpan.className = `p-pct badge ${b.classes}`;
+                pctSpan.textContent = b.text;
             }
 
-            saveProgress();
-
-            const sa = Number(session.a) || 0;
-            const se = Number(session.e) || 0;
-            const sq = sa + se;
-            const spct = sq > 0 ? (sa / sq) * 100 : null;
-
-            const sqEl = document.getElementById(`sq-${subjId}-${idx}-${sIdx}`);
-            const spctEl = document.getElementById(`spct-${subjId}-${idx}-${sIdx}`);
-            if (sqEl) sqEl.textContent = sq;
-            if (spctEl) spctEl.innerHTML = formatAccuracyBadge(spct, sq);
-
+            // Atualiza cirurgicamente a linha-pai do assunto, rodapé e resumo da matéria
             const m = getTopicMetrics(item);
-            const qEl = document.getElementById(`q-${subjId}-${idx}`);
-            const aEl = document.getElementById(`a-${subjId}-${idx}`);
-            const eEl = document.getElementById(`e-${subjId}-${idx}`);
-            const pctEl = document.getElementById(`pct-${subjId}-${idx}`);
+            const mainTotal = document.getElementById(`main-total-${subjId}-${idx}`);
+            const mainCorrect = document.getElementById(`main-correct-${subjId}-${idx}`);
+            const mainWrong = document.getElementById(`main-wrong-${subjId}-${idx}`);
+            const mainPct = document.getElementById(`main-pct-${subjId}-${idx}`);
             const badgesEl = document.getElementById(`badges-${subjId}-${idx}`);
 
-            if (qEl) qEl.textContent = m.q;
-            if (aEl) aEl.textContent = m.a;
-            if (eEl) eEl.textContent = m.e;
-            if (pctEl) pctEl.innerHTML = formatAccuracyBadge(m.pct, m.q);
-
-            if (badgesEl && field === "date") {
-                const labelPass = m.sessionsCount === 1 ? "1 passagem" : `${m.sessionsCount} passagens`;
-                let bHtml = `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-100 text-[#004B8D] border border-blue-200">${labelPass}</span>`;
-                if (m.lastDate) {
-                    bHtml += `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-600 border border-gray-200">Última: ${formatShortDate(m.lastDate)}</span>`;
-                }
-                badgesEl.innerHTML = bHtml;
+            if (mainTotal) mainTotal.textContent = m.total;
+            if (mainCorrect) mainCorrect.textContent = m.correct;
+            if (mainWrong) mainWrong.textContent = m.wrong;
+            if (mainPct) mainPct.innerHTML = renderAccuracyBadgeHtml(m.pct, m.total);
+            if (badgesEl && updateDateBadges) {
+                badgesEl.innerHTML = buildTopicBadgesHtml(item, m);
             }
 
-            updateSubjectFooterAndTabs(subjId);
+            updateSubjectFooterSurgically(subjId);
         }
 
-        function updateSubjectFooterAndTabs(subjId) {
-            const st = getSubjectStats(subjId);
-            const footStudied = document.getElementById(`foot-studied-${subjId}`);
-            const footQ = document.getElementById(`foot-q-${subjId}`);
-            const footA = document.getElementById(`foot-a-${subjId}`);
-            const footE = document.getElementById(`foot-e-${subjId}`);
-            const footPct = document.getElementById(`foot-pct-${subjId}`);
+        function handleSessionInput(el) {
+            const subjId = el.dataset.subj;
+            const idx = parseInt(el.dataset.idx, 10);
+            const sIdx = parseInt(el.dataset.sidx, 10);
+            const field = el.dataset.field;
 
-            if (footStudied) footStudied.textContent = `${st.studiedTopics}/${st.totalTopics}`;
-            if (footQ) footQ.textContent = st.totalQ;
-            if (footA) footA.textContent = st.totalA;
-            if (footE) footE.textContent = st.totalE;
-            if (footPct) footPct.innerHTML = formatAccuracyBadge(st.pctAccuracy, st.totalQ);
+            const item = userProgress[subjId]?.[idx];
+            const session = item?.sessions?.[sIdx];
+            if (!item || !session) return;
 
-            renderTabs();
-        }
-
-        function toggleStudied(subjId, idx, isChecked) {
-            userProgress[subjId][idx].studied = isChecked;
-            saveProgress();
-            renderTabs();
-            renderCurrentView();
-        }
-
-        function updateNote(subjId, idx, val) {
-            userProgress[subjId][idx].note = val;
-            saveProgress();
-        }
-
-        function updateCell(subjId, idx, field, rawValue) {
-            let val = parseInt(rawValue, 10);
-            if (isNaN(val) || val < 0) val = 0;
-            const item = userProgress[subjId][idx];
-
-            if (field === "a") {
-                item.a = val;
-                item.q = item.a + item.e;
-                const qInput = document.getElementById(`q-${subjId}-${idx}`);
-                if (qInput) qInput.value = item.q;
-            } else if (field === "e") {
-                item.e = val;
-                item.q = item.a + item.e;
-                const qInput = document.getElementById(`q-${subjId}-${idx}`);
-                if (qInput) qInput.value = item.q;
-            } else if (field === "q") {
-                item.q = val;
-                if (item.q >= item.a) {
-                    item.e = item.q - item.a;
-                } else {
-                    item.a = item.q;
-                    item.e = 0;
-                    const aInput = document.getElementById(`a-${subjId}-${idx}`);
-                    if (aInput) aInput.value = item.a;
-                }
-                const eInput = document.getElementById(`e-${subjId}-${idx}`);
-                if (eInput) eInput.value = item.e;
+            if (field === "total" || field === "correct" || field === "wrong") {
+                applyNumericCalculation(session, field, el.value);
+                refreshSessionRowAndParentUI(subjId, idx, sIdx, false);
+            } else if (field === "date") {
+                session.date = el.value;
+                refreshSessionRowAndParentUI(subjId, idx, sIdx, true);
+            } else if (field === "label") {
+                session.label = el.value;
+            } else if (field === "notes") {
+                session.notes = el.value;
+                autoResizeTextarea(el);
             }
 
             saveProgress();
-            const pct = item.q > 0 ? (item.a / item.q) * 100 : null;
-            const pctCell = document.getElementById(`pct-${subjId}-${idx}`);
-            if (pctCell) pctCell.innerHTML = formatAccuracyBadge(pct, item.q);
-            updateSubjectFooterAndTabs(subjId);
+        }
+
+        function handleSessionTotalBlur(el) {
+            const subjId = el.dataset.subj;
+            const idx = parseInt(el.dataset.idx, 10);
+            const sIdx = parseInt(el.dataset.sidx, 10);
+            const item = userProgress[subjId]?.[idx];
+            const session = item?.sessions?.[sIdx];
+            if (!item || !session) return;
+
+            const changed = reconcileTotalOnBlur(session);
+            if (el.value.trim() === "") el.value = String(session.total);
+            if (changed) {
+                const totalEl = document.getElementById(`p-total-${subjId}-${idx}-${sIdx}`);
+                const correctEl = document.getElementById(`p-correct-${subjId}-${idx}-${sIdx}`);
+                const wrongEl = document.getElementById(`p-wrong-${subjId}-${idx}-${sIdx}`);
+                if (totalEl) totalEl.value = session.total;
+                if (correctEl) correctEl.value = session.correct;
+                if (wrongEl) wrongEl.value = session.wrong;
+                refreshSessionRowAndParentUI(subjId, idx, sIdx, false);
+                saveProgress();
+            }
+        }
+
+        function refreshMainRowUI(subjId, idx) {
+            const item = userProgress[subjId]?.[idx];
+            if (!item) return;
+
+            const totalEl = document.getElementById(`main-total-${subjId}-${idx}`);
+            const correctEl = document.getElementById(`main-correct-${subjId}-${idx}`);
+            const wrongEl = document.getElementById(`main-wrong-${subjId}-${idx}`);
+            syncSiblingInputsSurgically(item, totalEl, correctEl, wrongEl);
+
+            const pct = calcPercent(item.correct, item.total);
+            const mainPct = document.getElementById(`main-pct-${subjId}-${idx}`);
+            if (mainPct) mainPct.innerHTML = renderAccuracyBadgeHtml(pct, item.total);
+
+            updateSubjectFooterSurgically(subjId);
+        }
+
+        function handleMainNumericInput(el) {
+            const subjId = el.dataset.subj;
+            const idx = parseInt(el.dataset.idx, 10);
+            const field = el.dataset.field;
+            const item = userProgress[subjId]?.[idx];
+            if (!item) return;
+
+            applyNumericCalculation(item, field, el.value);
+            refreshMainRowUI(subjId, idx);
+            saveProgress();
+        }
+
+        function handleMainTotalBlur(el) {
+            const subjId = el.dataset.subj;
+            const idx = parseInt(el.dataset.idx, 10);
+            const item = userProgress[subjId]?.[idx];
+            if (!item) return;
+
+            const changed = reconcileTotalOnBlur(item);
+            if (el.value.trim() === "") el.value = String(item.total);
+            if (changed) {
+                const totalEl = document.getElementById(`main-total-${subjId}-${idx}`);
+                const correctEl = document.getElementById(`main-correct-${subjId}-${idx}`);
+                const wrongEl = document.getElementById(`main-wrong-${subjId}-${idx}`);
+                if (totalEl) totalEl.value = item.total;
+                if (correctEl) correctEl.value = item.correct;
+                if (wrongEl) wrongEl.value = item.wrong;
+                refreshMainRowUI(subjId, idx);
+                saveProgress();
+            }
+        }
+
+        function handleTopicStudiedChange(el) {
+            const subjId = el.dataset.subj;
+            const idx = parseInt(el.dataset.idx, 10);
+            const item = userProgress[subjId]?.[idx];
+            if (!item) return;
+
+            item.studied = el.checked;
+            const rowTr = document.getElementById(`topic-row-${subjId}-${idx}`);
+            const titleEl = document.getElementById(`topic-title-txt-${subjId}-${idx}`);
+            const badgesEl = document.getElementById(`badges-${subjId}-${idx}`);
+            const m = getTopicMetrics(item);
+
+            if (rowTr) {
+                rowTr.classList.toggle("bg-emerald-50/35", item.studied);
+                rowTr.classList.toggle("bg-white", !item.studied);
+            }
+            if (titleEl) {
+                titleEl.classList.toggle("line-through", item.studied);
+                titleEl.classList.toggle("text-gray-400", item.studied);
+            }
+            if (badgesEl) {
+                badgesEl.innerHTML = buildTopicBadgesHtml(item, m);
+            }
+
+            updateSubjectFooterSurgically(subjId);
+            saveProgress();
         }
 
         // ============================================================================
-        // EXPORTAÇÃO CSV, BACKUP JSON, IMPORTAÇÃO E RESET
+        // 12. EXPORTAÇÃO CSV, BACKUP JSON, IMPORTAÇÃO E RESET
         // ============================================================================
         function exportCSV() {
             let csv = "\uFEFF";
@@ -2117,23 +2591,24 @@
 
             EDITAL_DATA.forEach(subj => {
                 subj.topics.forEach((topic, idx) => {
-                    const r = userProgress[subj.id][idx] || { studied: false, q: 0, a: 0, e: 0, note: "", sessions: [] };
+                    const r = userProgress[subj.id][idx];
                     const m = getTopicMetrics(r);
-                    const pct = m.q > 0 ? m.pct.toFixed(1).replace(".", ",") + "%" : "0%";
+                    const pct = m.total > 0 ? m.pct.toFixed(1).replace(".", ",") + "%" : "0%";
                     const cleanTopic = topic.replace(/;/g, ",");
-                    const cleanNote = (r.note || "").replace(/;/g, ",").replace(/\n/g, " | ");
+                    const cleanNote = (r.notes || "").replace(/;/g, ",").replace(/\n/g, " | ");
 
-                    csv += `${subj.code};"${subj.name}";${subj.block};${subj.weight};"${cleanTopic}";RESUMO;${m.lastDate || ""};"${m.sessionsCount} passagens";${m.isStudied ? "SIM" : "NAO"};${m.q};${m.a};${m.e};${pct};"${cleanNote}"\n`;
+                    csv += `${subj.code};"${subj.name}";${subj.block};${subj.weight};"${cleanTopic}";RESUMO;${m.lastDate || ""};"${m.sessionsCount} passagens";${m.isStudied ? "SIM" : "NAO"};${m.total};${m.correct};${m.wrong};${pct};"${cleanNote}"\n`;
 
                     if (Array.isArray(r.sessions) && r.sessions.length > 0) {
                         r.sessions.forEach(s => {
-                            const sa = Number(s.a) || 0;
-                            const se = Number(s.e) || 0;
-                            const sq = sa + se;
-                            const spct = sq > 0 ? ((sa / sq) * 100).toFixed(1).replace(".", ",") + "%" : "0%";
+                            const st = parseNonNegativeInt(s.total);
+                            const sc = parseNonNegativeInt(s.correct);
+                            const sw = parseNonNegativeInt(s.wrong);
+                            const sp = calcPercent(sc, st);
+                            const spct = sp !== null ? sp.toFixed(1).replace(".", ",") + "%" : "0%";
                             const sLabel = (s.label || "").replace(/;/g, ",");
-                            const sNote = (s.note || "").replace(/;/g, ",").replace(/\n/g, " | ");
-                            csv += `${subj.code};"${subj.name}";${subj.block};${subj.weight};"${cleanTopic}";PASSAGEM;${s.date || ""};"${sLabel}";SIM;${sq};${sa};${se};${spct};"${sNote}"\n`;
+                            const sNote = (s.notes || "").replace(/;/g, ",").replace(/\n/g, " | ");
+                            csv += `${subj.code};"${subj.name}";${subj.block};${subj.weight};"${cleanTopic}";PASSAGEM;${s.date || ""};"${sLabel}";SIM;${st};${sc};${sw};${spct};"${sNote}"\n`;
                         });
                     }
                 });
@@ -2151,8 +2626,8 @@
         }
 
         function exportBackup() {
-            const dataStr = JSON.stringify(userProgress, null, 2);
-            const blob = new Blob([dataStr], { type: "application/json" });
+            const prettyJson = JSON.stringify(JSON.parse(serializeProgressForStorage()), null, 2);
+            const blob = new Blob([prettyJson], { type: "application/json" });
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
@@ -2167,10 +2642,10 @@
             const file = event.target.files[0];
             if (!file) return;
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = (e) => {
                 try {
                     const parsed = JSON.parse(e.target.result);
-                    if (typeof parsed === "object" && parsed !== null) {
+                    if (parsed && typeof parsed === "object") {
                         userProgress = parsed;
                         ensureProgressStructure();
                         saveProgress();
@@ -2178,8 +2653,7 @@
                         renderCurrentView();
                         showToast("Backup importado com sucesso!");
                     }
-                } catch (err) {
-                    console.error("Arquivo JSON inválido:", err);
+                } catch {
                     showToast("Arquivo JSON inválido.");
                 }
             };
@@ -2201,6 +2675,7 @@
 
         function confirmReset() {
             userProgress = {};
+            expandedTopics = {};
             ensureProgressStructure();
             saveProgress();
             closeResetModal();
@@ -2210,10 +2685,10 @@
         }
 
         // ============================================================================
-        // CONEXÃO DE TODOS OS EVENTOS (addEventListener + window)
+        // 13. DELEGAÇÃO DE EVENTOS LIMPA E ISOLADA
         // ============================================================================
-        function bindStaticEvents() {
-            // Tela de Login estilo Windows 10
+        function bindAllEvents() {
+            // --- Tela de Login Windows 10 ---
             document.getElementById("win-tab-login")?.addEventListener("click", () => setAuthMode("login"));
             document.getElementById("win-tab-register")?.addEventListener("click", () => setAuthMode("register"));
             document.getElementById("win-auth-form")?.addEventListener("submit", handleWinEmailAuth);
@@ -2221,14 +2696,12 @@
             document.getElementById("win-google-btn")?.addEventListener("click", handleWinGoogleLogin);
             document.getElementById("win-offline-btn")?.addEventListener("click", enterOfflineMode);
             document.getElementById("win-corner-offline-btn")?.addEventListener("click", enterOfflineMode);
-
             document.getElementById("win-toggle-pwd")?.addEventListener("click", () => {
                 const pwd = document.getElementById("win-password");
-                if (!pwd) return;
-                pwd.type = pwd.type === "password" ? "text" : "password";
+                if (pwd) pwd.type = pwd.type === "password" ? "text" : "password";
             });
 
-            // Cabeçalho e Filtros da Planilha
+            // --- Cabeçalho e Modal ---
             document.getElementById("btn-export-csv")?.addEventListener("click", exportCSV);
             document.getElementById("btn-export-json")?.addEventListener("click", exportBackup);
             document.getElementById("import-file")?.addEventListener("change", importBackup);
@@ -2237,37 +2710,135 @@
             document.getElementById("btn-reset-confirm")?.addEventListener("click", confirmReset);
             document.getElementById("btn-lock-logout")?.addEventListener("click", handleLockOrLogout);
 
+            // --- Filtros da Matéria ---
             document.getElementById("search-input")?.addEventListener("input", renderCurrentView);
             document.getElementById("filter-select")?.addEventListener("change", renderCurrentView);
             document.getElementById("toggle-all-btn")?.addEventListener("click", toggleExpandAll);
+
+            // --- Barra de Abas ---
+            document.getElementById("tabs-container")?.addEventListener("click", (e) => {
+                const btn = e.target.closest("[data-action='switch-tab']");
+                if (btn) switchTab(btn.dataset.tab);
+            });
+
+            // --- Viewport da Planilha ---
+            const viewport = document.getElementById("sheet-viewport");
+            if (!viewport) return;
+
+            viewport.addEventListener("click", (e) => {
+                // Nunca intercepta cliques em inputs, textareas ou selects
+                if (e.target.closest("input, textarea, select")) {
+                    e.stopPropagation();
+                    return;
+                }
+
+                const switchBtn = e.target.closest("[data-action='switch-tab']");
+                if (switchBtn) {
+                    switchTab(switchBtn.dataset.tab);
+                    return;
+                }
+
+                const addBtn = e.target.closest("[data-action='add-session']");
+                if (addBtn) {
+                    e.stopPropagation();
+                    addSession(addBtn.dataset.subj, parseInt(addBtn.dataset.idx, 10));
+                    return;
+                }
+
+                const removeBtn = e.target.closest("[data-action='remove-session']");
+                if (removeBtn) {
+                    e.stopPropagation();
+                    removeSession(
+                        removeBtn.dataset.subj,
+                        parseInt(removeBtn.dataset.idx, 10),
+                        parseInt(removeBtn.dataset.sidx, 10)
+                    );
+                    return;
+                }
+
+                const toggleTrigger = e.target.closest("[data-action='toggle-expand']");
+                if (toggleTrigger) {
+                    const subjId = toggleTrigger.dataset.subj;
+                    const idx = parseInt(toggleTrigger.dataset.idx, 10);
+                    const key = `${subjId}-${idx}`;
+                    expandedTopics[key] = !expandedTopics[key];
+                    renderSubjectSheet(subjId);
+                }
+            });
+
+            // Digitação em tempo real (atualização cirúrgica, sem recriar a tabela)
+            viewport.addEventListener("input", (e) => {
+                const el = e.target;
+                const role = el.dataset?.role;
+                if (!role) return;
+
+                if (role === "session-field") {
+                    handleSessionInput(el);
+                } else if (role === "main-num") {
+                    handleMainNumericInput(el);
+                } else if (role === "main-notes") {
+                    const subjId = el.dataset.subj;
+                    const idx = parseInt(el.dataset.idx, 10);
+                    if (userProgress[subjId]?.[idx]) {
+                        userProgress[subjId][idx].notes = el.value;
+                        autoResizeTextarea(el);
+                        saveProgress();
+                    }
+                }
+            });
+
+            // Eventos change (checkbox de estudado e seletor de data)
+            viewport.addEventListener("change", (e) => {
+                const el = e.target;
+                const role = el.dataset?.role;
+                if (!role) return;
+
+                if (role === "topic-studied") {
+                    handleTopicStudiedChange(el);
+                } else if (role === "session-field" && el.dataset.field === "date") {
+                    handleSessionInput(el);
+                }
+            });
+
+            // Seleciona o valor numérico ao focar para digitar direto sem apagar o zero
+            viewport.addEventListener("focusin", (e) => {
+                const el = e.target;
+                if (el.tagName === "INPUT" && el.type === "number") {
+                    el.select();
+                }
+            });
+
+            // Reconciliação no blur (focusout) + aplicação de atualização remota pendente
+            viewport.addEventListener("focusout", (e) => {
+                const el = e.target;
+                const role = el.dataset?.role;
+                const field = el.dataset?.field;
+
+                if (role === "session-field" && field === "total") {
+                    handleSessionTotalBlur(el);
+                } else if (role === "main-num" && field === "total") {
+                    handleMainTotalBlur(el);
+                } else if (el.tagName === "INPUT" && el.type === "number" && el.value.trim() === "") {
+                    el.value = "0";
+                }
+
+                setTimeout(applyPendingCloudUpdateIfIdle, 150);
+            });
         }
 
-        // Expõe funções necessárias para os elementos renderizados dinamicamente nas linhas
-        Object.assign(window, {
-            switchTab,
-            toggleExpand,
-            toggleStudied,
-            addSession,
-            removeSession,
-            updateSessionField,
-            autoResizeTextarea,
-            updateNote,
-            updateCell
-        });
-
         // ============================================================================
-        // INICIALIZAÇÃO PRINCIPAL (NUNCA TRAVA OS BOTÕES)
+        // 14. INICIALIZAÇÃO
         // ============================================================================
         function startApp() {
             updateWindowsClock();
             setInterval(updateWindowsClock, 15000);
 
-            bindStaticEvents();
+            bindAllEvents();
             loadLocalProgress();
             renderTabs();
             renderCurrentView();
 
-            // Inicializa o Firebase de forma assíncrona e isolada em try/catch
+            // Inicializa Firebase em background dentro de try/catch
             initFirebaseSafely();
         }
 
