@@ -3,16 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planilha Edital Verticalizado - Banestes Técnico Bancário</title>
+    <title>Planilha Edital Verticalizado — Banestes Técnico Bancário</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
             background-color: #f3f4f6;
             color: #1f2937;
+            margin: 0;
         }
-        /* Grade estilo Excel / Google Sheets */
+
+        /* ====================================================================
+           TELA DE LOGIN ESTILO WINDOWS 10 / WINDOWS X (TELA CHEIA)
+           ==================================================================== */
+        #win-login-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+            background:
+                radial-gradient(circle at 18% 22%, rgba(0, 120, 212, 0.55) 0%, transparent 45%),
+                radial-gradient(circle at 82% 78%, rgba(0, 183, 195, 0.35) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(12, 45, 92, 0.9) 0%, rgba(4, 15, 34, 0.98) 100%),
+                linear-gradient(135deg, #001f4d 0%, #004b8d 50%, #001833 100%);
+            transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease;
+        }
+        #win-login-screen::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            background: rgba(5, 18, 38, 0.28);
+            pointer-events: none;
+            z-index: 0;
+        }
+        #win-login-screen.unlocked {
+            opacity: 0;
+            transform: scale(1.03);
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Inputs retangulares estilo Windows 10 */
+        .win-input {
+            width: 100%;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.92);
+            color: #111827;
+            border: 2px solid rgba(255, 255, 255, 0.72);
+            border-radius: 2px;
+            padding: 0 12px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.15s ease, background-color 0.15s ease;
+        }
+        .win-input::placeholder {
+            color: #6b7280;
+        }
+        .win-input:hover {
+            background: #ffffff;
+            border-color: rgba(255, 255, 255, 0.95);
+        }
+        .win-input:focus {
+            background: #ffffff;
+            border-color: #0078D4;
+            box-shadow: 0 0 0 1px #0078D4;
+        }
+
+        /* Botão de seta estilo Windows 10 acoplado ao campo de senha */
+        .win-arrow-btn {
+            height: 40px;
+            width: 44px;
+            flex-shrink: 0;
+            background-color: #0078D4;
+            color: #ffffff;
+            border: 2px solid #0078D4;
+            border-left: none;
+            border-radius: 0 2px 2px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.15s ease;
+        }
+        .win-arrow-btn:hover {
+            background-color: #1084e0;
+        }
+        .win-arrow-btn:active {
+            background-color: #005a9e;
+        }
+        .win-arrow-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Botões translúcidos estilo Windows 10 */
+        .win-tile-btn {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            color: #ffffff;
+            border-radius: 2px;
+            transition: background-color 0.15s ease, border-color 0.15s ease;
+        }
+        .win-tile-btn:hover {
+            background: rgba(255, 255, 255, 0.22);
+            border-color: rgba(255, 255, 255, 0.55);
+        }
+
+        /* ====================================================================
+           ESTILOS DA PLANILHA (EXCEL / GOOGLE SHEETS)
+           ==================================================================== */
         .sheet-table {
             border-collapse: collapse;
             width: 100%;
@@ -49,10 +155,11 @@
         }
         .sheet-input:focus {
             background: #ffffff;
-            border-color: #004B8D;
-            box-shadow: 0 0 0 2px rgba(0, 75, 141, 0.2);
+            border-color: #0078D4;
+            box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
         }
-        /* Textarea que cresce somente para baixo sem empurrar a tabela */
+
+        /* Textarea que cresce apenas para baixo sem empurrar a tabela */
         .sheet-textarea {
             width: 100%;
             min-height: 30px;
@@ -74,9 +181,10 @@
         }
         .sheet-textarea:focus {
             background: #ffffff;
-            border-color: #004B8D;
-            box-shadow: 0 0 0 2px rgba(0, 75, 141, 0.18);
+            border-color: #0078D4;
+            box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.18);
         }
+
         /* Sub-menu expansível estilo árvore para passagens/datas */
         .sessions-row {
             background-color: #f8fafc !important;
@@ -134,6 +242,7 @@
             position: static;
             box-shadow: none;
         }
+
         /* Remove setas nativas do input number */
         input[type=number]::-webkit-inner-spin-button,
         input[type=number]::-webkit-outer-spin-button {
@@ -143,6 +252,7 @@
         input[type=number] {
             -moz-appearance: textfield;
         }
+
         /* Abas estilo planilha */
         .tab-btn {
             white-space: nowrap;
@@ -169,181 +279,220 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- Cabeçalho Superior da Planilha -->
-    <header class="bg-[#004B8D] text-white shadow-md">
-        <div class="max-w-[1600px] mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
-            <div class="flex items-center gap-3">
-                <div class="bg-white text-[#004B8D] font-extrabold px-2.5 py-1 rounded text-sm tracking-tight shadow-sm">
-                    BANESTES
-                </div>
-                <div>
-                    <h1 class="font-bold text-base sm:text-lg leading-tight">Planilha Edital Verticalizado — Técnico Bancário</h1>
-                    <p class="text-xs text-blue-100">Banca FCC • 70 Questões (Gerais Peso 1 | Específicos Peso 2)</p>
-                </div>
-            </div>
-
-            <!-- Controles de Conta, Sincronização e Exportação -->
-            <div class="flex items-center gap-2 flex-wrap">
-                <span id="save-status" class="text-xs bg-blue-900/60 text-blue-100 px-2.5 py-1 rounded border border-blue-700">
-                    💾 Salvo localmente
-                </span>
-
-                <!-- Botão Entrar / Conta (quando deslogado) -->
-                <button id="open-auth-btn" onclick="openAuthModal('login')" class="bg-white hover:bg-gray-100 text-[#004B8D] text-xs font-bold px-3 py-1.5 rounded shadow-sm transition flex items-center gap-1.5">
-                    <span>👤</span> Entrar / Conta
-                </button>
-
-                <!-- Badge do Usuário Logado -->
-                <div id="user-badge" class="hidden items-center gap-2 bg-blue-900/80 text-white text-xs px-2.5 py-1.5 rounded border border-blue-600">
-                    <span class="text-blue-200">👤</span>
-                    <span id="user-email-label" class="font-medium max-w-[170px] truncate"></span>
-                    <button onclick="logoutUser()" class="text-blue-200 hover:text-white underline font-semibold ml-1">Sair</button>
-                </div>
-
-                <button onclick="exportCSV()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-3 py-1.5 rounded shadow-sm transition flex items-center gap-1.5">
-                    <span>⬇</span> Baixar Excel (CSV)
-                </button>
-                <button onclick="exportBackup()" class="bg-blue-700 hover:bg-blue-600 text-white text-xs font-medium px-2.5 py-1.5 rounded border border-blue-500 transition">
-                    Backup JSON
-                </button>
-                <label class="bg-blue-700 hover:bg-blue-600 text-white text-xs font-medium px-2.5 py-1.5 rounded border border-blue-500 transition cursor-pointer">
-                    Importar JSON
-                    <input type="file" id="import-file" accept=".json" class="hidden" onchange="importBackup(event)">
-                </label>
-                <button onclick="openResetModal()" class="bg-red-600 hover:bg-red-500 text-white text-xs font-medium px-2.5 py-1.5 rounded shadow-sm transition">
-                    Zerar Planilha
-                </button>
-            </div>
+    <!-- ======================================================================
+         TELA DE LOGIN EM TELA CHEIA ESTILO WINDOWS 10 / WINDOWS X
+         ====================================================================== -->
+    <section id="win-login-screen" aria-label="Tela de Login estilo Windows 10">
+        <!-- Relógio e Data no canto inferior esquerdo (estilo Windows 10) -->
+        <div class="hidden md:block fixed bottom-8 left-10 z-10 text-white select-none pointer-events-none">
+            <div id="win-clock" class="text-6xl font-light tracking-tight leading-none drop-shadow">00:00</div>
+            <div id="win-date" class="text-lg font-light text-blue-100/90 mt-1 capitalize drop-shadow">carregando data...</div>
         </div>
 
-        <!-- Barra de Abas Estilo Excel -->
-        <div class="bg-gray-200 text-gray-700 border-t border-gray-300">
-            <div id="tabs-container" class="max-w-[1600px] mx-auto px-2 flex items-center overflow-x-auto tabs-scroll">
-                <!-- Renderizado via JS -->
-            </div>
-        </div>
-    </header>
-
-    <!-- Conteúdo Principal -->
-    <main class="flex-1 max-w-[1600px] w-full mx-auto p-3 sm:p-4 flex flex-col gap-3">
-
-        <!-- Barra de Filtros da Matéria -->
-        <div id="subject-toolbar" class="hidden bg-white border border-gray-300 rounded p-2.5 shadow-sm flex flex-wrap items-center justify-between gap-3">
-            <div class="flex items-center gap-2 flex-wrap">
-                <span id="subject-badge" class="bg-[#004B8D] text-white text-xs font-bold px-2.5 py-1 rounded"></span>
-                <h2 id="subject-title" class="font-bold text-gray-800 text-sm sm:text-base"></h2>
-                <span id="subject-meta" class="text-xs text-gray-500 font-medium"></span>
+        <!-- Bloco Central de Login -->
+        <div class="relative z-10 w-full max-w-[360px] px-6 py-8 flex flex-col items-center text-white">
+            <!-- Avatar Circular Translúcido -->
+            <div class="w-28 h-28 rounded-full bg-white/15 border-2 border-white/30 backdrop-blur-md flex items-center justify-center shadow-2xl mb-4">
+                <svg class="w-16 h-16 text-white/90" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-3.866 0-7 2.239-7 5v1a1 1 0 001 1h12a1 1 0 001-1v-1c0-2.761-3.134-5-7-5z"/>
+                </svg>
             </div>
 
-            <div class="flex items-center gap-2 flex-wrap w-full sm:w-auto">
-                <input type="text" id="search-input" oninput="renderCurrentView()" placeholder="🔍 Filtrar assunto..."
-                    class="border border-gray-300 rounded px-2.5 py-1 text-xs focus:outline-none focus:border-[#004B8D] flex-1 sm:w-52">
+            <!-- Título e Subtítulo -->
+            <h1 class="text-2xl font-light tracking-wide text-center drop-shadow">Edital Banestes</h1>
+            <p class="text-xs text-blue-100/80 mt-0.5 mb-5 text-center">Técnico Bancário • Planilha de Estudos</p>
 
-                <select id="filter-select" onchange="renderCurrentView()" class="border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:outline-none focus:border-[#004B8D]">
-                    <option value="all">Todos os assuntos</option>
-                    <option value="pending">Pendentes de estudo</option>
-                    <option value="done">Estudados / Com passagem</option>
-                    <option value="low">Desempenho &lt; 70%</option>
-                </select>
-
-                <button id="toggle-all-btn" onclick="toggleExpandAll()" class="border border-gray-300 bg-gray-50 hover:bg-gray-100 text-gray-700 font-medium rounded px-2.5 py-1 text-xs transition whitespace-nowrap">
-                    ▼ Expandir todos
-                </button>
-            </div>
-        </div>
-
-        <!-- Viewport da Planilha -->
-        <div id="sheet-viewport" class="bg-white border border-gray-300 rounded shadow-sm overflow-x-auto flex-1">
-            <!-- Renderizado via JS -->
-        </div>
-    </main>
-
-    <!-- Modal de Autenticação (E-mail/Senha + Google) -->
-    <div id="auth-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-xl shadow-2xl max-w-md w-full overflow-hidden border border-gray-200">
-            <!-- Topo do Modal -->
-            <div class="bg-[#004B8D] text-white px-5 py-4 flex items-center justify-between">
-                <div>
-                    <h3 class="font-bold text-base">Sincronização na Nuvem</h3>
-                    <p class="text-xs text-blue-100">Salve seu progresso no PC e no celular</p>
-                </div>
-                <button type="button" onclick="closeAuthModal()" class="text-blue-200 hover:text-white text-xl font-bold leading-none px-1">×</button>
-            </div>
-
-            <!-- Abas Entrar / Criar Conta -->
-            <div class="grid grid-cols-2 border-b border-gray-200 bg-gray-50">
-                <button type="button" id="auth-tab-login" onclick="setAuthMode('login')" class="py-2.5 text-sm font-bold text-[#004B8D] border-b-2 border-[#004B8D] bg-white transition">
+            <!-- Alternador Discreto: Entrar / Criar Conta -->
+            <div class="flex items-center gap-6 mb-4 text-sm">
+                <button type="button" id="win-tab-login" class="pb-1 font-semibold text-white border-b-2 border-[#38bdf8] transition cursor-pointer">
                     Entrar
                 </button>
-                <button type="button" id="auth-tab-register" onclick="setAuthMode('register')" class="py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 transition">
+                <button type="button" id="win-tab-register" class="pb-1 font-normal text-blue-100/70 border-b-2 border-transparent hover:text-white transition cursor-pointer">
                     Criar Conta
                 </button>
             </div>
 
-            <!-- Formulário -->
-            <form id="auth-form" onsubmit="handleEmailAuth(event)" class="p-5 space-y-4">
-                <!-- Mensagem de Erro / Sucesso -->
-                <div id="auth-feedback" class="hidden text-xs px-3 py-2.5 rounded-lg border font-medium"></div>
+            <!-- Caixa de Feedback / Erro Traduzido -->
+            <div id="win-auth-feedback" class="hidden w-full mb-3 text-xs px-3 py-2.5 rounded-sm border backdrop-blur-md leading-relaxed"></div>
 
+            <!-- Formulário de Login / Cadastro -->
+            <form id="win-auth-form" class="w-full space-y-2.5" novalidate>
                 <div>
-                    <label for="auth-email" class="block text-xs font-semibold text-gray-700 mb-1">E-mail</label>
-                    <input type="email" id="auth-email" required autocomplete="email" placeholder="seuemail@exemplo.com"
-                        class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#004B8D] focus:ring-2 focus:ring-blue-100">
+                    <label for="win-email" class="sr-only">E-mail</label>
+                    <input type="email" id="win-email" required autocomplete="email" placeholder="E-mail"
+                        class="win-input">
                 </div>
 
-                <div>
-                    <label for="auth-password" class="block text-xs font-semibold text-gray-700 mb-1">Senha</label>
-                    <div class="relative">
-                        <input type="password" id="auth-password" required minlength="6" autocomplete="current-password" placeholder="Mínimo 6 caracteres"
-                            class="w-full border border-gray-300 rounded-lg px-3 py-2 pr-16 text-sm focus:outline-none focus:border-[#004B8D] focus:ring-2 focus:ring-blue-100">
-                        <button type="button" id="toggle-pwd-btn" onclick="togglePasswordVisibility()"
-                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-500 hover:text-[#004B8D]">
-                            Mostrar
+                <!-- Campo Senha + Botão Mostrar + Seta Windows → -->
+                <div class="flex items-center w-full">
+                    <div class="relative flex-1">
+                        <label for="win-password" class="sr-only">Senha</label>
+                        <input type="password" id="win-password" required minlength="6" autocomplete="current-password" placeholder="Senha"
+                            class="win-input pr-10 rounded-r-none">
+                        <button type="button" id="win-toggle-pwd" title="Mostrar ou ocultar senha"
+                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-800 p-1 cursor-pointer">
+                            <svg id="win-eye-icon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg>
                         </button>
                     </div>
-                </div>
-
-                <div id="forgot-password-wrap" class="flex justify-end -mt-2">
-                    <button type="button" onclick="handleForgotPassword()" class="text-xs font-medium text-[#004B8D] hover:underline">
-                        Esqueci minha senha
+                    <button type="submit" id="win-submit-btn" title="Entrar" class="win-arrow-btn">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        </svg>
                     </button>
                 </div>
 
-                <button type="submit" id="auth-submit-btn" class="w-full bg-[#004B8D] hover:bg-blue-800 text-white font-bold text-sm py-2.5 rounded-lg shadow-sm transition">
-                    Entrar com E-mail
-                </button>
+                <!-- Link Esqueci minha senha -->
+                <div id="win-forgot-wrap" class="flex justify-between items-center pt-0.5">
+                    <span id="win-mode-hint" class="text-[11px] text-blue-100/75">Pressione Enter ou clique na seta →</span>
+                    <button type="button" id="win-forgot-btn" class="text-xs text-blue-200 hover:text-white hover:underline cursor-pointer">
+                        Esqueci minha senha
+                    </button>
+                </div>
+            </form>
 
-                <div class="relative flex items-center py-1">
-                    <div class="flex-grow border-t border-gray-200"></div>
-                    <span class="flex-shrink mx-3 text-xs text-gray-400 font-medium">ou</span>
-                    <div class="flex-grow border-t border-gray-200"></div>
+            <!-- Divisor -->
+            <div class="w-full flex items-center gap-3 my-4">
+                <div class="flex-1 h-px bg-white/20"></div>
+                <span class="text-[11px] text-blue-100/70 uppercase tracking-wider">ou</span>
+                <div class="flex-1 h-px bg-white/20"></div>
+            </div>
+
+            <!-- Botão Entrar com Google -->
+            <button type="button" id="win-google-btn" class="win-tile-btn w-full py-2.5 px-4 text-sm font-medium flex items-center justify-center gap-2.5 cursor-pointer">
+                <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M23.745 12.27c0-.79-.07-1.54-.19-2.27h-11.3v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/>
+                    <path fill="#34A853" d="M12.255 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96h-3.98v3.09C3.515 21.3 7.565 24 12.255 24z"/>
+                    <path fill="#FBBC05" d="M5.525 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62h-3.98a11.86 11.86 0 000 10.76l3.98-3.09z"/>
+                    <path fill="#EA4335" d="M12.255 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C18.205 1.19 15.495 0 12.255 0c-4.69 0-8.74 2.7-10.71 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/>
+                </svg>
+                <span>Entrar com Google</span>
+            </button>
+
+            <!-- Botão Entrar sem Conta (Modo Offline) -->
+            <button type="button" id="win-offline-btn" class="mt-3 w-full py-2 px-4 text-xs font-medium text-blue-100/90 hover:text-white bg-white/5 hover:bg-white/15 border border-white/15 rounded-sm transition cursor-pointer">
+                💻 Entrar sem conta (Modo Offline)
+            </button>
+        </div>
+
+        <!-- Ícones estilo Windows 10 no canto inferior direito -->
+        <div class="fixed bottom-6 right-6 z-10 flex items-center gap-2 text-white/85">
+            <span id="win-net-indicator" title="Status da conexão com a nuvem"
+                class="w-9 h-9 rounded-sm flex items-center justify-center bg-white/10 border border-white/15 text-xs select-none">
+                🌐
+            </span>
+            <button type="button" id="win-corner-offline-btn" title="Entrar sem conta (Modo Offline)"
+                class="w-9 h-9 rounded-sm flex items-center justify-center bg-white/10 hover:bg-white/25 border border-white/15 transition cursor-pointer">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+            </button>
+        </div>
+    </section>
+
+    <!-- ======================================================================
+         APLICAÇÃO PRINCIPAL (PLANILHA)
+         ====================================================================== -->
+    <div id="app-shell" class="min-h-screen flex flex-col">
+        <!-- Cabeçalho Fixo da Planilha -->
+        <header class="bg-[#004B8D] text-white shadow-md sticky top-0 z-30">
+            <div class="max-w-[1600px] mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="bg-white text-[#004B8D] font-extrabold px-2.5 py-1 rounded text-sm tracking-tight shadow-sm">
+                        BANESTES
+                    </div>
+                    <div>
+                        <h2 class="font-bold text-base sm:text-lg leading-tight">Planilha Banestes — Técnico Bancário</h2>
+                        <p class="text-xs text-blue-100">Banca FCC • Edital 01/2026 • 70 Questões (Gerais Peso 1 | Específicos Peso 2)</p>
+                    </div>
                 </div>
 
-                <button type="button" onclick="loginWithGoogle()" class="w-full bg-white hover:bg-gray-50 text-gray-700 font-semibold text-sm py-2.5 px-4 rounded-lg border border-gray-300 shadow-sm transition flex items-center justify-center gap-2">
-                    <svg class="w-4 h-4" viewBox="0 0 24 24">
-                        <path fill="#4285F4" d="M23.745 12.27c0-.79-.07-1.54-.19-2.27h-11.3v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/>
-                        <path fill="#34A853" d="M12.255 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96h-3.98v3.09C3.515 21.3 7.565 24 12.255 24z"/>
-                        <path fill="#FBBC05" d="M5.525 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62h-3.98a11.86 11.86 0 000 10.76l3.98-3.09z"/>
-                        <path fill="#EA4335" d="M12.255 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C18.205 1.19 15.495 0 12.255 0c-4.69 0-8.74 2.7-10.71 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/>
-                    </svg>
-                    Entrar com Google
-                </button>
-            </form>
-        </div>
+                <!-- Barra de Ações e Status -->
+                <div class="flex items-center gap-2 flex-wrap">
+                    <span id="save-status" class="text-xs bg-blue-900/60 text-blue-100 px-2.5 py-1 rounded border border-blue-700 font-medium">
+                        💻 Modo Local
+                    </span>
+
+                    <div id="header-user-pill" class="flex items-center gap-1.5 bg-blue-900/70 text-white text-xs px-2.5 py-1 rounded border border-blue-600">
+                        <span class="text-blue-200">👤</span>
+                        <span id="header-user-name" class="font-medium max-w-[160px] truncate">Modo Offline</span>
+                    </div>
+
+                    <button type="button" id="btn-export-csv" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-3 py-1.5 rounded shadow-sm transition flex items-center gap-1.5 cursor-pointer">
+                        <span>⬇</span> Baixar Excel (CSV)
+                    </button>
+                    <button type="button" id="btn-export-json" class="bg-blue-700 hover:bg-blue-600 text-white text-xs font-medium px-2.5 py-1.5 rounded border border-blue-500 transition cursor-pointer">
+                        Backup JSON
+                    </button>
+                    <label class="bg-blue-700 hover:bg-blue-600 text-white text-xs font-medium px-2.5 py-1.5 rounded border border-blue-500 transition cursor-pointer">
+                        Importar JSON
+                        <input type="file" id="import-file" accept=".json" class="hidden">
+                    </label>
+                    <button type="button" id="btn-reset-open" class="bg-red-600 hover:bg-red-500 text-white text-xs font-medium px-2.5 py-1.5 rounded shadow-sm transition cursor-pointer">
+                        Zerar Dados
+                    </button>
+                    <button type="button" id="btn-lock-logout" class="bg-white hover:bg-gray-100 text-[#004B8D] text-xs font-bold px-3 py-1.5 rounded shadow-sm transition flex items-center gap-1 cursor-pointer">
+                        <span>🔒</span> Bloquear / Sair
+                    </button>
+                </div>
+            </div>
+
+            <!-- Barra de Abas Estilo Planilha -->
+            <div class="bg-gray-200 text-gray-700 border-t border-gray-300">
+                <div id="tabs-container" class="max-w-[1600px] mx-auto px-2 flex items-center overflow-x-auto tabs-scroll">
+                    <!-- Renderizado via JS -->
+                </div>
+            </div>
+        </header>
+
+        <!-- Conteúdo Principal -->
+        <main class="flex-1 max-w-[1600px] w-full mx-auto p-3 sm:p-4 flex flex-col gap-3">
+            <!-- Barra de Filtros da Matéria -->
+            <div id="subject-toolbar" class="hidden bg-white border border-gray-300 rounded p-2.5 shadow-sm flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-2 flex-wrap">
+                    <span id="subject-badge" class="bg-[#004B8D] text-white text-xs font-bold px-2.5 py-1 rounded"></span>
+                    <h3 id="subject-title" class="font-bold text-gray-800 text-sm sm:text-base"></h3>
+                    <span id="subject-meta" class="text-xs text-gray-500 font-medium"></span>
+                </div>
+
+                <div class="flex items-center gap-2 flex-wrap w-full sm:w-auto">
+                    <input type="text" id="search-input" placeholder="🔍 Filtrar assunto..."
+                        class="border border-gray-300 rounded px-2.5 py-1 text-xs focus:outline-none focus:border-[#0078D4] flex-1 sm:w-52">
+
+                    <select id="filter-select" class="border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:outline-none focus:border-[#0078D4]">
+                        <option value="all">Todos os assuntos</option>
+                        <option value="pending">Pendentes de estudo</option>
+                        <option value="done">Estudados / Com passagem</option>
+                        <option value="low">Desempenho &lt; 70%</option>
+                    </select>
+
+                    <button type="button" id="toggle-all-btn" class="border border-gray-300 bg-gray-50 hover:bg-gray-100 text-gray-700 font-medium rounded px-2.5 py-1 text-xs transition whitespace-nowrap cursor-pointer">
+                        ▼ Expandir todos
+                    </button>
+                </div>
+            </div>
+
+            <!-- Viewport da Planilha -->
+            <div id="sheet-viewport" class="bg-white border border-gray-300 rounded shadow-sm overflow-x-auto flex-1">
+                <!-- Renderizado via JS -->
+            </div>
+        </main>
     </div>
 
-    <!-- Modal de Confirmação para Zerar Planilha -->
+    <!-- Modal de Confirmação para Zerar Dados -->
     <div id="reset-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
         <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-5 border border-gray-200">
-            <h3 class="text-base font-bold text-gray-900 mb-2">Zerar toda a planilha?</h3>
+            <h3 class="text-base font-bold text-gray-900 mb-2">Zerar todos os dados da planilha?</h3>
             <p class="text-sm text-gray-600 mb-5">
-                Tem certeza que deseja apagar todas as questões, acertos, erros, anotações e passagens registradas? Essa ação não pode ser desfeita (faça um Backup JSON antes se quiser guardar seus dados).
+                Tem certeza que deseja apagar todas as questões, acertos, erros, anotações e passagens registradas? Faça um <strong>Backup JSON</strong> antes caso queira guardar seu histórico.
             </p>
             <div class="flex items-center justify-end gap-2">
-                <button type="button" onclick="closeResetModal()" class="px-3.5 py-2 text-xs font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded transition">
+                <button type="button" id="btn-reset-cancel" class="px-3.5 py-2 text-xs font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded transition cursor-pointer">
                     Cancelar
                 </button>
-                <button type="button" onclick="confirmReset()" class="px-3.5 py-2 text-xs font-semibold text-white bg-red-600 hover:bg-red-700 rounded shadow-sm transition">
+                <button type="button" id="btn-reset-confirm" class="px-3.5 py-2 text-xs font-semibold text-white bg-red-600 hover:bg-red-700 rounded shadow-sm transition cursor-pointer">
                     Sim, zerar tudo
                 </button>
             </div>
@@ -351,53 +500,37 @@
     </div>
 
     <!-- Notificação Toast -->
-    <div id="toast-box" class="fixed bottom-4 right-4 z-50 hidden max-w-sm bg-gray-900 text-white text-xs px-4 py-3 rounded-lg shadow-lg border border-gray-700"></div>
+    <div id="toast-box" class="fixed bottom-4 right-4 z-[120] hidden max-w-sm bg-gray-900 text-white text-xs px-4 py-3 rounded-lg shadow-lg border border-gray-700"></div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-        import {
-            getAuth,
-            GoogleAuthProvider,
-            signInWithPopup,
-            signInWithEmailAndPassword,
-            createUserWithEmailAndPassword,
-            sendPasswordResetEmail,
-            signOut,
-            onAuthStateChanged
-        } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-        import {
-            getFirestore,
-            doc,
-            setDoc,
-            onSnapshot
-        } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
-
         // ============================================================================
-        // CONFIGURAÇÃO DO FIREBASE (EMBUTIDA)
+        // CONFIGURAÇÃO EXATA DO FIREBASE (FORNECIDA PELO USUÁRIO)
         // ============================================================================
-        const MY_FIREBASE_CONFIG = {
-           const firebaseConfig = {
-  apiKey: "AIzaSyBb-lO-hSafr80eNvFikQRSfR_n6gXOkFk",
-  authDomain: "planilha-banteses.firebaseapp.com",
-  projectId: "planilha-banteses",
-  storageBucket: "planilha-banteses.firebasestorage.app",
-  messagingSenderId: "11481329402",
-  appId: "1:11481329402:web:08924ee706420806526343"
-};
+        const firebaseConfig = {
+            apiKey: "AIzaSyBb-lO-hSafr80eNvFikQRSfR_n6gXOkFk",
+            authDomain: "planilha-banteses.firebaseapp.com",
+            projectId: "planilha-banteses",
+            storageBucket: "planilha-banteses.firebasestorage.app",
+            messagingSenderId: "11481329402",
+            appId: "1:11481329402:web:08924ee706420806526343"
         };
 
         const LOCAL_STORAGE_KEY = "banestes_planilha_progresso_v1";
 
-        let auth = null;
-        let db = null;
+        // Referências do Firebase carregadas com segurança via CDN oficial 10.12.2
+        let fbAuth = null;
+        let fbDb = null;
+        let fbModules = null;
+        let firebaseReady = false;
         let currentUser = null;
+        let isOfflineMode = false;
         let unsubscribeSnapshot = null;
         let saveDebounceTimer = null;
         let lastSyncedJson = "";
-        let authMode = "login"; // 'login' | 'register'
+        let authMode = "login"; // "login" | "register"
 
         // ============================================================================
-        // DADOS DO EDITAL VERTICALIZADO BANESTES - TÉCNICO BANCÁRIO (FCC)
+        // CONTEÚDO COMPLETO DO EDITAL VERTICALIZADO BANESTES (FCC EDITAL 01/2026)
         // ============================================================================
         const EDITAL_DATA = [
             {
@@ -478,9 +611,9 @@
             {
                 id: "03",
                 code: "03",
-                shortName: "03. Matemática e RLM",
-                name: "MATEMÁTICA / RACIOCÍNIO LÓGICO E QUANTITATIVO",
-                block: "Gerais",
+                shortName: "03. Matemática / RLM",
+                name: "MATEMÁTICA/RACIOCÍNIO LÓGICO E QUANTITATIVO",
+                block: "Gerais TB",
                 weight: 1,
                 examQuestions: 10,
                 scoreShare: "11,1%",
@@ -521,7 +654,7 @@
                 code: "04",
                 shortName: "04. Atualidades MF",
                 name: "ATUALIDADES DO MERCADO FINANCEIRO",
-                block: "Gerais",
+                block: "Gerais TB",
                 weight: 1,
                 examQuestions: 5,
                 scoreShare: "5,6%",
@@ -553,8 +686,8 @@
             {
                 id: "05",
                 code: "05",
-                shortName: "05. Conhec. Bancários",
-                name: "CONHECIMENTOS BANCÁRIOS / SECURITÁRIOS",
+                shortName: "05. Conh. Bancários",
+                name: "CONHECIMENTOS BANCÁRIOS/SECURITÁRIOS",
                 block: "Específicos",
                 weight: 2,
                 examQuestions: 15,
@@ -592,7 +725,7 @@
                     "7.2 - Pix.",
                     "7.3 - Meios eletrônicos de pagamento.",
                     "7.4 - Inovação no sistema financeiro.",
-                    "8 - Prevenção à lavagem de dinheiro e ao financiamento do terrorismo (PLD/FT).",
+                    "8 - Prevenção à lavagem de dinheiro e ao financiamento do terrorismo.",
                     "9 - Conselho de Controle de Atividades Financeiras (COAF).",
                     "10 - Educação financeira e proteção do consumidor de produtos e serviços financeiros.",
                     "11 - Noções de seguros.",
@@ -711,7 +844,7 @@
                     "3.1 - Conceitos básicos de informática.",
                     "3.2 - Hardware.",
                     "3.3 - Software.",
-                    "3.4 - Sistemas operacionais (Windows e Linux básico).",
+                    "3.4 - Sistemas operacionais (Windows e Linux básico, em suas últimas versões).",
                     "3.5 - Internet, intranet, navegadores e mecanismos de busca.",
                     "3.6 - Correio eletrônico.",
                     "3.7 - Computação em nuvem.",
@@ -733,11 +866,11 @@
                     "4.9 - Chat.",
                     "5 - Inteligência Artificial e novas tecnologias.",
                     "5.1 - Conceitos básicos de inteligência artificial.",
-                    "5.2 - Aprendizado de máquina (Machine Learning).",
+                    "5.2 - Aprendizado de máquina.",
                     "5.3 - IA generativa.",
                     "5.4 - Automação.",
                     "5.5 - Chatbots.",
-                    "5.6 - Processamento de linguagem natural (PLN).",
+                    "5.6 - Processamento de linguagem natural.",
                     "5.7 - Gemini no Google Workspace.",
                     "5.8 - Aplicações bancárias da IA: análise de crédito, prevenção à fraude e atendimento ao cliente.",
                     "5.9 - Riscos, vieses e explicabilidade.",
@@ -784,6 +917,28 @@
         let expandedTopics = {};
 
         // ============================================================================
+        // RELÓGIO DA TELA DE LOGIN WINDOWS 10
+        // ============================================================================
+        function updateWindowsClock() {
+            const clockEl = document.getElementById("win-clock");
+            const dateEl = document.getElementById("win-date");
+            if (!clockEl || !dateEl) return;
+            const now = new Date();
+            const hh = String(now.getHours()).padStart(2, "0");
+            const mm = String(now.getMinutes()).padStart(2, "0");
+            clockEl.textContent = `${hh}:${mm}`;
+            try {
+                dateEl.textContent = now.toLocaleDateString("pt-BR", {
+                    weekday: "long",
+                    day: "numeric",
+                    month: "long"
+                });
+            } catch (e) {
+                dateEl.textContent = now.toLocaleDateString();
+            }
+        }
+
+        // ============================================================================
         // UTILITÁRIOS DE UI E FORMATAÇÃO
         // ============================================================================
         function showToast(msg, duration = 4000) {
@@ -799,40 +954,40 @@
             const el = document.getElementById("save-status");
             if (!el) return;
             el.textContent = text;
-            el.className = `text-xs px-2.5 py-1 rounded border transition ${colorClasses}`;
+            el.className = `text-xs px-2.5 py-1 rounded border font-medium transition ${colorClasses}`;
         }
 
         function getTodayISO() {
             const now = new Date();
             const y = now.getFullYear();
-            const m = String(now.getMonth() + 1).padStart(2, '0');
-            const d = String(now.getDate()).padStart(2, '0');
+            const m = String(now.getMonth() + 1).padStart(2, "0");
+            const d = String(now.getDate()).padStart(2, "0");
             return `${y}-${m}-${d}`;
         }
 
         function formatShortDate(isoDate) {
-            if (!isoDate || !isoDate.includes('-')) return "";
-            const parts = isoDate.split('-');
+            if (!isoDate || !isoDate.includes("-")) return "";
+            const parts = isoDate.split("-");
             if (parts.length !== 3) return isoDate;
             return `${parts[2]}/${parts[1]}`;
         }
 
         function escapeHtml(str) {
-            return String(str || '')
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;');
+            return String(str || "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;");
         }
 
         function autoResizeTextarea(el) {
             if (!el) return;
-            el.style.height = 'auto';
-            el.style.height = Math.max(30, el.scrollHeight) + 'px';
+            el.style.height = "auto";
+            el.style.height = Math.max(30, el.scrollHeight) + "px";
         }
 
         function resizeAllVisibleTextareas() {
-            document.querySelectorAll('.sheet-textarea').forEach(autoResizeTextarea);
+            document.querySelectorAll(".sheet-textarea").forEach(autoResizeTextarea);
         }
 
         function hasAnyProgressData(progressObj) {
@@ -842,7 +997,14 @@
                 for (const idx of Object.keys(topics)) {
                     const row = topics[idx];
                     if (!row) continue;
-                    if (row.studied || Number(row.q) > 0 || Number(row.a) > 0 || Number(row.e) > 0 || (row.note && row.note.trim() !== "") || (Array.isArray(row.sessions) && row.sessions.length > 0)) {
+                    if (
+                        row.studied ||
+                        Number(row.q) > 0 ||
+                        Number(row.a) > 0 ||
+                        Number(row.e) > 0 ||
+                        (row.note && row.note.trim() !== "") ||
+                        (Array.isArray(row.sessions) && row.sessions.length > 0)
+                    ) {
                         return true;
                     }
                 }
@@ -871,7 +1033,7 @@
         }
 
         // ============================================================================
-        // PERSISTÊNCIA LOCAL + FIREBASE FIRESTORE (COM DEBOUNCE 600ms)
+        // PERSISTÊNCIA LOCAL + FIRESTORE (COM DEBOUNCE 600ms)
         // ============================================================================
         function loadLocalProgress() {
             try {
@@ -897,54 +1059,72 @@
         }
 
         function getUserProgressDocRef(uid) {
-            return doc(db, "artifacts", "banestes-planilha", "users", uid, "planilha", "progresso");
+            return fbModules.doc(fbDb, "artifacts", "banestes-planilha", "users", uid, "planilha", "progresso");
         }
 
         function saveProgress() {
             // 1. Salva localmente de imediato
             saveToLocalStorage();
 
-            // 2. Se não estiver logado, mantém status local
-            if (!db || !currentUser) {
-                updateSyncStatus("💾 Salvo localmente", "bg-blue-900/60 text-blue-100 border-blue-700");
+            // 2. Se offline ou sem login, mantém modo local
+            if (!firebaseReady || !fbDb || !currentUser || isOfflineMode) {
+                updateSyncStatus("💻 Modo Local", "bg-blue-900/60 text-blue-100 border-blue-700");
                 return;
             }
 
-            // 3. Se logado, salva na nuvem com debounce de 600ms
-            updateSyncStatus("🔄 Salvando...", "bg-blue-800 text-blue-100 border-blue-500");
+            // 3. Sincroniza com Firestore usando debounce de 600ms
+            updateSyncStatus("⏳ Salvando...", "bg-blue-800 text-blue-100 border-blue-500");
             clearTimeout(saveDebounceTimer);
             saveDebounceTimer = setTimeout(async () => {
-                if (!db || !currentUser) return;
+                if (!firebaseReady || !fbDb || !currentUser) return;
                 try {
                     const serialized = JSON.stringify(userProgress);
                     lastSyncedJson = serialized;
-                    await setDoc(getUserProgressDocRef(currentUser.uid), {
+                    await fbModules.setDoc(getUserProgressDocRef(currentUser.uid), {
                         progressJson: serialized,
                         email: currentUser.email || "",
                         updatedAt: new Date().toISOString()
                     });
-                    updateSyncStatus("☁️ Sincronizado na nuvem", "bg-emerald-700 text-white border-emerald-500");
+                    updateSyncStatus("☁️ Sincronizado", "bg-emerald-700 text-white border-emerald-500");
                 } catch (err) {
                     console.error("Erro ao salvar no Firestore:", err);
-                    updateSyncStatus("⚠ Erro na nuvem (salvo local)", "bg-amber-600 text-white border-amber-500");
-                    showToast("Erro ao salvar na nuvem. Seus dados continuam salvos localmente.");
+                    updateSyncStatus("⚠ Salvo Local (Erro Nuvem)", "bg-amber-600 text-white border-amber-500");
+                    showToast("Erro ao sincronizar na nuvem. Seus dados continuam salvos localmente.");
                 }
             }, 600);
         }
 
-        function subscribeToCloudProgress(user) {
-            if (!db || !user) return;
+        async function subscribeToCloudProgress(user) {
+            if (!firebaseReady || !fbDb || !user) return;
             if (unsubscribeSnapshot) {
                 unsubscribeSnapshot();
                 unsubscribeSnapshot = null;
             }
 
-            updateSyncStatus("🔄 Sincronizando...", "bg-blue-800 text-blue-100 border-blue-500");
-
+            updateSyncStatus("⏳ Sincronizando...", "bg-blue-800 text-blue-100 border-blue-500");
             const docRef = getUserProgressDocRef(user.uid);
-            unsubscribeSnapshot = onSnapshot(
+
+            try {
+                // Verifica se o documento na nuvem existe; se estiver vazio e houver dados locais, sobe automaticamente
+                const initialSnap = await fbModules.getDoc(docRef);
+                if (!initialSnap.exists() && hasAnyProgressData(userProgress)) {
+                    const serialized = JSON.stringify(userProgress);
+                    lastSyncedJson = serialized;
+                    await fbModules.setDoc(docRef, {
+                        progressJson: serialized,
+                        email: user.email || "",
+                        updatedAt: new Date().toISOString()
+                    });
+                    showToast("Seus dados locais foram enviados para a nuvem!");
+                }
+            } catch (err) {
+                console.warn("Aviso ao verificar documento inicial:", err);
+            }
+
+            // Escuta alterações em tempo real
+            unsubscribeSnapshot = fbModules.onSnapshot(
                 docRef,
-                async (snap) => {
+                (snap) => {
                     if (snap.exists()) {
                         const data = snap.data();
                         if (data && data.progressJson && data.progressJson !== lastSyncedJson) {
@@ -956,258 +1136,274 @@
                                 renderTabs();
                                 renderCurrentView();
                             } catch (e) {
-                                console.error("Erro ao ler JSON da nuvem:", e);
+                                console.error("Erro ao interpretar JSON da nuvem:", e);
                             }
-                        }
-                        updateSyncStatus("☁️ Sincronizado na nuvem", "bg-emerald-700 text-white border-emerald-500");
-                    } else {
-                        // Se a nuvem estiver vazia mas o usuário já tiver dados locais, sobe automaticamente
-                        if (hasAnyProgressData(userProgress)) {
-                            try {
-                                const serialized = JSON.stringify(userProgress);
-                                lastSyncedJson = serialized;
-                                await setDoc(docRef, {
-                                    progressJson: serialized,
-                                    email: user.email || "",
-                                    updatedAt: new Date().toISOString()
-                                });
-                                updateSyncStatus("☁️ Sincronizado na nuvem", "bg-emerald-700 text-white border-emerald-500");
-                                showToast("Seus dados locais foram enviados para a nuvem!");
-                            } catch (err) {
-                                console.error("Erro ao subir dados locais:", err);
-                                updateSyncStatus("⚠ Erro ao enviar dados", "bg-red-700 text-white border-red-500");
-                            }
-                        } else {
-                            updateSyncStatus("☁️ Sincronizado na nuvem", "bg-emerald-700 text-white border-emerald-500");
                         }
                     }
+                    updateSyncStatus("☁️ Sincronizado", "bg-emerald-700 text-white border-emerald-500");
                 },
                 (err) => {
-                    console.error("Erro no onSnapshot:", err);
+                    console.error("Erro no onSnapshot do Firestore:", err);
                     updateSyncStatus("⚠ Sem permissão no Firestore", "bg-red-700 text-white border-red-500");
                 }
             );
         }
 
         // ============================================================================
-        // AUTENTICAÇÃO (MODAL E-MAIL/SENHA + GOOGLE + TRADUÇÃO DE ERROS)
+        // CONTROLE DA TELA DE LOGIN WINDOWS 10 E AUTENTICAÇÃO
         // ============================================================================
-        function translateFirebaseError(errorCode) {
+        function unlockToSpreadsheet(displayName, isCloud) {
+            const loginScreen = document.getElementById("win-login-screen");
+            const userLabel = document.getElementById("header-user-name");
+            if (userLabel) userLabel.textContent = displayName || "Modo Offline";
+            if (!isCloud) {
+                updateSyncStatus("💻 Modo Local", "bg-blue-900/60 text-blue-100 border-blue-700");
+            }
+            if (loginScreen) loginScreen.classList.add("unlocked");
+            requestAnimationFrame(resizeAllVisibleTextareas);
+        }
+
+        function lockToWindowsScreen() {
+            const loginScreen = document.getElementById("win-login-screen");
+            if (loginScreen) loginScreen.classList.remove("unlocked");
+            clearWinFeedback();
+        }
+
+        function showWinFeedback(message, isSuccess = false) {
+            const box = document.getElementById("win-auth-feedback");
+            if (!box) return;
+            box.textContent = message;
+            box.classList.remove(
+                "hidden",
+                "bg-red-950/75", "text-red-100", "border-red-400/50",
+                "bg-emerald-950/75", "text-emerald-100", "border-emerald-400/50"
+            );
+            if (isSuccess) {
+                box.classList.add("bg-emerald-950/75", "text-emerald-100", "border-emerald-400/50");
+            } else {
+                box.classList.add("bg-red-950/75", "text-red-100", "border-red-400/50");
+            }
+        }
+
+        function clearWinFeedback() {
+            const box = document.getElementById("win-auth-feedback");
+            if (box) box.classList.add("hidden");
+        }
+
+        function translateFirebaseError(code) {
             const map = {
                 "auth/invalid-email": "O formato do e-mail digitado é inválido.",
                 "auth/user-disabled": "Esta conta foi desativada.",
                 "auth/user-not-found": "Nenhuma conta encontrada com este e-mail.",
                 "auth/wrong-password": "Senha incorreta. Tente novamente ou clique em 'Esqueci minha senha'.",
                 "auth/invalid-credential": "E-mail ou senha incorretos.",
-                "auth/email-already-in-use": "Este e-mail já está cadastrado. Tente fazer login.",
-                "auth/weak-password": "A senha é muito fraca. Use pelo menos 6 caracteres.",
+                "auth/email-already-in-use": "Este e-mail já está cadastrado. Clique em 'Entrar' para acessar.",
+                "auth/weak-password": "Senha muito curta. Use no mínimo 6 caracteres.",
                 "auth/too-many-requests": "Muitas tentativas seguidas. Aguarde alguns minutos e tente novamente.",
-                "auth/network-request-failed": "Sem conexão com a internet. Verifique sua rede.",
+                "auth/network-request-failed": "Sem conexão com a internet. Você pode usar o Modo Offline abaixo.",
                 "auth/popup-closed-by-user": "A janela de login do Google foi fechada antes de concluir.",
-                "auth/unauthorized-domain": "Este domínio não está autorizado no Firebase Authentication.",
-                "auth/operation-not-allowed": "Ative o provedor E-mail/Senha no painel do Firebase Authentication."
+                "auth/popup-blocked": "O navegador bloqueou a janela do Google. Permita pop-ups ou use E-mail/Senha.",
+                "auth/unauthorized-domain": "Domínio não autorizado no Firebase. Adicione este domínio em Authentication > Configurações > Domínios autorizados.",
+                "auth/operation-not-allowed": "Provedor não ativado. Ative E-mail/Senha no painel do Firebase Authentication.",
+                "auth/api-key-not-valid.-please-pass-a-valid-api-key.": "Chave da API do Firebase inválida. Verifique o firebaseConfig."
             };
-            return map[errorCode] || `Erro na autenticação (${errorCode || "desconhecido"}).`;
-        }
-
-        function showAuthFeedback(message, isSuccess = false) {
-            const box = document.getElementById("auth-feedback");
-            if (!box) return;
-            box.textContent = message;
-            box.classList.remove("hidden", "bg-red-50", "text-red-700", "border-red-200", "bg-emerald-50", "text-emerald-700", "border-emerald-200");
-            if (isSuccess) {
-                box.classList.add("bg-emerald-50", "text-emerald-700", "border-emerald-200");
-            } else {
-                box.classList.add("bg-red-50", "text-red-700", "border-red-200");
-            }
-        }
-
-        function clearAuthFeedback() {
-            const box = document.getElementById("auth-feedback");
-            if (box) box.classList.add("hidden");
+            return map[code] || `Erro na autenticação (${code || "verifique sua conexão"}).`;
         }
 
         function setAuthMode(mode) {
             authMode = mode;
-            clearAuthFeedback();
-            const tabLogin = document.getElementById("auth-tab-login");
-            const tabRegister = document.getElementById("auth-tab-register");
-            const submitBtn = document.getElementById("auth-submit-btn");
-            const forgotWrap = document.getElementById("forgot-password-wrap");
-            const pwdInput = document.getElementById("auth-password");
+            clearWinFeedback();
+            const tabLogin = document.getElementById("win-tab-login");
+            const tabRegister = document.getElementById("win-tab-register");
+            const forgotBtn = document.getElementById("win-forgot-btn");
+            const submitBtn = document.getElementById("win-submit-btn");
+            const pwdInput = document.getElementById("win-password");
+            const modeHint = document.getElementById("win-mode-hint");
 
             if (mode === "login") {
-                tabLogin.className = "py-2.5 text-sm font-bold text-[#004B8D] border-b-2 border-[#004B8D] bg-white transition";
-                tabRegister.className = "py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 transition";
-                submitBtn.textContent = "Entrar com E-mail";
-                forgotWrap.classList.remove("hidden");
+                tabLogin.className = "pb-1 font-semibold text-white border-b-2 border-[#38bdf8] transition cursor-pointer";
+                tabRegister.className = "pb-1 font-normal text-blue-100/70 border-b-2 border-transparent hover:text-white transition cursor-pointer";
+                forgotBtn.classList.remove("hidden");
+                submitBtn.title = "Entrar";
+                pwdInput.placeholder = "Senha";
                 pwdInput.setAttribute("autocomplete", "current-password");
+                modeHint.textContent = "Pressione Enter ou clique na seta →";
             } else {
-                tabRegister.className = "py-2.5 text-sm font-bold text-[#004B8D] border-b-2 border-[#004B8D] bg-white transition";
-                tabLogin.className = "py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 transition";
-                submitBtn.textContent = "Criar Conta";
-                forgotWrap.classList.add("hidden");
+                tabRegister.className = "pb-1 font-semibold text-white border-b-2 border-[#38bdf8] transition cursor-pointer";
+                tabLogin.className = "pb-1 font-normal text-blue-100/70 border-b-2 border-transparent hover:text-white transition cursor-pointer";
+                forgotBtn.classList.add("hidden");
+                submitBtn.title = "Criar Conta";
+                pwdInput.placeholder = "Criar senha (mín. 6 caracteres)";
                 pwdInput.setAttribute("autocomplete", "new-password");
+                modeHint.textContent = "Clique na seta → para criar sua conta";
             }
         }
 
-        function openAuthModal(mode = "login") {
-            setAuthMode(mode);
-            const modal = document.getElementById("auth-modal");
-            modal.classList.remove("hidden");
-            modal.classList.add("flex");
-            setTimeout(() => document.getElementById("auth-email")?.focus(), 50);
-        }
-
-        function closeAuthModal() {
-            const modal = document.getElementById("auth-modal");
-            modal.classList.add("hidden");
-            modal.classList.remove("flex");
-            clearAuthFeedback();
-        }
-
-        function togglePasswordVisibility() {
-            const input = document.getElementById("auth-password");
-            const btn = document.getElementById("toggle-pwd-btn");
-            if (!input || !btn) return;
-            if (input.type === "password") {
-                input.type = "text";
-                btn.textContent = "Ocultar";
-            } else {
-                input.type = "password";
-                btn.textContent = "Mostrar";
-            }
-        }
-
-        async function handleEmailAuth(event) {
+        async function handleWinEmailAuth(event) {
             event.preventDefault();
-            clearAuthFeedback();
-            if (!auth) {
-                showAuthFeedback("Firebase não inicializado.");
+            clearWinFeedback();
+
+            if (!firebaseReady || !fbAuth) {
+                showWinFeedback("Serviço na nuvem indisponível no momento. Clique em 'Entrar sem conta (Modo Offline)' para usar normalmente.");
                 return;
             }
 
-            const email = document.getElementById("auth-email").value.trim();
-            const password = document.getElementById("auth-password").value;
-            const submitBtn = document.getElementById("auth-submit-btn");
+            const email = document.getElementById("win-email").value.trim();
+            const password = document.getElementById("win-password").value;
+            const submitBtn = document.getElementById("win-submit-btn");
 
             if (!email) {
-                showAuthFeedback("Digite seu e-mail.");
+                showWinFeedback("Digite seu e-mail para continuar.");
+                document.getElementById("win-email").focus();
                 return;
             }
-            if (password.length < 6) {
-                showAuthFeedback("A senha precisa ter no mínimo 6 caracteres.");
+            if (!password || password.length < 6) {
+                showWinFeedback("A senha precisa ter no mínimo 6 caracteres.");
+                document.getElementById("win-password").focus();
                 return;
             }
 
-            const originalText = submitBtn.textContent;
             submitBtn.disabled = true;
-            submitBtn.textContent = "Aguarde...";
-
             try {
+                isOfflineMode = false;
                 if (authMode === "login") {
-                    await signInWithEmailAndPassword(auth, email, password);
-                    closeAuthModal();
-                    showToast("Login realizado com sucesso!");
+                    await fbModules.signInWithEmailAndPassword(fbAuth, email, password);
+                    showToast("Bem-vindo de volta! Sincronizando na nuvem...");
                 } else {
-                    await createUserWithEmailAndPassword(auth, email, password);
-                    closeAuthModal();
-                    showToast("Conta criada e conectada com sucesso!");
+                    await fbModules.createUserWithEmailAndPassword(fbAuth, email, password);
+                    showToast("Conta criada com sucesso! Seus dados agora sincronizam na nuvem.");
                 }
             } catch (err) {
-                console.error("Erro auth e-mail:", err);
-                showAuthFeedback(translateFirebaseError(err.code));
+                console.error("Erro de login/cadastro:", err);
+                showWinFeedback(translateFirebaseError(err.code));
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
             }
         }
 
-        async function handleForgotPassword() {
-            clearAuthFeedback();
-            const email = document.getElementById("auth-email").value.trim();
+        async function handleWinForgotPassword() {
+            clearWinFeedback();
+            if (!firebaseReady || !fbAuth) {
+                showWinFeedback("Firebase indisponível no momento. Verifique sua conexão.");
+                return;
+            }
+            const email = document.getElementById("win-email").value.trim();
             if (!email) {
-                showAuthFeedback("Digite seu e-mail no campo acima para receber o link de redefinição.");
+                showWinFeedback("Digite seu e-mail no campo acima e clique novamente em 'Esqueci minha senha'.");
+                document.getElementById("win-email").focus();
                 return;
             }
             try {
-                await sendPasswordResetEmail(auth, email);
-                showAuthFeedback("E-mail de redefinição enviado! Verifique sua caixa de entrada e spam.", true);
+                await fbModules.sendPasswordResetEmail(fbAuth, email);
+                showWinFeedback("Link de redefinição enviado! Verifique sua caixa de entrada e a pasta de spam.", true);
             } catch (err) {
-                console.error("Erro reset senha:", err);
-                showAuthFeedback(translateFirebaseError(err.code));
+                console.error("Erro ao redefinir senha:", err);
+                showWinFeedback(translateFirebaseError(err.code));
             }
         }
 
-        async function loginWithGoogle() {
-            clearAuthFeedback();
-            if (!auth) return;
+        async function handleWinGoogleLogin() {
+            clearWinFeedback();
+            if (!firebaseReady || !fbAuth) {
+                showWinFeedback("Serviço na nuvem indisponível no momento. Use o Modo Offline abaixo.");
+                return;
+            }
             try {
-                const provider = new GoogleAuthProvider();
-                await signInWithPopup(auth, provider);
-                closeAuthModal();
+                isOfflineMode = false;
+                const provider = new fbModules.GoogleAuthProvider();
+                await fbModules.signInWithPopup(fbAuth, provider);
                 showToast("Conectado com Google!");
             } catch (err) {
-                console.error("Erro Google login:", err);
-                showAuthFeedback(translateFirebaseError(err.code));
+                console.error("Erro no login com Google:", err);
+                showWinFeedback(translateFirebaseError(err.code));
             }
         }
 
-        async function logoutUser() {
-            if (!auth) return;
-            try {
-                if (unsubscribeSnapshot) {
-                    unsubscribeSnapshot();
-                    unsubscribeSnapshot = null;
+        function enterOfflineMode() {
+            isOfflineMode = true;
+            unlockToSpreadsheet("Modo Offline", false);
+            showToast("Modo Offline ativado. Suas alterações serão salvas neste navegador.");
+        }
+
+        async function handleLockOrLogout() {
+            if (unsubscribeSnapshot) {
+                unsubscribeSnapshot();
+                unsubscribeSnapshot = null;
+            }
+            isOfflineMode = false;
+            lastSyncedJson = "";
+            if (firebaseReady && fbAuth && currentUser) {
+                try {
+                    await fbModules.signOut(fbAuth);
+                } catch (err) {
+                    console.error("Erro ao sair:", err);
                 }
-                await signOut(auth);
-                lastSyncedJson = "";
-                updateSyncStatus("💾 Salvo localmente", "bg-blue-900/60 text-blue-100 border-blue-700");
-                showToast("Você saiu da conta. Seus dados continuam salvos localmente.");
-            } catch (err) {
-                console.error("Erro ao sair:", err);
             }
+            currentUser = null;
+            lockToWindowsScreen();
+            showToast("Sessão bloqueada.");
         }
 
-        function updateAuthHeaderUI(user) {
-            const openBtn = document.getElementById("open-auth-btn");
-            const badge = document.getElementById("user-badge");
-            const emailLabel = document.getElementById("user-email-label");
-
-            if (user) {
-                openBtn.classList.add("hidden");
-                badge.classList.remove("hidden");
-                badge.classList.add("flex");
-                emailLabel.textContent = user.email || user.displayName || "Usuário";
-            } else {
-                openBtn.classList.remove("hidden");
-                badge.classList.add("hidden");
-                badge.classList.remove("flex");
-            }
-        }
-
-        function initFirebase() {
+        // ============================================================================
+        // INICIALIZAÇÃO SEGURA DO FIREBASE (CDN OFICIAL 10.12.2 + TRY/CATCH)
+        // ============================================================================
+        async function initFirebaseSafely() {
+            const netIndicator = document.getElementById("win-net-indicator");
             try {
-                const app = initializeApp(MY_FIREBASE_CONFIG);
-                auth = getAuth(app);
-                db = getFirestore(app);
+                const [appMod, authMod, fsMod] = await Promise.all([
+                    import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"),
+                    import("https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"),
+                    import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js")
+                ]);
 
-                onAuthStateChanged(auth, (user) => {
+                fbModules = {
+                    initializeApp: appMod.initializeApp,
+                    getAuth: authMod.getAuth,
+                    GoogleAuthProvider: authMod.GoogleAuthProvider,
+                    signInWithPopup: authMod.signInWithPopup,
+                    signInWithEmailAndPassword: authMod.signInWithEmailAndPassword,
+                    createUserWithEmailAndPassword: authMod.createUserWithEmailAndPassword,
+                    sendPasswordResetEmail: authMod.sendPasswordResetEmail,
+                    signOut: authMod.signOut,
+                    onAuthStateChanged: authMod.onAuthStateChanged,
+                    getFirestore: fsMod.getFirestore,
+                    doc: fsMod.doc,
+                    setDoc: fsMod.setDoc,
+                    getDoc: fsMod.getDoc,
+                    onSnapshot: fsMod.onSnapshot
+                };
+
+                const app = fbModules.initializeApp(firebaseConfig);
+                fbAuth = fbModules.getAuth(app);
+                fbDb = fbModules.getFirestore(app);
+                firebaseReady = true;
+
+                if (netIndicator) {
+                    netIndicator.textContent = "☁️";
+                    netIndicator.title = "Conectado ao Firebase";
+                }
+
+                fbModules.onAuthStateChanged(fbAuth, (user) => {
                     currentUser = user;
-                    updateAuthHeaderUI(user);
                     if (user) {
+                        isOfflineMode = false;
+                        unlockToSpreadsheet(user.email || user.displayName || "Usuário", true);
                         subscribeToCloudProgress(user);
-                    } else {
+                    } else if (!isOfflineMode) {
                         if (unsubscribeSnapshot) {
                             unsubscribeSnapshot();
                             unsubscribeSnapshot = null;
                         }
-                        updateSyncStatus("💾 Salvo localmente", "bg-blue-900/60 text-blue-100 border-blue-700");
+                        lockToWindowsScreen();
                     }
                 });
             } catch (err) {
-                console.error("Erro ao inicializar Firebase:", err);
-                updateSyncStatus("💾 Salvo localmente", "bg-blue-900/60 text-blue-100 border-blue-700");
+                console.error("Firebase indisponível (seguindo em modo local seguro):", err);
+                firebaseReady = false;
+                if (netIndicator) {
+                    netIndicator.textContent = "⚠️";
+                    netIndicator.title = "Nuvem indisponível — Modo Offline ativo";
+                }
             }
         }
 
@@ -1246,7 +1442,7 @@
         function getSubjectStats(subjId) {
             const subj = EDITAL_DATA.find(s => s.id === subjId);
             const data = userProgress[subjId] || {};
-            let totalTopics = subj.topics.length;
+            const totalTopics = subj.topics.length;
             let studiedTopics = 0;
             let totalSessions = 0;
             let totalQ = 0, totalA = 0, totalE = 0;
@@ -1271,7 +1467,7 @@
             if (!questionsCount || questionsCount === 0 || pct === null) {
                 return `<span class="inline-block px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-400">—</span>`;
             }
-            const formatted = pct.toFixed(1).replace('.', ',') + '%';
+            const formatted = pct.toFixed(1).replace(".", ",") + "%";
             let colorClass = "bg-red-100 text-red-800 border-red-300";
             if (pct >= 80) colorClass = "bg-emerald-100 text-emerald-800 border-emerald-300";
             else if (pct >= 60) colorClass = "bg-amber-100 text-amber-800 border-amber-300";
@@ -1279,12 +1475,14 @@
         }
 
         // ============================================================================
-        // RENDERIZAÇÃO DAS ABAS E VISÃO GERAL
+        // RENDERIZAÇÃO DAS ABAS E PAINEL DE DESEMPENHO GERAL
         // ============================================================================
         function renderTabs() {
             const container = document.getElementById("tabs-container");
+            if (!container) return;
+
             let html = `
-                <button onclick="switchTab('geral')" class="tab-btn px-3.5 py-2 text-xs sm:text-sm flex items-center gap-1.5 ${currentTab === 'geral' ? 'active' : 'hover:bg-gray-300/60'}">
+                <button type="button" onclick="switchTab('geral')" class="tab-btn px-3.5 py-2 text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer ${currentTab === "geral" ? "active" : "hover:bg-gray-300/60"}">
                     <span>📊</span> Desempenho Geral
                 </button>
             `;
@@ -1300,10 +1498,10 @@
                 }
 
                 html += `
-                    <button onclick="switchTab('${subj.id}')" class="tab-btn px-3 py-2 text-xs sm:text-sm flex items-center gap-1.5 border-l border-gray-300 ${isActive ? 'active' : 'hover:bg-gray-300/60'}">
+                    <button type="button" onclick="switchTab('${subj.id}')" class="tab-btn px-3 py-2 text-xs sm:text-sm flex items-center gap-1.5 border-l border-gray-300 cursor-pointer ${isActive ? "active" : "hover:bg-gray-300/60"}">
                         <span>${subj.shortName}</span>
                         <span class="text-[10px] font-bold px-1.5 py-0.2 rounded-full ${pillColor}">
-                            ${stats.totalQ > 0 ? Math.round(stats.pctAccuracy) + '%' : stats.studiedTopics + '/' + stats.totalTopics}
+                            ${stats.totalQ > 0 ? Math.round(stats.pctAccuracy) + "%" : stats.studiedTopics + "/" + stats.totalTopics}
                         </span>
                     </button>
                 `;
@@ -1358,13 +1556,13 @@
                     <tr class="bg-white">
                         <td class="text-center font-bold text-gray-600">${subj.code}</td>
                         <td>
-                            <button onclick="switchTab('${subj.id}')" class="text-left font-semibold text-[#004B8D] hover:underline flex items-center gap-1.5 w-full">
+                            <button type="button" onclick="switchTab('${subj.id}')" class="text-left font-semibold text-[#004B8D] hover:underline flex items-center gap-1.5 w-full cursor-pointer">
                                 <span>${subj.name}</span>
                                 <span class="text-xs text-gray-400 font-normal">↗</span>
                             </button>
                         </td>
                         <td class="text-center">
-                            <span class="px-2 py-0.5 rounded text-xs font-medium ${subj.weight === 2 ? 'bg-blue-100 text-blue-900 font-semibold' : 'bg-gray-100 text-gray-700'}">
+                            <span class="px-2 py-0.5 rounded text-xs font-medium ${subj.weight === 2 ? "bg-blue-100 text-blue-900 font-semibold" : "bg-gray-100 text-gray-700"}">
                                 ${subj.block} (Peso ${subj.weight})
                             </span>
                         </td>
@@ -1379,7 +1577,7 @@
                             </div>
                         </td>
                         <td class="text-center">
-                            <span class="inline-block px-2 py-0.5 rounded-full text-xs font-semibold ${st.totalSessions > 0 ? 'bg-blue-100 text-[#004B8D]' : 'bg-gray-100 text-gray-400'}">
+                            <span class="inline-block px-2 py-0.5 rounded-full text-xs font-semibold ${st.totalSessions > 0 ? "bg-blue-100 text-[#004B8D]" : "bg-gray-100 text-gray-400"}">
                                 ${st.totalSessions}
                             </span>
                         </td>
@@ -1424,19 +1622,19 @@
                         <div class="bg-white p-3 rounded border border-blue-300 shadow-sm">
                             <p class="text-[11px] font-bold uppercase text-[#004B8D]">% Acerto Geral</p>
                             <p class="text-2xl font-extrabold text-[#004B8D] mt-0.5">
-                                ${grandPctAccuracy !== null ? grandPctAccuracy.toFixed(1).replace('.', ',') + '%' : '0,0%'}
+                                ${grandPctAccuracy !== null ? grandPctAccuracy.toFixed(1).replace(".", ",") + "%" : "0,0%"}
                             </p>
                             <p class="text-[11px] text-gray-500">Taxa média de acerto</p>
-                        </div>
-                        <div class="bg-white p-3 rounded border border-gray-300 shadow-sm">
-                            <p class="text-[11px] font-bold uppercase text-gray-500">% Edital Estudado</p>
-                            <p class="text-2xl font-extrabold text-gray-800 mt-0.5">${grandPctStudied.toFixed(1).replace('.', ',')}%</p>
-                            <p class="text-[11px] text-gray-500">${grandStudiedTopics} de ${grandTotalTopics} tópicos</p>
                         </div>
                         <div class="bg-white p-3 rounded border border-indigo-300 shadow-sm">
                             <p class="text-[11px] font-bold uppercase text-indigo-700">Passagens / Dias</p>
                             <p class="text-2xl font-extrabold text-indigo-700 mt-0.5">${grandSessions}</p>
                             <p class="text-[11px] text-gray-500">Registros de estudo</p>
+                        </div>
+                        <div class="bg-white p-3 rounded border border-gray-300 shadow-sm">
+                            <p class="text-[11px] font-bold uppercase text-gray-500">% Edital Estudado</p>
+                            <p class="text-2xl font-extrabold text-gray-800 mt-0.5">${grandPctStudied.toFixed(1).replace(".", ",")}%</p>
+                            <p class="text-[11px] text-gray-500">${grandStudiedTopics} de ${grandTotalTopics} tópicos</p>
                         </div>
                     </div>
                 </div>
@@ -1472,7 +1670,7 @@
                                 <td>
                                     <div class="flex items-center justify-between text-xs">
                                         <span>${grandStudiedTopics} / ${grandTotalTopics}</span>
-                                        <span>${grandPctStudied.toFixed(1).replace('.', ',')}%</span>
+                                        <span>${grandPctStudied.toFixed(1).replace(".", ",")}%</span>
                                     </div>
                                 </td>
                                 <td class="text-center text-indigo-900 text-base">${grandSessions}</td>
@@ -1490,7 +1688,7 @@
         }
 
         // ============================================================================
-        // RENDERIZAÇÃO DAS MATÉRIAS + SUB-MENU DE PASSAGENS POR DATA
+        // RENDERIZAÇÃO DAS MATÉRIAS E SUB-MENU EXPANSÍVEL POR DATA
         // ============================================================================
         function updateToggleAllButton(subjId) {
             const btn = document.getElementById("toggle-all-btn");
@@ -1573,20 +1771,20 @@
                     : `<input type="number" min="0" value="${m.e}" id="e-${subjId}-${idx}" oninput="updateCell('${subjId}', ${idx}, 'e', this.value)" onfocus="this.select()" class="sheet-input text-red-600 font-semibold" title="Erros">`;
 
                 rowsHtml += `
-                    <tr id="row-${subjId}-${idx}" class="${rowData.studied ? 'bg-emerald-50/30' : 'bg-white'}">
+                    <tr id="row-${subjId}-${idx}" class="${rowData.studied ? "bg-emerald-50/30" : "bg-white"}">
                         <td class="text-center w-10 align-top pt-2">
-                            <input type="checkbox" ${rowData.studied ? 'checked' : ''}
+                            <input type="checkbox" ${rowData.studied ? "checked" : ""}
                                 onchange="toggleStudied('${subjId}', ${idx}, this.checked)"
                                 class="w-4 h-4 accent-[#004B8D] rounded cursor-pointer" title="Marcar como concluído">
                         </td>
-                        <td class="${isSubtopic ? 'pl-6 text-gray-700' : 'font-semibold text-gray-900'} align-top">
+                        <td class="${isSubtopic ? "pl-6 text-gray-700" : "font-semibold text-gray-900"} align-top">
                             <div class="flex items-start justify-between gap-2">
                                 <div class="flex items-start gap-1.5 flex-1 cursor-pointer select-none group" onclick="toggleExpand('${subjId}', ${idx})">
-                                    <button type="button" class="text-[11px] text-[#004B8D] mt-0.5 w-4 h-4 flex items-center justify-center rounded hover:bg-blue-100 shrink-0" title="Abrir/Fechar histórico de datas">
-                                        ${isExpanded ? '▼' : '▶'}
+                                    <button type="button" class="text-[11px] text-[#004B8D] mt-0.5 w-4 h-4 flex items-center justify-center rounded hover:bg-blue-100 shrink-0 cursor-pointer" title="Abrir/Fechar histórico de datas">
+                                        ${isExpanded ? "▼" : "▶"}
                                     </button>
                                     <div class="flex-1 min-w-0">
-                                        <div class="group-hover:text-[#004B8D] transition-colors ${rowData.studied ? 'line-through text-gray-400' : ''}">
+                                        <div class="group-hover:text-[#004B8D] transition-colors ${rowData.studied ? "line-through text-gray-400" : ""}">
                                             ${escapeHtml(topicTitle)}
                                         </div>
                                         <div class="flex items-center flex-wrap gap-1.5 mt-1" id="badges-${subjId}-${idx}">
@@ -1595,9 +1793,9 @@
                                     </div>
                                 </div>
                                 <button type="button" onclick="addSession('${subjId}', ${idx}); event.stopPropagation();"
-                                    class="shrink-0 w-6 h-6 rounded bg-blue-50 hover:bg-[#004B8D] text-[#004B8D] hover:text-white border border-blue-200 font-bold text-sm flex items-center justify-center transition"
+                                    class="shrink-0 px-2 h-6 rounded bg-blue-50 hover:bg-[#004B8D] text-[#004B8D] hover:text-white border border-blue-200 font-semibold text-[11px] flex items-center justify-center gap-1 transition cursor-pointer"
                                     title="Adicionar passagem / data neste assunto">
-                                    +
+                                    <span>+</span><span class="hidden sm:inline">Passagem</span>
                                 </button>
                             </div>
                         </td>
@@ -1609,9 +1807,9 @@
                         </td>
                         <td class="w-72 min-w-[220px] max-w-[320px] align-top">
                             <textarea rows="1"
-                                placeholder="Anotações gerais (expande para baixo)..."
+                                placeholder="Anotações gerais (cresce para baixo)..."
                                 oninput="autoResizeTextarea(this); updateNote('${subjId}', ${idx}, this.value)"
-                                class="sheet-textarea text-gray-700">${escapeHtml(rowData.note || '')}</textarea>
+                                class="sheet-textarea text-gray-700">${escapeHtml(rowData.note || "")}</textarea>
                         </td>
                     </tr>
                 `;
@@ -1638,15 +1836,15 @@
                             sessionRowsHtml += `
                                 <tr class="bg-white">
                                     <td class="w-32">
-                                        <input type="date" value="${escapeHtml(s.date || '')}"
+                                        <input type="date" value="${escapeHtml(s.date || "")}"
                                             onchange="updateSessionField('${subjId}', ${idx}, ${sIdx}, 'date', this.value)"
-                                            class="w-full text-xs border border-gray-200 rounded px-1.5 py-1 focus:outline-none focus:border-[#004B8D]">
+                                            class="w-full text-xs border border-gray-200 rounded px-1.5 py-1 focus:outline-none focus:border-[#0078D4]">
                                     </td>
                                     <td class="w-36">
-                                        <input type="text" value="${escapeHtml(s.label || '')}"
+                                        <input type="text" value="${escapeHtml(s.label || "")}"
                                             placeholder="Ex: 1ª passagem"
                                             oninput="updateSessionField('${subjId}', ${idx}, ${sIdx}, 'label', this.value)"
-                                            class="w-full text-xs font-medium text-gray-800 border border-gray-200 rounded px-2 py-1 focus:outline-none focus:border-[#004B8D]">
+                                            class="w-full text-xs font-medium text-gray-800 border border-gray-200 rounded px-2 py-1 focus:outline-none focus:border-[#0078D4]">
                                     </td>
                                     <td class="w-16 text-center font-bold text-gray-700 bg-gray-50 pt-2" id="sq-${subjId}-${idx}-${sIdx}">
                                         ${sq}
@@ -1671,9 +1869,9 @@
                                             <textarea rows="1"
                                                 placeholder="O que estudou/errou nesse dia..."
                                                 oninput="autoResizeTextarea(this); updateSessionField('${subjId}', ${idx}, ${sIdx}, 'note', this.value)"
-                                                class="sheet-textarea text-gray-700 flex-1 border border-gray-200 bg-gray-50/40">${escapeHtml(s.note || '')}</textarea>
+                                                class="sheet-textarea text-gray-700 flex-1 border border-gray-200 bg-gray-50/40">${escapeHtml(s.note || "")}</textarea>
                                             <button type="button" onclick="removeSession('${subjId}', ${idx}, ${sIdx})"
-                                                class="text-gray-400 hover:text-red-600 hover:bg-red-50 rounded px-1.5 py-0.5 text-sm font-bold leading-none mt-1 transition"
+                                                class="text-gray-400 hover:text-red-600 hover:bg-red-50 rounded px-1.5 py-0.5 text-sm font-bold leading-none mt-1 transition cursor-pointer"
                                                 title="Remover esta passagem">×</button>
                                         </div>
                                     </td>
@@ -1706,11 +1904,11 @@
                                     </div>
                                     <div class="mt-2 flex items-center justify-between flex-wrap gap-2">
                                         <button type="button" onclick="addSession('${subjId}', ${idx})"
-                                            class="inline-flex items-center gap-1.5 bg-[#004B8D] hover:bg-blue-800 text-white text-xs font-semibold px-3 py-1.5 rounded shadow-sm transition">
+                                            class="inline-flex items-center gap-1.5 bg-[#004B8D] hover:bg-blue-800 text-white text-xs font-semibold px-3 py-1.5 rounded shadow-sm transition cursor-pointer">
                                             <span>+</span> Adicionar passagem / data
                                         </button>
                                         <span class="text-[11px] text-gray-500">
-                                            As questões, acertos e erros de cada data são somados automaticamente na linha principal do assunto.
+                                            As questões, acertos e erros de cada data são somados automaticamente na linha principal.
                                         </span>
                                     </div>
                                 </div>
@@ -1757,7 +1955,7 @@
                                 ${formatAccuracyBadge(st.pctAccuracy, st.totalQ)}
                             </td>
                             <td class="text-xs text-gray-500 font-normal">
-                                Clique no <strong>+</strong> ou no assunto para registrar datas.
+                                Clique em <strong>+ Passagem</strong> ou no assunto para registrar datas.
                             </td>
                         </tr>
                     </tfoot>
@@ -1801,7 +1999,7 @@
             const session = item.sessions[sIdx];
             if (!session) return;
 
-            if (field === 'a' || field === 'e') {
+            if (field === "a" || field === "e") {
                 let val = parseInt(rawValue, 10);
                 if (isNaN(val) || val < 0) val = 0;
                 session[field] = val;
@@ -1833,7 +2031,7 @@
             if (eEl) eEl.textContent = m.e;
             if (pctEl) pctEl.innerHTML = formatAccuracyBadge(m.pct, m.q);
 
-            if (badgesEl && field === 'date') {
+            if (badgesEl && field === "date") {
                 const labelPass = m.sessionsCount === 1 ? "1 passagem" : `${m.sessionsCount} passagens`;
                 let bHtml = `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-100 text-[#004B8D] border border-blue-200">${labelPass}</span>`;
                 if (m.lastDate) {
@@ -1879,17 +2077,17 @@
             if (isNaN(val) || val < 0) val = 0;
             const item = userProgress[subjId][idx];
 
-            if (field === 'a') {
+            if (field === "a") {
                 item.a = val;
                 item.q = item.a + item.e;
                 const qInput = document.getElementById(`q-${subjId}-${idx}`);
                 if (qInput) qInput.value = item.q;
-            } else if (field === 'e') {
+            } else if (field === "e") {
                 item.e = val;
                 item.q = item.a + item.e;
                 const qInput = document.getElementById(`q-${subjId}-${idx}`);
                 if (qInput) qInput.value = item.q;
-            } else if (field === 'q') {
+            } else if (field === "q") {
                 item.q = val;
                 if (item.q >= item.a) {
                     item.e = item.q - item.a;
@@ -1921,21 +2119,21 @@
                 subj.topics.forEach((topic, idx) => {
                     const r = userProgress[subj.id][idx] || { studied: false, q: 0, a: 0, e: 0, note: "", sessions: [] };
                     const m = getTopicMetrics(r);
-                    const pct = m.q > 0 ? m.pct.toFixed(1).replace('.', ',') + "%" : "0%";
+                    const pct = m.q > 0 ? m.pct.toFixed(1).replace(".", ",") + "%" : "0%";
                     const cleanTopic = topic.replace(/;/g, ",");
                     const cleanNote = (r.note || "").replace(/;/g, ",").replace(/\n/g, " | ");
 
-                    csv += `${subj.code};"${subj.name}";${subj.block};${subj.weight};"${cleanTopic}";RESUMO;${m.lastDate || ''};"${m.sessionsCount} passagens";${m.isStudied ? 'SIM' : 'NAO'};${m.q};${m.a};${m.e};${pct};"${cleanNote}"\n`;
+                    csv += `${subj.code};"${subj.name}";${subj.block};${subj.weight};"${cleanTopic}";RESUMO;${m.lastDate || ""};"${m.sessionsCount} passagens";${m.isStudied ? "SIM" : "NAO"};${m.q};${m.a};${m.e};${pct};"${cleanNote}"\n`;
 
                     if (Array.isArray(r.sessions) && r.sessions.length > 0) {
                         r.sessions.forEach(s => {
                             const sa = Number(s.a) || 0;
                             const se = Number(s.e) || 0;
                             const sq = sa + se;
-                            const spct = sq > 0 ? ((sa / sq) * 100).toFixed(1).replace('.', ',') + "%" : "0%";
+                            const spct = sq > 0 ? ((sa / sq) * 100).toFixed(1).replace(".", ",") + "%" : "0%";
                             const sLabel = (s.label || "").replace(/;/g, ",");
                             const sNote = (s.note || "").replace(/;/g, ",").replace(/\n/g, " | ");
-                            csv += `${subj.code};"${subj.name}";${subj.block};${subj.weight};"${cleanTopic}";PASSAGEM;${s.date || ''};"${sLabel}";SIM;${sq};${sa};${se};${spct};"${sNote}"\n`;
+                            csv += `${subj.code};"${subj.name}";${subj.block};${subj.weight};"${cleanTopic}";PASSAGEM;${s.date || ""};"${sLabel}";SIM;${sq};${sa};${se};${spct};"${sNote}"\n`;
                         });
                     }
                 });
@@ -1949,6 +2147,7 @@
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
 
         function exportBackup() {
@@ -1961,6 +2160,7 @@
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
 
         function importBackup(event) {
@@ -1979,11 +2179,12 @@
                         showToast("Backup importado com sucesso!");
                     }
                 } catch (err) {
-                    console.error("Arquivo inválido", err);
+                    console.error("Arquivo JSON inválido:", err);
                     showToast("Arquivo JSON inválido.");
                 }
             };
             reader.readAsText(file);
+            event.target.value = "";
         }
 
         function openResetModal() {
@@ -2005,27 +2206,44 @@
             closeResetModal();
             renderTabs();
             renderCurrentView();
-            showToast("Planilha zerada com sucesso.");
+            showToast("Todos os dados da planilha foram zerados.");
         }
 
-        // Expõe funções no escopo global para os eventos HTML inline
+        // ============================================================================
+        // CONEXÃO DE TODOS OS EVENTOS (addEventListener + window)
+        // ============================================================================
+        function bindStaticEvents() {
+            // Tela de Login estilo Windows 10
+            document.getElementById("win-tab-login")?.addEventListener("click", () => setAuthMode("login"));
+            document.getElementById("win-tab-register")?.addEventListener("click", () => setAuthMode("register"));
+            document.getElementById("win-auth-form")?.addEventListener("submit", handleWinEmailAuth);
+            document.getElementById("win-forgot-btn")?.addEventListener("click", handleWinForgotPassword);
+            document.getElementById("win-google-btn")?.addEventListener("click", handleWinGoogleLogin);
+            document.getElementById("win-offline-btn")?.addEventListener("click", enterOfflineMode);
+            document.getElementById("win-corner-offline-btn")?.addEventListener("click", enterOfflineMode);
+
+            document.getElementById("win-toggle-pwd")?.addEventListener("click", () => {
+                const pwd = document.getElementById("win-password");
+                if (!pwd) return;
+                pwd.type = pwd.type === "password" ? "text" : "password";
+            });
+
+            // Cabeçalho e Filtros da Planilha
+            document.getElementById("btn-export-csv")?.addEventListener("click", exportCSV);
+            document.getElementById("btn-export-json")?.addEventListener("click", exportBackup);
+            document.getElementById("import-file")?.addEventListener("change", importBackup);
+            document.getElementById("btn-reset-open")?.addEventListener("click", openResetModal);
+            document.getElementById("btn-reset-cancel")?.addEventListener("click", closeResetModal);
+            document.getElementById("btn-reset-confirm")?.addEventListener("click", confirmReset);
+            document.getElementById("btn-lock-logout")?.addEventListener("click", handleLockOrLogout);
+
+            document.getElementById("search-input")?.addEventListener("input", renderCurrentView);
+            document.getElementById("filter-select")?.addEventListener("change", renderCurrentView);
+            document.getElementById("toggle-all-btn")?.addEventListener("click", toggleExpandAll);
+        }
+
+        // Expõe funções necessárias para os elementos renderizados dinamicamente nas linhas
         Object.assign(window, {
-            openAuthModal,
-            closeAuthModal,
-            setAuthMode,
-            togglePasswordVisibility,
-            handleEmailAuth,
-            handleForgotPassword,
-            loginWithGoogle,
-            logoutUser,
-            exportCSV,
-            exportBackup,
-            importBackup,
-            openResetModal,
-            closeResetModal,
-            confirmReset,
-            renderCurrentView,
-            toggleExpandAll,
             switchTab,
             toggleExpand,
             toggleStudied,
@@ -2037,12 +2255,20 @@
             updateCell
         });
 
-        // Inicialização
+        // ============================================================================
+        // INICIALIZAÇÃO PRINCIPAL (NUNCA TRAVA OS BOTÕES)
+        // ============================================================================
         function startApp() {
+            updateWindowsClock();
+            setInterval(updateWindowsClock, 15000);
+
+            bindStaticEvents();
             loadLocalProgress();
             renderTabs();
             renderCurrentView();
-            initFirebase();
+
+            // Inicializa o Firebase de forma assíncrona e isolada em try/catch
+            initFirebaseSafely();
         }
 
         if (document.readyState === "loading") {
