@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planilha Edital Verticalizado — Banestes Técnico Bancário</title>
+    <title>Edital Verticalizado — CAIXA (TBN - TI)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -21,7 +21,7 @@
         }
 
         /* ====================================================================
-           TELA DE LOGIN EM TELA CHEIA ESTILO WINDOWS 10 (WINDOWS X)
+           TELA DE LOGIN EM TELA CHEIA ESTILO WINDOWS 10
            ==================================================================== */
         #win-login-screen {
             position: fixed;
@@ -34,9 +34,9 @@
             overflow-y: auto;
             background:
                 radial-gradient(circle at 18% 20%, rgba(0, 120, 212, 0.65) 0%, transparent 46%),
-                radial-gradient(circle at 82% 80%, rgba(0, 183, 195, 0.38) 0%, transparent 48%),
-                radial-gradient(circle at 50% 45%, rgba(11, 52, 108, 0.88) 0%, rgba(4, 17, 38, 0.98) 100%),
-                linear-gradient(135deg, #001f4d 0%, #004b8d 52%, #00152e 100%);
+                radial-gradient(circle at 82% 80%, rgba(0, 183, 195, 0.35) 0%, transparent 48%),
+                radial-gradient(circle at 50% 45%, rgba(0, 67, 133, 0.88) 0%, rgba(4, 17, 38, 0.98) 100%),
+                linear-gradient(135deg, #001f4d 0%, #005ca9 52%, #00152e 100%);
             transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s ease;
         }
         #win-login-screen::before {
@@ -120,7 +120,7 @@
         }
 
         /* ====================================================================
-           ESTILO PLANILHA LIMPA (EXCEL / GOOGLE SHEETS)
+           ESTILO PLANILHA EXCEL LIMPA
            ==================================================================== */
         .sheet-table {
             border-collapse: collapse;
@@ -133,7 +133,7 @@
             border: 1px solid #d1d5db;
             padding: 6px 9px;
             font-size: 0.84rem;
-            line-height: 1.3;
+            line-height: 1.35;
         }
         .sheet-table thead th {
             background-color: #e5e7eb;
@@ -170,11 +170,11 @@
         }
         .main-num-input:focus {
             background-color: #ffffff;
-            border-color: #004b8d;
-            box-shadow: 0 0 0 2px rgba(0, 75, 141, 0.2);
+            border-color: #005ca9;
+            box-shadow: 0 0 0 2px rgba(0, 92, 169, 0.2);
         }
 
-        /* Caixas de anotação que crescem verticalmente sem esticar a tabela */
+        /* Caixas de anotação que crescem verticalmente sem alargar a tabela */
         .auto-grow {
             width: 100%;
             min-height: 32px;
@@ -200,8 +200,8 @@
             border-color: #94a3b8;
         }
         .auto-grow:focus {
-            border-color: #004b8d;
-            box-shadow: 0 0 0 2px rgba(0, 75, 141, 0.2);
+            border-color: #005ca9;
+            box-shadow: 0 0 0 2px rgba(0, 92, 169, 0.2);
         }
 
         /* Submenu expansível de passagens por data */
@@ -212,7 +212,6 @@
             position: relative;
             padding-left: 22px;
         }
-        /* Pseudo-elementos decorativos com pointer-events: none para nunca bloquear cliques */
         .tree-wrapper::before {
             content: "";
             position: absolute;
@@ -220,7 +219,7 @@
             top: 0;
             bottom: 12px;
             width: 2px;
-            background-color: #004b8d;
+            background-color: #005ca9;
             opacity: 0.65;
             border-radius: 2px;
             pointer-events: none;
@@ -235,7 +234,7 @@
             top: 18px;
             width: 14px;
             height: 2px;
-            background-color: #004b8d;
+            background-color: #005ca9;
             opacity: 0.65;
             pointer-events: none;
         }
@@ -329,8 +328,8 @@
         .p-correct:focus,
         .p-wrong:focus {
             background-color: #ffffff;
-            border-color: #004b8d;
-            box-shadow: 0 0 0 2px rgba(0, 75, 141, 0.22);
+            border-color: #005ca9;
+            box-shadow: 0 0 0 2px rgba(0, 92, 169, 0.22);
         }
 
         /* Remove setas nativas dos inputs numéricos */
@@ -351,8 +350,8 @@
         }
         .tab-btn.active {
             background-color: #ffffff;
-            color: #004b8d;
-            border-bottom-color: #004b8d;
+            color: #005ca9;
+            border-bottom-color: #005ca9;
             font-weight: 700;
         }
         .tabs-scroll::-webkit-scrollbar {
@@ -370,7 +369,7 @@
 <body class="min-h-screen flex flex-col">
 
     <!-- ======================================================================
-         TELA DE LOGIN EM TELA CHEIA ESTILO WINDOWS 10 (WINDOWS X)
+         TELA DE LOGIN EM TELA CHEIA ESTILO WINDOWS 10
          ====================================================================== -->
     <section id="win-login-screen" aria-label="Tela de Login estilo Windows 10">
         <!-- Relógio e Data no canto inferior esquerdo -->
@@ -380,7 +379,7 @@
         </div>
 
         <!-- Bloco Central de Login -->
-        <div class="relative z-10 w-full max-w-[375px] px-6 py-8 flex flex-col items-center text-white">
+        <div class="relative z-10 w-full max-w-[380px] px-6 py-8 flex flex-col items-center text-white">
             <!-- Avatar Circular Translúcido -->
             <div class="w-28 h-28 rounded-full bg-white/15 border-2 border-white/35 backdrop-blur-md flex items-center justify-center shadow-2xl mb-4">
                 <svg class="w-16 h-16 text-white/90" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -390,9 +389,9 @@
 
             <!-- Título -->
             <h1 class="text-xl sm:text-2xl font-light tracking-wide text-center drop-shadow">
-                Planilha Banestes — Técnico Bancário
+                Edital Verticalizado — CAIXA (TBN - TI)
             </h1>
-            <p class="text-xs text-blue-100/80 mt-1 mb-5 text-center">Edital Verticalizado • Banca FCC 2026/2027</p>
+            <p class="text-xs text-blue-100/80 mt-1 mb-5 text-center">Técnico Bancário Novo — Tecnologia da Informação</p>
 
             <!-- Alternador Entrar / Criar Conta -->
             <div class="flex items-center gap-6 mb-4 text-sm">
@@ -478,22 +477,22 @@
     </section>
 
     <!-- ======================================================================
-         APLICAÇÃO PRINCIPAL (PLANILHA)
+         APLICAÇÃO PRINCIPAL (PLANILHA SIMPLES)
          ====================================================================== -->
     <div id="app-shell" class="min-h-screen flex flex-col">
         <!-- Cabeçalho Fixo -->
-        <header class="bg-[#004b8d] text-white shadow-md sticky top-0 z-30">
+        <header class="bg-[#005ca9] text-white shadow-md sticky top-0 z-30">
             <div class="max-w-[1650px] mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
                 <div class="flex items-center gap-3">
-                    <div class="bg-white text-[#004b8d] font-extrabold px-2.5 py-1 rounded text-sm tracking-tight shadow-sm">
-                        BANESTES
+                    <div class="bg-white text-[#005ca9] font-extrabold px-2.5 py-1 rounded text-sm tracking-tight shadow-sm">
+                        CAIXA <span class="text-[#f39200]">TI</span>
                     </div>
                     <div>
                         <h2 class="font-bold text-sm sm:text-base leading-tight">
-                            Edital Verticalizado Banestes — Técnico Bancário (FCC)
+                            Edital Verticalizado — CAIXA (TBN - TI)
                         </h2>
                         <p class="text-[11px] text-blue-100">
-                            70 Questões • Conhecimentos Gerais (Peso 1) | Específicos (Peso 2)
+                            60 Questões Objetivas (25 Básicas + 35 Específicas) + Redação
                         </p>
                     </div>
                 </div>
@@ -510,7 +509,7 @@
                     </div>
 
                     <button type="button" id="btn-export-csv" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-3 py-1.5 rounded shadow-sm transition flex items-center gap-1 cursor-pointer">
-                        <span>⬇</span> Exportar Excel (CSV)
+                        <span>⬇</span> Exportar CSV
                     </button>
                     <button type="button" id="btn-export-json" class="bg-blue-700 hover:bg-blue-600 text-white text-xs font-medium px-2.5 py-1.5 rounded border border-blue-500 transition cursor-pointer">
                         Backup JSON
@@ -522,7 +521,7 @@
                     <button type="button" id="btn-reset-open" class="bg-red-600 hover:bg-red-500 text-white text-xs font-medium px-2.5 py-1.5 rounded shadow-sm transition cursor-pointer">
                         Zerar Planilha
                     </button>
-                    <button type="button" id="btn-lock-logout" class="bg-white hover:bg-gray-100 text-[#004b8d] text-xs font-bold px-3 py-1.5 rounded shadow-sm transition flex items-center gap-1 cursor-pointer">
+                    <button type="button" id="btn-lock-logout" class="bg-white hover:bg-gray-100 text-[#005ca9] text-xs font-bold px-3 py-1.5 rounded shadow-sm transition flex items-center gap-1 cursor-pointer">
                         <span>🔒</span> Bloquear / Sair
                     </button>
                 </div>
@@ -540,24 +539,22 @@
         <main class="flex-1 max-w-[1650px] w-full mx-auto p-3 sm:p-4 flex flex-col gap-3">
             <!-- Barra de Resumo + Filtros da Matéria -->
             <div id="subject-toolbar" class="hidden flex flex-col gap-2.5">
-                <!-- Cards de Resumo da Matéria -->
-                <div id="subject-summary-bar" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+                <div id="subject-summary-bar" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
                     <!-- Atualizado via JS -->
                 </div>
 
-                <!-- Barra de Busca, Filtro e Expandir/Recolher -->
                 <div class="bg-white border border-gray-300 rounded-md p-2.5 shadow-sm flex flex-wrap items-center justify-between gap-3">
                     <div class="flex items-center gap-2 flex-wrap">
-                        <span id="subject-badge" class="bg-[#004b8d] text-white text-xs font-bold px-2.5 py-1 rounded"></span>
+                        <span id="subject-badge" class="bg-[#005ca9] text-white text-xs font-bold px-2.5 py-1 rounded"></span>
                         <h3 id="subject-title" class="font-bold text-gray-800 text-sm sm:text-base"></h3>
                         <span id="subject-meta" class="text-xs text-gray-500 font-medium"></span>
                     </div>
 
                     <div class="flex items-center gap-2 flex-wrap w-full sm:w-auto">
                         <input type="text" id="search-input" placeholder="🔍 Buscar assunto..."
-                            class="border border-gray-300 rounded px-2.5 py-1.5 text-xs focus:outline-none focus:border-[#004b8d] flex-1 sm:w-52">
+                            class="border border-gray-300 rounded px-2.5 py-1.5 text-xs focus:outline-none focus:border-[#005ca9] flex-1 sm:w-52">
 
-                        <select id="filter-select" class="border border-gray-300 rounded px-2.5 py-1.5 text-xs bg-white focus:outline-none focus:border-[#004b8d]">
+                        <select id="filter-select" class="border border-gray-300 rounded px-2.5 py-1.5 text-xs bg-white focus:outline-none focus:border-[#005ca9]">
                             <option value="all">Todos os assuntos</option>
                             <option value="pending">Pendentes</option>
                             <option value="done">Estudados / Com passagem</option>
@@ -601,7 +598,7 @@
 
     <script type="module">
         // ============================================================================
-        // 1. CONFIGURAÇÃO EXATA DO FIREBASE
+        // 1. CONFIGURAÇÃO DO FIREBASE (v10.12.2 VIA CDN)
         // ============================================================================
         const firebaseConfig = {
             apiKey: "AIzaSyBb-lO-hSafr80eNvFikQRSfR_n6gXOkFk",
@@ -612,10 +609,10 @@
             appId: "1:11481329402:web:08924ee706420806526343"
         };
 
-        const LOCAL_STORAGE_KEY = "banestes_planilha_progresso_v1";
+        const LOCAL_STORAGE_KEY = "planilha_caixa_ti_simples_v1";
+        const FIRESTORE_APP_ID = "caixa-ti-simples";
         const CLIENT_SESSION_ID = "cli_" + Math.random().toString(36).slice(2, 10);
 
-        // Estado do Firebase e Sincronização
         let fbModules = null;
         let fbAuth = null;
         let fbDb = null;
@@ -630,384 +627,222 @@
         let authMode = "login"; // "login" | "register"
 
         // ============================================================================
-        // 2. CONTEÚDO COMPLETO E EXATO DAS 9 MATÉRIAS DO EDITAL BANESTES (FCC)
+        // 2. CONTEÚDO COMPLETO DO EDITAL CAIXA TBN (TI) — CORRIGIDO E ATUALIZADO
         // ============================================================================
         const EDITAL_DATA = [
             {
                 id: "01",
                 code: "01",
                 shortName: "01. Português",
-                name: "LÍNGUA PORTUGUESA",
-                block: "Gerais",
-                weight: 1,
-                examQuestions: 10,
-                scoreShare: "11,1%",
+                name: "Língua Portuguesa",
+                block: "Conhecimentos Básicos",
+                examQuestions: 5,
+                examLabel: "5 questões",
                 topics: [
-                    "1 - Ortografia e acentuação.",
-                    "2 - Emprego do sinal indicativo de crase.",
-                    "3 - Compreensão e interpretação de textos de gêneros variados.",
-                    "4 - Relação do texto com seu contexto histórico.",
-                    "5 - Denotação e conotação.",
-                    "6 - Discurso direto, discurso indireto e discurso indireto livre.",
-                    "7 - Intertextualidade.",
-                    "8 - Figuras de linguagem.",
-                    "9 - Morfossintaxe.",
-                    "10 - Elementos estruturais e processos de formação de palavras.",
-                    "11 - Sinonímia e antonímia.",
-                    "12 - Pontuação.",
-                    "13 - Pronomes.",
-                    "14 - Concordância nominal e concordância verbal.",
-                    "15 - Flexão nominal e flexão verbal.",
-                    "16 - Vozes do verbo.",
-                    "17 - Correlação de tempos e modos verbais.",
-                    "18 - Regência nominal e regência verbal.",
-                    "19 - Coordenação e subordinação.",
-                    "20 - Conectivos.",
-                    "21 - Redação.",
-                    "21.1 - Confronto e reconhecimento de frases corretas e incorretas.",
-                    "21.2 - Organização e reorganização de orações e períodos.",
-                    "21.3 - Equivalência e transformação de estruturas."
+                    { text: "1 - Compreensão e interpretação de textos." },
+                    { text: "2 - Argumentação e persuasão." },
+                    { text: "3 - Comunicação assertiva: linguagem simples, concisa, objetiva." },
+                    { text: "4 - Organização textual." },
+                    { text: "5 - Coesão e coerência." },
+                    { text: "6 - Tipologia textual." },
+                    { text: "7 - Ortografia oficial." },
+                    { text: "8 - Acentuação gráfica." },
+                    { text: "9 - Emprego do sinal indicativo de crase." },
+                    { text: "10 - Sintaxe da oração e do período." },
+                    { text: "11 - Pontuação." },
+                    { text: "12 - Concordância nominal e verbal." },
+                    { text: "13 - Regência nominal e verbal." },
+                    { text: "14 - Significação das palavras." },
+                    { text: "15 - Colocação do pronome átono." },
+                    { text: "16 - Redação Oficial: escrita de textos formais e Manual de Redação da Presidência da República (disponível no sítio do Planalto na internet)." },
+                    { text: "17 - Novo Acordo Ortográfico." }
                 ]
             },
             {
                 id: "02",
                 code: "02",
-                shortName: "02. Ética e ESG",
-                name: "ÉTICA, COMPLIANCE E ESG",
-                block: "Gerais",
-                weight: 1,
+                shortName: "02. Inglês",
+                name: "Língua Inglesa",
+                block: "Conhecimentos Básicos",
                 examQuestions: 5,
-                scoreShare: "5,6%",
+                examLabel: "5 questões",
                 topics: [
-                    "1 - Ética e moral.",
-                    "1.1 - Conceitos.",
-                    "1.2 - Princípios.",
-                    "1.3 - Aplicação no ambiente organizacional.",
-                    "2 - Ética no serviço público e nas instituições financeiras.",
-                    "3 - Integridade, transparência, responsabilidade e conflitos de interesse.",
-                    "4 - Governança corporativa.",
-                    "4.1 - Conceitos.",
-                    "4.2 - Princípios.",
-                    "4.3 - Boas práticas.",
-                    "5 - Compliance.",
-                    "5.1 - Conceito.",
-                    "5.2 - Objetivos.",
-                    "5.3 - Controles internos.",
-                    "5.4 - Gestão de riscos.",
-                    "5.5 - Canais de denúncia.",
-                    "5.6 - Programas de integridade.",
-                    "6 - Prevenção e combate à corrupção, fraudes e lavagem de dinheiro.",
-                    "7 - Proteção de dados pessoais e privacidade.",
-                    "8 - Noções da Lei Geral de Proteção de Dados Pessoais (LGPD).",
-                    "9 - ESG (Environmental, Social and Governance).",
-                    "9.1 - Conceitos e fundamentos.",
-                    "9.2 - Aplicação nas organizações.",
-                    "10 - Sustentabilidade e responsabilidade socioambiental corporativa.",
-                    "11 - Aspectos ambientais, sociais e de governança (ESG) aplicados ao setor financeiro.",
-                    "12 - Desenvolvimento sustentável, Agenda 2030 e Objetivos de Desenvolvimento Sustentável (ODS).",
-                    "13 - Guia de Conduta Ética do Banestes."
+                    { text: "1 - Conhecimento de vocabulário fundamental e de aspectos gramaticais básicos para a compreensão de textos." }
                 ]
             },
             {
                 id: "03",
                 code: "03",
-                shortName: "03. Matemática / RLM",
-                name: "MATEMÁTICA/RACIOCÍNIO LÓGICO E QUANTITATIVO",
-                block: "Gerais (TB)",
-                weight: 1,
-                examQuestions: 10,
-                scoreShare: "11,1%",
+                shortName: "03. Mat. Financeira",
+                name: "Matemática Financeira",
+                block: "Conhecimentos Básicos",
+                examQuestions: 5,
+                examLabel: "5 questões",
                 topics: [
-                    "1 - Estrutura lógica de relações arbitrárias entre pessoas, lugares, objetos ou eventos fictícios.",
-                    "2 - Deduzir novas informações das relações fornecidas e avaliar as condições usadas para estabelecer a estrutura daquelas relações.",
-                    "3 - Compreensão e elaboração da lógica das situações por meio de:",
-                    "3.1 - Raciocínio verbal.",
-                    "3.2 - Raciocínio matemático.",
-                    "3.3 - Raciocínio sequencial.",
-                    "3.4 - Orientação espacial e temporal.",
-                    "3.5 - Formação de conceitos.",
-                    "3.6 - Discriminação de elementos.",
-                    "4 - Compreensão do processo lógico que, a partir de um conjunto de hipóteses, conduz, de forma válida, a conclusões determinadas.",
-                    "5 - Números inteiros e racionais.",
-                    "5.1 - Operações (adição, subtração, multiplicação, divisão, potenciação).",
-                    "5.2 - Expressões numéricas.",
-                    "5.3 - Múltiplos e divisores de números naturais.",
-                    "5.4 - Problemas.",
-                    "6 - Frações e operações com frações.",
-                    "7 - Números e grandezas proporcionais.",
-                    "7.1 - Razões e proporções.",
-                    "7.2 - Divisão em partes proporcionais.",
-                    "7.3 - Regra de três.",
-                    "7.4 - Porcentagem.",
-                    "7.5 - Problemas envolvendo regra de três simples, cálculos de porcentagem, acréscimos e descontos.",
-                    "8 - Noções de Estatística.",
-                    "8.1 - Medidas de tendência central (moda, mediana, média aritmética simples e ponderada).",
-                    "8.2 - Medidas de dispersão (desvio médio, amplitude, variância, desvio padrão).",
-                    "8.3 - Leitura e interpretação de gráficos (histogramas, setores, infográficos) e tabelas.",
-                    "9 - Contagem.",
-                    "9.1 - Princípio multiplicativo e aditivo.",
-                    "9.2 - Permutações e combinações simples."
+                    { text: "1 - Conceitos gerais: valor do dinheiro no tempo, valor presente, valor futuro, juro, taxa de juro, prazo da operação." },
+                    { text: "2 - Juros Simples." },
+                    { text: "3 - Juros Compostos." },
+                    { text: "4 - Séries Uniformes." },
+                    { text: "5 - Equivalência de Capitais em fluxos regulares ou irregulares: VP, VF, prazos e taxas de retorno." },
+                    { text: "6 - Sistemas de Amortização de qualquer tipo, incluindo os sistemas com amortizações constantes (SAC) e com prestações constantes (Francês ou PRICE)." },
+                    { text: "7 - Descontos: racional composto e comercial simples." },
+                    { text: "8 - Sequências numéricas: leis de formação expressas de forma geral (em função da posição do termo) ou de forma recursiva (em função de um ou mais termos anteriores); progressões aritméticas; progressões geométricas." }
                 ]
             },
             {
                 id: "04",
                 code: "04",
-                shortName: "04. Atualidades MF",
-                name: "ATUALIDADES DO MERCADO FINANCEIRO",
-                block: "Gerais (TB)",
-                weight: 1,
+                shortName: "04. Prob. e Estatística",
+                name: "Probabilidade e Estatística",
+                block: "Conhecimentos Básicos",
                 examQuestions: 5,
-                scoreShare: "5,6%",
+                examLabel: "5 questões",
                 topics: [
-                    "1 - Sistema Financeiro Nacional.",
-                    "1.1 - Estrutura.",
-                    "1.2 - Órgãos normativos.",
-                    "1.3 - Supervisores.",
-                    "1.4 - Operadores.",
-                    "2 - Política monetária e seus impactos na economia.",
-                    "2.1 - Política monetária.",
-                    "2.2 - Comitê de Política Monetária (Copom) do Banco Central do Brasil.",
-                    "2.3 - Taxa Selic.",
-                    "2.4 - Inflação.",
-                    "2.5 - Taxas de juros e seus impactos na economia.",
-                    "3 - Mercado financeiro e de capitais.",
-                    "3.1 - Conceitos.",
-                    "3.2 - Produtos.",
-                    "3.3 - Serviços.",
-                    "3.4 - Principais indicadores.",
-                    "4 - Open Finance, Pix, moedas digitais, inovação e transformação digital no sistema financeiro.",
-                    "5 - Fintechs, bancos digitais, instituições de pagamento e tendências do setor bancário.",
-                    "6 - Educação financeira, inclusão financeira e proteção do consumidor financeiro.",
-                    "7 - Sustentabilidade, finanças sustentáveis e ESG no mercado financeiro.",
-                    "8 - Cenários econômico e geopolítico nacional e internacional e seus reflexos no sistema financeiro.",
-                    "9 - Atualidades e tendências do mercado financeiro brasileiro."
+                    { text: "1 - Conceitos gerais: variável, tipos de variáveis, população, amostra, frequências: absoluta e relativa, frequências acumuladas, representações em gráficos e tabelas (linhas, colunas, setores e histogramas)." },
+                    { text: "2 - Medidas de tendência central (em dados brutos ou agrupados em classes): média aritmética, média geométrica, média ponderada, moda e mediana." },
+                    { text: "3 - Medidas de Posição: quartis e percentis." },
+                    { text: "4 - Medidas de dispersão (em dados brutos ou agrupados em classes): amplitude, variância, desvio padrão e coeficiente de variação." },
+                    { text: "5 - Probabilidade: experimento aleatório, espaço amostral, evento; espaços equiprováveis; probabilidade de Laplace; espaços não equiprováveis; teorema do produto; probabilidade condicional e independência; distribuição binomial." }
                 ]
             },
             {
                 id: "05",
                 code: "05",
-                shortName: "05. Conh. Bancários",
-                name: "CONHECIMENTOS BANCÁRIOS/SECURITÁRIOS",
-                block: "Específicos",
-                weight: 2,
-                examQuestions: 15,
-                scoreShare: "25,0%",
+                shortName: "05. Ética e Compliance",
+                name: "Ética e Compliance",
+                block: "Conhecimentos Básicos",
+                examQuestions: 5,
+                examLabel: "5 questões",
                 topics: [
-                    "1 - Sistema Financeiro Nacional.",
-                    "1.1 - Estrutura.",
-                    "1.2 - Órgãos normativos.",
-                    "1.3 - Supervisores.",
-                    "1.4 - Operadores.",
-                    "2 - Instituições financeiras e Instituições de Pagamento.",
-                    "2.1 - Conceitos.",
-                    "2.2 - Tipos.",
-                    "2.3 - Funções.",
-                    "2.4 - Operações.",
-                    "3 - Produtos e serviços bancários.",
-                    "3.1 - Contas.",
-                    "3.2 - Meios de pagamento.",
-                    "3.3 - Crédito.",
-                    "3.4 - Investimentos.",
-                    "3.5 - Cartões.",
-                    "3.6 - Canais de atendimento.",
-                    "4 - Captação, intermediação e aplicação de recursos financeiros.",
-                    "5 - Mercado financeiro e de capitais.",
-                    "5.1 - Conceitos básicos.",
-                    "5.2 - Principais instrumentos.",
-                    "6 - Política monetária e indicadores econômicos.",
-                    "6.1 - Política monetária.",
-                    "6.2 - Comitê de Política Monetária (Copom) do Banco Central do Brasil.",
-                    "6.3 - Taxas de juros.",
-                    "6.4 - Inflação.",
-                    "6.5 - Indicadores econômicos.",
-                    "7 - Open Finance, Pix, meios eletrônicos de pagamento e inovação no sistema financeiro.",
-                    "7.1 - Open Finance.",
-                    "7.2 - Pix.",
-                    "7.3 - Meios eletrônicos de pagamento.",
-                    "7.4 - Inovação no sistema financeiro.",
-                    "8 - Prevenção à lavagem de dinheiro e ao financiamento do terrorismo.",
-                    "9 - Conselho de Controle de Atividades Financeiras (COAF).",
-                    "10 - Educação financeira e proteção do consumidor de produtos e serviços financeiros.",
-                    "11 - Noções de seguros.",
-                    "11.1 - Conceitos.",
-                    "11.2 - Princípios.",
-                    "11.3 - Participantes.",
-                    "11.4 - Modalidades de seguros pessoais e empresariais.",
-                    "12 - Previdência complementar aberta.",
-                    "12.1 - Conceitos.",
-                    "12.2 - Características.",
-                    "12.3 - Modalidades.",
-                    "13 - Títulos de capitalização.",
-                    "13.1 - Conceitos.",
-                    "13.2 - Características.",
-                    "13.3 - Funcionamento.",
-                    "14 - Produtos bancassurance: integração entre serviços bancários, seguros, previdência e capitalização.",
-                    "15 - Consórcio.",
-                    "16 - Regulação e supervisão dos mercados financeiro e securitário.",
-                    "17 - Atendimento, comercialização e adequação de produtos financeiros e securitários ao perfil do cliente.",
-                    "18 - Portabilidade.",
-                    "19 - Resolução CMN nº 4.966/2021."
+                    { text: "1 - Prevenção à lavagem de dinheiro: Lei nº 9.613/98 e suas alterações; Circular nº 3.978, de 23 de janeiro de 2020 e Carta Circular nº 4.001, de 29 de janeiro de 2020 e suas alterações; Resolução CVM 50/2021." },
+                    { text: "2 - Conceitos e medidas de enfrentamento ao assédio moral e sexual." },
+                    { text: "3 - Atitudes éticas, respeito, valores e virtudes; noções de ética empresarial e profissional. A gestão da ética nas empresas públicas e privadas. Código de Ética, Conduta e Integridade (disponível no sítio da CAIXA na internet)." },
+                    { text: "4 - Segurança da informação: fundamentos, conceitos e mecanismos de segurança; Segurança cibernética: Resolução CMN nº 4.893, de 26 de fevereiro de 2021." },
+                    { text: "5 - Artigo 37 da Constituição Federal (Princípios constitucionais da Administração Pública: Princípios da legalidade, impessoalidade, moralidade, publicidade e eficiência)." },
+                    { text: "6 - Sigilo Bancário: Lei Complementar nº 105/2001 e suas alterações." },
+                    { text: "7 - Lei Geral de Proteção de Dados (LGPD): Lei nº 13.709, de 14 de agosto de 2018 e suas alterações." },
+                    { text: "8 - Legislação anticorrupção: Lei nº 12.846/2013 e Decreto nº 8.420/2015 e suas alterações. [Atualização: revogado e substituído pelo Decreto nº 11.129/2022.]" },
+                    { text: "9 - Política de Responsabilidade Socioambiental da Caixa Econômica Federal (disponível no sítio da CAIXA na internet)." },
+                    { text: "10 - Boas práticas de governança corporativa." }
                 ]
             },
             {
                 id: "06",
                 code: "06",
-                shortName: "06. Mat. Financeira",
-                name: "MATEMÁTICA FINANCEIRA",
-                block: "Específicos",
-                weight: 2,
-                examQuestions: 5,
-                scoreShare: "8,3%",
+                shortName: "06. Tec. da Informação",
+                name: "Tecnologia da Informação",
+                block: "Conhecimentos Específicos",
+                examQuestions: 30,
+                examLabel: "30 questões",
                 topics: [
-                    "1 - Razão, proporção, porcentagem e variação percentual.",
-                    "2 - Juros simples e juros compostos.",
-                    "3 - Taxas de juros.",
-                    "3.1 - Nominal.",
-                    "3.2 - Efetiva.",
-                    "3.3 - Proporcional.",
-                    "3.4 - Equivalente.",
-                    "3.5 - Real.",
-                    "4 - Capitalização e desconto simples e composto.",
-                    "4.1 - Capitalização simples e composta.",
-                    "4.2 - Desconto simples e composto.",
-                    "5 - Valor presente e valor futuro.",
-                    "6 - Séries de pagamentos (anuidades) e sistemas de amortização.",
-                    "7 - Fluxo de caixa e equivalência de capitais.",
-                    "8 - Cálculo financeiro aplicado a operações de crédito e investimentos.",
-                    "9 - Análise de financiamentos e empréstimos.",
-                    "10 - Matemática financeira aplicada ao mercado financeiro e bancário."
+                    // 1 - Engenharia de Software
+                    { group: "1 - Engenharia de Software", text: "1.1 - Processos de software: Processo Unificado (UP) - conceitos gerais, disciplinas, fases, papéis, atividades e artefatos." },
+                    { group: "1 - Engenharia de Software", text: "1.2 - UX; Análise e projeto orientados a objetos." },
+                    { group: "1 - Engenharia de Software", text: "1.3 - A Linguagem UML: modelos e diagramas." },
+                    { group: "1 - Engenharia de Software", text: "1.4 - Padrões de projeto; Engenharia de requisitos." },
+                    // 2 - Estrutura de Dados e Algoritmos
+                    { group: "2 - Estrutura de Dados e Algoritmos", text: "2.1 - Busca sequencial e busca binária sobre arrays." },
+                    { group: "2 - Estrutura de Dados e Algoritmos", text: "2.2 - Ordenação: métodos da bolha, ordenação por seleção, ordenação por inserção." },
+                    { group: "2 - Estrutura de Dados e Algoritmos", text: "2.3 - Lista encadeada; Pilha; Fila; Noções de árvore binária." },
+                    // 3 - Linguagens de Programação
+                    { group: "3 - Linguagens de Programação", text: "3.1 - Linguagens de programação, linguagens orientadas a objeto e procedurais; Padrões de Projeto." },
+                    { group: "3 - Linguagens de Programação", text: "3.2 - Java SE; JEE; Microprofile." },
+                    { group: "3 - Linguagens de Programação", text: "3.3 - C#; .NET." },
+                    { group: "3 - Linguagens de Programação", text: "3.4 - AngularJS; Angular; TypeScript 4.X; JavaScript." },
+                    { group: "3 - Linguagens de Programação", text: "3.5 - Python 3.9.X (bibliotecas Pandas, NumPy, SciPy, Matplotlib, TensorFlow, PyTorch e Scikit-learn)." },
+                    { group: "3 - Linguagens de Programação", text: "3.6 - Scala; R; Kotlin; Objective-C; Flutter; Swift; Cobol." },
+                    // 4 - Desenvolvimento de Software para a Web
+                    { group: "4 - Desenvolvimento de Software para a Web", text: "4.1 - Sistemas distribuídos e microsserviços; Interoperabilidade de sistemas." },
+                    { group: "4 - Desenvolvimento de Software para a Web", text: "4.2 - Arquitetura e padrões de projeto Java EE8; Servlets; JSF; JSP; Ajax." },
+                    { group: "4 - Desenvolvimento de Software para a Web", text: "4.3 - SOA e Web Services (Quarkus); Padrões REST; HTTP response Status code." },
+                    { group: "4 - Desenvolvimento de Software para a Web", text: "4.4 - Padrões HTML 4.01, XHTML 1.0, XML, XSLT, UDDI, WSDL e SOAP." },
+                    // 5 - Teste de Software (Qualidade)
+                    { group: "5 - Teste de Software (Qualidade)", text: "5.1 - Controle da qualidade estático: revisão, inspeção, medição estática, análise estática." },
+                    { group: "5 - Teste de Software (Qualidade)", text: "5.2 - Princípios e técnicas de teste de software: teste de unidade, teste de integração, teste de regressão, teste alfa, teste beta, teste de segurança, teste de aceitação e de aprovação." },
+                    { group: "5 - Teste de Software (Qualidade)", text: "5.3 - Desenvolvimento dirigido por testes (TDD)." },
+                    // 6 - Bancos de Dados
+                    { group: "6 - Bancos de Dados", text: "6.1 - Modelagem conceitual de dados: a abordagem entidade-relacionamento." },
+                    { group: "6 - Bancos de Dados", text: "6.2 - Modelo relacional de dados (conceitos básicos e normalização); Conceitos de banco de dados e sistemas gerenciadores de bancos de dados (SGBD)." },
+                    { group: "6 - Bancos de Dados", text: "6.3 - Linguagem SQL." },
+                    { group: "6 - Bancos de Dados", text: "6.4 - Data Warehouse - modelagem física de dados: tabelas, índices, particionamento, desempenho; modelagem conceitual para data warehouses, dados multidimensionais." },
+                    { group: "6 - Bancos de Dados", text: "6.5 - Big data: fundamentos, técnicas de preparação e apresentação de dados; soluções de big data." },
+                    // 7 - Agilidade
+                    { group: "7 - Agilidade", text: "7.1 - Lean; Lean IT; frameworks (XP; SCRUM; Kanban; SAFE SA; Nexus); ágil em escala e ágil escalado." },
+                    { group: "7 - Agilidade", text: "7.2 - Ferramentas; artefatos, métricas e indicadores ágeis; Management 3.0; Lean UX; Design Thinking." },
+                    { group: "7 - Agilidade", text: "7.3 - História de Usuário; O backlog do produto e as técnicas para priorização (MOSCOW, Scorecard, BUC, Testes de Suposição e Valor de negócio x risco)." },
+                    { group: "7 - Agilidade", text: "7.4 - Técnica para estimativa de escopo (Planning Poker, Story points, enquete, T-shirt sizing); Kanban e o fluxo de valor." },
+                    { group: "7 - Agilidade", text: "7.5 - Técnicas/cerimônias para colaboração e integração do time ágil (SoS, PoSinc, planning, review, retrospectiva, daily, PI Planning)." },
+                    { group: "7 - Agilidade", text: "7.6 - Integração contínua; Deploy contínuo; Entrega contínua; tratamento de débitos técnicos e incidentes; Arquitetura e Qualidade ágeis; DevSecOps." },
+                    // 8 - Organização e Arquitetura de Computadores
+                    { group: "8 - Organização e Arquitetura de Computadores", text: "8.1 - Arquitetura básica de um computador: CPU e hierarquia de memória." },
+                    { group: "8 - Organização e Arquitetura de Computadores", text: "8.2 - Armazenamento e representação de dados: base binária e complemento a dois, ponto flutuante e caracteres." },
+                    { group: "8 - Organização e Arquitetura de Computadores", text: "8.3 - Armazenamento e representação de instruções; Modos de endereçamento; Conjunto típico de instruções de uma CPU." },
+                    { group: "8 - Organização e Arquitetura de Computadores", text: "8.4 - Subsistema de entrada/saída e dispositivos de armazenamento secundário." },
+                    // 9 - Sistemas Operacionais
+                    { group: "9 - Sistemas Operacionais", text: "9.1 - Funções e estrutura de um sistema operacional; Processos: conceitos básicos, comunicação, sincronização e escalonamento." },
+                    { group: "9 - Sistemas Operacionais", text: "9.2 - Gerência de memória: partições fixas e variáveis, realocação, memória virtual, swapping, sistemas de arquivos." },
+                    { group: "9 - Sistemas Operacionais", text: "9.3 - Windows 10 (32-64 bits) e ambiente Linux (SUSE SLES 15 SP2) e IBM z/OS." },
+                    // 10 - Arquiteturas de Software e Computação em Nuvem
+                    { group: "10 - Arquiteturas de Software e Computação em Nuvem", text: "10.1 - Arquitetura em camadas, arquitetura MVC, arquitetura orientada a serviços; arquitetura monolítica, arquitetura microsserviço, micro front end." },
+                    { group: "10 - Arquiteturas de Software e Computação em Nuvem", text: "10.2 - Métricas e estimativas de software; Análise por pontos de função: conceitos básicos e aplicações." },
+                    { group: "10 - Arquiteturas de Software e Computação em Nuvem", text: "10.3 - Nuvem pública e privada; Estratégias de Migração de Aplicações para o ambiente de nuvem, Governança, Computação Serverless, Segurança Compartilhada." },
+                    // 11 - Gerência de Configuração
+                    { group: "11 - Gerência de Configuração", text: "11.1 - Conceitos e práticas; Uso de ferramentas de gerência de configuração." },
+                    { group: "11 - Gerência de Configuração", text: "11.2 - Controle de defeitos: conceitos e práticas." },
+                    // 12 - Portais Corporativos
+                    { group: "12 - Portais Corporativos", text: "12.1 - Arquitetura da informação, portlets e RSS; Ferramentas de Gestão de Conteúdos." },
+                    { group: "12 - Portais Corporativos", text: "12.2 - Modelo de Acessibilidade do Governo Eletrônico (eMAG)." },
+                    // 13 - Qualidade de Software
+                    { group: "13 - Qualidade de Software", text: "13.1 - CMMI / MPS-BR: conceitos básicos e objetivos; disciplinas e formas de representação; níveis de capacidade e maturidade." },
+                    // 14 - Conceitos de Arquitetura de Referência
+                    { group: "14 - Conceitos de Arquitetura de Referência", text: "14.1 - Arquitetura de solução para o desenvolvedor básico." },
+                    // 15 - Gestão e Governança de TI
+                    { group: "15 - Gestão e Governança de TI", text: "15.1 - ITIL v.4; COBIT." }
                 ]
             },
             {
                 id: "07",
                 code: "07",
-                shortName: "07. Prob. e Estatística",
-                name: "NOÇÕES DE PROBABILIDADE E ESTATÍSTICA",
-                block: "Específicos",
-                weight: 2,
+                shortName: "07. Conh. Digitais",
+                name: "Conhecimentos Digitais",
+                block: "Conhecimentos Específicos",
                 examQuestions: 5,
-                scoreShare: "8,3%",
+                examLabel: "5 questões",
                 topics: [
-                    "1 - Conceitos básicos de estatística e análise de dados.",
-                    "2 - População, amostra e técnicas de amostragem.",
-                    "3 - Organização, representação e interpretação de dados em tabelas e gráficos.",
-                    "4 - Medidas de tendência central.",
-                    "4.1 - Média.",
-                    "4.2 - Mediana.",
-                    "4.3 - Moda.",
-                    "5 - Medidas de dispersão.",
-                    "5.1 - Amplitude.",
-                    "5.2 - Variância.",
-                    "5.3 - Desvio padrão.",
-                    "5.4 - Coeficiente de variação.",
-                    "6 - Probabilidade.",
-                    "6.1 - Conceitos fundamentais.",
-                    "6.2 - Eventos.",
-                    "6.3 - Espaço amostral.",
-                    "6.4 - Cálculo de probabilidades.",
-                    "7 - Probabilidade condicional e independência de eventos.",
-                    "8 - Distribuições de frequência e distribuição normal.",
-                    "9 - Análise e interpretação de indicadores estatísticos.",
-                    "10 - Aplicações de probabilidade e estatística em contextos financeiros, econômicos e organizacionais."
+                    { text: "1 - Mindset de crescimento; Paradigma da abundância." },
+                    { text: "2 - Intraempreendedorismo." },
+                    { text: "3 - Design Thinking; Design de Serviço." },
+                    { text: "4 - Metodologias ágeis; Lean Manufacturing; SCRUM." },
+                    { text: "5 - Resolução de problemas complexos; visão sistêmica e estratégica." },
+                    { text: "6 - Ciência de dados." },
+                    { text: "7 - Senso colaborativo e disposição para somar pontos de vista divergentes." },
+                    { text: "8 - Pensamento computacional." },
+                    { text: "9 - Análise de Negócios." },
+                    { text: "10 - Liderança, autoliderança e liderança de equipes." },
+                    { text: "11 - Autodesenvolvimento." },
+                    { text: "12 - Experiência do consumidor (Customer Experience)." },
+                    { text: "13 - Inteligência emocional." },
+                    { text: "14 - Desenvolvimento sustentável (Pacto Global e Objetivos de Desenvolvimento Sustentável - ODS)." },
+                    { text: "15 - Objetivos-chaves para resultados (OKR)." },
+                    { text: "16 - Gestão do tempo e produtividade." },
+                    { text: "17 - Técnicas e boas práticas para o trabalho à distância." },
+                    { text: "18 - Aprender a aprender e Aprendizagem contínua (Lifelong Learning)." }
                 ]
             },
             {
                 id: "08",
                 code: "08",
-                shortName: "08. Informática e IA",
-                name: "NOÇÕES DE INFORMÁTICA E COMPORTAMENTOS DIGITAIS",
-                block: "Específicos",
-                weight: 2,
-                examQuestions: 5,
-                scoreShare: "8,3%",
+                shortName: "08. Redação",
+                name: "Redação",
+                block: "2ª Etapa (Eliminatória)",
+                examQuestions: 0,
+                examLabel: "2ª Etapa",
                 topics: [
-                    "1 - Lei Geral de Proteção de Dados Pessoais (LGPD).",
-                    "1.1 - Fundamentos.",
-                    "1.2 - Conceitos.",
-                    "1.3 - Princípios.",
-                    "1.4 - Bases legais.",
-                    "1.5 - Direitos dos titulares.",
-                    "1.6 - Tratamento de dados sensíveis.",
-                    "1.7 - Agentes de tratamento.",
-                    "1.8 - Encarregado.",
-                    "1.9 - Segurança.",
-                    "1.10 - Boas práticas.",
-                    "1.11 - Responsabilidade e sanções.",
-                    "2 - Aplicações da LGPD ao setor bancário.",
-                    "2.1 - Cadastro de clientes.",
-                    "2.2 - Análise de crédito.",
-                    "2.3 - Prevenção à fraude.",
-                    "2.4 - Compartilhamento de dados.",
-                    "2.5 - Proteção do crédito.",
-                    "2.6 - Decisões automatizadas.",
-                    "3 - Noções de Informática, Google Workspace e segurança digital.",
-                    "3.1 - Conceitos básicos de informática.",
-                    "3.2 - Hardware.",
-                    "3.3 - Software.",
-                    "3.4 - Sistemas operacionais (Windows e Linux básico, em suas últimas versões).",
-                    "3.5 - Internet, intranet, navegadores e mecanismos de busca.",
-                    "3.6 - Correio eletrônico.",
-                    "3.7 - Computação em nuvem.",
-                    "3.8 - Redes de computadores.",
-                    "3.9 - Aplicativos de escritório.",
-                    "3.10 - Ferramentas de colaboração digital.",
-                    "3.11 - Segurança da informação, senhas e autenticação.",
-                    "3.12 - Vírus, malware, phishing e engenharia social.",
-                    "3.13 - Privacidade, proteção de dados e boas práticas de uso corporativo.",
-                    "4 - Google Workspace.",
-                    "4.1 - Gmail.",
-                    "4.2 - Drive.",
-                    "4.3 - Docs.",
-                    "4.4 - Sheets.",
-                    "4.5 - Slides.",
-                    "4.6 - Forms.",
-                    "4.7 - Calendar.",
-                    "4.8 - Meet.",
-                    "4.9 - Chat.",
-                    "5 - Inteligência Artificial e novas tecnologias.",
-                    "5.1 - Conceitos básicos de inteligência artificial.",
-                    "5.2 - Aprendizado de máquina.",
-                    "5.3 - IA generativa.",
-                    "5.4 - Automação.",
-                    "5.5 - Chatbots.",
-                    "5.6 - Processamento de linguagem natural.",
-                    "5.7 - Gemini no Google Workspace.",
-                    "5.8 - Aplicações bancárias da IA: análise de crédito, prevenção à fraude e atendimento ao cliente.",
-                    "5.9 - Riscos, vieses e explicabilidade.",
-                    "5.10 - Governança.",
-                    "5.11 - Segurança da informação, LGPD e decisões automatizadas."
-                ]
-            },
-            {
-                id: "09",
-                code: "09",
-                shortName: "09. Vendas e Atend.",
-                name: "VENDAS, NEGOCIAÇÃO E ATENDIMENTO",
-                block: "Específicos",
-                weight: 2,
-                examQuestions: 10,
-                scoreShare: "16,7%",
-                topics: [
-                    "1 - Atendimento ao cliente.",
-                    "1.1 - Conceitos.",
-                    "1.2 - Princípios.",
-                    "1.3 - Qualidade, excelência e satisfação do cliente.",
-                    "2 - Comunicação interpessoal, relacionamento com clientes e técnicas de atendimento presencial e digital.",
-                    "3 - Perfil, necessidades e comportamento do consumidor de produtos e serviços financeiros.",
-                    "4 - Técnicas de vendas e pós-venda.",
-                    "5 - Prospecção, fidelização e retenção de clientes.",
-                    "6 - Negociação.",
-                    "6.1 - Conceitos.",
-                    "6.2 - Etapas.",
-                    "6.3 - Abordagens.",
-                    "6.4 - Técnicas de negociação.",
-                    "7 - Gestão do relacionamento com clientes (CRM).",
-                    "8 - Marketing de relacionamento e experiência do cliente.",
-                    "9 - Produtos e serviços bancários: características, benefícios e adequação ao perfil do cliente.",
-                    "10 - Ética, transparência e responsabilidade no atendimento e na oferta de produtos e serviços financeiros.",
-                    "11 - Resolução de conflitos, tratamento de reclamações e mediação de situações de atendimento.",
-                    "12 - Canais de atendimento e transformação digital no setor bancário.",
-                    "13 - Educação financeira e orientação ao cliente na utilização de produtos e serviços financeiros."
+                    { text: "1 - Adequação ao tema proposto." },
+                    { text: "2 - Adequação ao tipo de texto solicitado (dissertativo-argumentativo em prosa)." },
+                    { text: "3 - Emprego apropriado de mecanismos de coesão (referenciação, sequenciação e demarcação das partes do texto)." },
+                    { text: "4 - Capacidade de selecionar, organizar e relacionar de forma coerente argumentos pertinentes ao tema proposto." },
+                    { text: "5 - Pleno domínio da modalidade escrita da norma-padrão (adequação vocabular, ortografia, morfologia, sintaxe de concordância, de regência e de colocação)." }
                 ]
             }
         ];
@@ -1101,7 +936,7 @@
         }
 
         // ============================================================================
-        // 4. NORMALIZAÇÃO DE DADOS, PERSISTÊNCIA LOCAL E FIRESTORE (DEBOUNCE 600ms)
+        // 4. NORMALIZAÇÃO, PERSISTÊNCIA LOCAL E FIRESTORE (DEBOUNCE 600ms)
         // ============================================================================
         function normalizeRecordNumbers(rawObj) {
             const rawTotal = rawObj?.total !== undefined ? rawObj.total : rawObj?.q;
@@ -1112,7 +947,6 @@
             let correct = parseNonNegativeInt(rawCorrect);
             let wrong = parseNonNegativeInt(rawWrong);
 
-            // Garante consistência ao carregar backups antigos ou dados salvos
             if (total === 0 && (correct > 0 || wrong > 0)) {
                 total = correct + wrong;
             } else if (total < correct) {
@@ -1122,7 +956,8 @@
                 wrong = total - correct;
             }
 
-            return { total, correct, wrong };
+            const manualTotal = rawObj?.manualTotal !== undefined ? Boolean(rawObj.manualTotal) : total > 0;
+            return { total, correct, wrong, manualTotal };
         }
 
         function ensureProgressStructure() {
@@ -1155,7 +990,7 @@
                             correct: nums.correct,
                             wrong: nums.wrong,
                             notes,
-                            manualTotal: false,
+                            manualTotal: nums.manualTotal,
                             sessions: rawSessions.map((s, sIdx) => {
                                 const sNums = normalizeRecordNumbers(s);
                                 const sNotes = typeof s?.notes === "string"
@@ -1168,7 +1003,7 @@
                                     correct: sNums.correct,
                                     wrong: sNums.wrong,
                                     notes: sNotes,
-                                    manualTotal: false
+                                    manualTotal: sNums.manualTotal
                                 };
                             })
                         };
@@ -1188,6 +1023,7 @@
                         total: row.total,
                         correct: row.correct,
                         wrong: row.wrong,
+                        manualTotal: Boolean(row.manualTotal),
                         notes: row.notes || "",
                         sessions: (row.sessions || []).map(s => ({
                             date: s.date || getTodayLocalISO(),
@@ -1195,6 +1031,7 @@
                             total: s.total,
                             correct: s.correct,
                             wrong: s.wrong,
+                            manualTotal: Boolean(s.manualTotal),
                             notes: s.notes || ""
                         }))
                     };
@@ -1246,21 +1083,18 @@
         }
 
         function getUserProgressDocRef(uid) {
-            return fbModules.doc(fbDb, "artifacts", "banestes-planilha", "users", uid, "planilha", "progresso");
+            return fbModules.doc(fbDb, "artifacts", FIRESTORE_APP_ID, "users", uid, "planilha", "progresso");
         }
 
         function saveProgress() {
-            // 1. Salvamento imediato em localStorage
             lastLocalUpdatedAt = Date.now();
             saveToLocalStorage();
 
-            // 2. Se modo offline ou Firebase indisponível, mantém status local
             if (!firebaseReady || !fbDb || !currentUser || isOfflineMode) {
                 updateSyncStatus("💻 Modo Offline", "bg-blue-900/60 text-blue-100 border-blue-700");
                 return;
             }
 
-            // 3. Debounce de 600ms para sincronizar no Firestore
             updateSyncStatus("⏳ Salvando...", "bg-blue-800 text-blue-100 border-blue-500");
             clearTimeout(saveDebounceTimer);
             saveDebounceTimer = setTimeout(async () => {
@@ -1330,20 +1164,17 @@
             unsubscribeSnapshot = fbModules.onSnapshot(
                 docRef,
                 (snap) => {
-                    // Ignora escritas locais pendentes
                     if (snap.metadata && snap.metadata.hasPendingWrites) return;
 
                     if (snap.exists()) {
                         const data = snap.data();
                         if (!data || !data.progressJson) return;
 
-                        // Ignora eco da própria escrita deste cliente
                         if (data.clientWriteId && data.clientWriteId === lastClientWriteId) {
                             updateSyncStatus("☁️ Sincronizado na nuvem", "bg-emerald-700 text-white border-emerald-500");
                             return;
                         }
 
-                        // Ignora snapshot mais antigo que a edição local mais recente
                         const remoteTs = Number(data.updatedAtMs) || 0;
                         if (remoteTs > 0 && remoteTs < lastLocalUpdatedAt) {
                             return;
@@ -1352,7 +1183,6 @@
                         try {
                             const remoteProgress = JSON.parse(data.progressJson);
                             if (isEditingInsideSheet()) {
-                                // Nunca recria a tabela enquanto houver input/textarea em foco
                                 pendingCloudProgress = remoteProgress;
                             } else {
                                 userProgress = remoteProgress;
@@ -1629,20 +1459,8 @@
         }
 
         // ============================================================================
-        // 6. LÓGICA EXATA DE CÁLCULO (QUESTÕES / ACERTOS / ERROS) — SEM DUPLICAÇÃO
+        // 6. LÓGICA CIRÚRGICA DE CÁLCULO (QUESTÕES / ACERTOS / ERROS) — SEM DUPLICAR
         // ============================================================================
-        /**
-         * Aplica a regra de cálculo sem duplicar Questões ao digitar Acertos:
-         * - field === "total": define obj.total = val; obj.manualTotal = val > 0;
-         *   se val >= obj.correct -> obj.wrong = val - obj.correct;
-         *   se val < obj.correct -> mantém obj.correct durante digitação e define obj.wrong = 0.
-         * - field === "correct": NUNCA soma correct + wrong;
-         *   se obj.total >= val -> mantém obj.total e calcula obj.wrong = obj.total - val;
-         *   somente se val > obj.total -> obj.total = val e obj.wrong = 0.
-         * - field === "wrong":
-         *   se obj.manualTotal && val <= obj.total -> mantém obj.total e obj.correct = obj.total - val;
-         *   caso contrário -> obj.total = obj.correct + val.
-         */
         function applyNumericCalculation(obj, field, rawValue) {
             const val = parseNonNegativeInt(rawValue);
 
@@ -1652,16 +1470,14 @@
                 if (val >= obj.correct) {
                     obj.wrong = val - obj.correct;
                 } else {
-                    // Durante a digitação (ex: apagando "23" para digitar "20"), não apaga correct
+                    // Não apaga acertos no meio da digitação; reconcilia apenas no blur
                     obj.wrong = 0;
                 }
             } else if (field === "correct") {
                 obj.correct = val;
                 if (obj.total >= val) {
-                    // Mantém total inalterado e calcula erros automaticamente
                     obj.wrong = obj.total - val;
                 } else {
-                    // Somente quando acertos ultrapassam o total atual
                     obj.total = val;
                     obj.wrong = 0;
                 }
@@ -1671,14 +1487,11 @@
                     obj.correct = obj.total - val;
                 } else {
                     obj.total = obj.correct + val;
+                    obj.manualTotal = false;
                 }
             }
         }
 
-        /**
-         * Finaliza a consistência no evento blur do campo Questões (total).
-         * Se o usuário terminou de editar e deixou total < correct, ajusta correct = total e wrong = 0.
-         */
         function reconcileTotalOnBlur(obj) {
             if (obj.total < obj.correct) {
                 obj.correct = obj.total;
@@ -1688,9 +1501,6 @@
             return false;
         }
 
-        /**
-         * Atualiza cirurgicamente apenas os outros 2 inputs da mesma linha que NÃO têm foco.
-         */
         function syncSiblingInputsSurgically(obj, totalEl, correctEl, wrongEl) {
             const active = document.activeElement;
             if (totalEl && active !== totalEl) totalEl.value = obj.total;
@@ -1793,7 +1603,7 @@
         function buildTopicBadgesHtml(rowData, metrics) {
             if (metrics.hasSessions) {
                 const labelPass = metrics.sessionsCount === 1 ? "1 passagem" : `${metrics.sessionsCount} passagens`;
-                let html = `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-100 text-[#004b8d] border border-blue-200">${labelPass}</span>`;
+                let html = `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-100 text-[#005ca9] border border-blue-200">${labelPass}</span>`;
                 if (metrics.lastDate) {
                     html += `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-600 border border-gray-200">Última: ${formatShortDate(metrics.lastDate)}</span>`;
                 }
@@ -1879,16 +1689,13 @@
                     <div class="text-xl font-extrabold text-red-700">${st.totalE}</div>
                 </div>
                 <div class="bg-white p-2.5 rounded border border-blue-300 shadow-sm">
-                    <div class="text-[10px] font-bold uppercase text-[#004b8d]">% Acerto</div>
-                    <div class="text-xl font-extrabold text-[#004b8d]">${pctAccText}</div>
+                    <div class="text-[10px] font-bold uppercase text-[#005ca9]">% Acerto</div>
+                    <div class="text-xl font-extrabold text-[#005ca9]">${pctAccText}</div>
                 </div>
                 <div class="bg-white p-2.5 rounded border border-indigo-300 shadow-sm">
-                    <div class="text-[10px] font-bold uppercase text-indigo-700">Passagens / Dias</div>
-                    <div class="text-xl font-extrabold text-indigo-700">${st.totalSessions}</div>
-                </div>
-                <div class="bg-white p-2.5 rounded border border-gray-300 shadow-sm">
-                    <div class="text-[10px] font-bold uppercase text-gray-500">Progresso</div>
-                    <div class="text-xl font-extrabold text-gray-800">${st.studiedTopics}/${st.totalTopics} <span class="text-xs font-semibold text-gray-500">(${pctStudiedText})</span></div>
+                    <div class="text-[10px] font-bold uppercase text-indigo-700">Progresso / Passagens</div>
+                    <div class="text-lg font-extrabold text-gray-800">${st.studiedTopics}/${st.totalTopics} <span class="text-xs font-semibold text-gray-500">(${pctStudiedText})</span></div>
+                    <div class="text-[11px] text-indigo-700 font-medium">${st.totalSessions} passagens</div>
                 </div>
             `;
         }
@@ -1934,7 +1741,7 @@
         }
 
         // ============================================================================
-        // 9. ABA "📊 DESEMPENHO GERAL"
+        // 9. ABA "📊 DESEMPENHO GERAL" (5 CARTÕES SIMPLES + TABELA CONSOLIDADA)
         // ============================================================================
         function renderGeneralDashboard() {
             const viewport = document.getElementById("sheet-viewport");
@@ -1961,33 +1768,39 @@
                     else barColor = "bg-red-500";
                 }
 
+                const blockBadgeClass = subj.block.includes("Específicos")
+                    ? "bg-blue-100 text-blue-900 font-semibold"
+                    : subj.block.includes("2ª Etapa")
+                        ? "bg-amber-100 text-amber-900 font-semibold"
+                        : "bg-gray-100 text-gray-700";
+
                 rowsHtml += `
                     <tr class="bg-white hover:bg-blue-50/60">
                         <td class="text-center font-bold text-gray-600">${subj.code}</td>
                         <td>
                             <button type="button" data-action="switch-tab" data-tab="${subj.id}"
-                                class="text-left font-semibold text-[#004b8d] hover:underline flex items-center gap-1.5 w-full cursor-pointer">
+                                class="text-left font-semibold text-[#005ca9] hover:underline flex items-center gap-1.5 w-full cursor-pointer">
                                 <span>${subj.name}</span>
                                 <span class="text-xs text-gray-400 font-normal">↗</span>
                             </button>
                         </td>
                         <td class="text-center">
-                            <span class="px-2 py-0.5 rounded text-xs font-medium ${subj.weight === 2 ? "bg-blue-100 text-blue-900 font-semibold" : "bg-gray-100 text-gray-700"}">
-                                ${subj.block} • Peso ${subj.weight}
+                            <span class="px-2 py-0.5 rounded text-xs font-medium ${blockBadgeClass}">
+                                ${subj.block}
                             </span>
                         </td>
-                        <td class="text-center text-gray-700 font-medium">${subj.examQuestions} <span class="text-xs text-gray-400">(${subj.scoreShare})</span></td>
+                        <td class="text-center text-gray-700 font-medium">${subj.examLabel}</td>
                         <td>
                             <div class="flex items-center justify-between text-xs mb-1">
                                 <span class="font-medium text-gray-700">${st.studiedTopics} / ${st.totalTopics}</span>
                                 <span class="text-gray-500">${pctStudiedFmt}</span>
                             </div>
                             <div class="w-full bg-gray-200 h-1.5 rounded-full overflow-hidden">
-                                <div class="bg-[#004b8d] h-1.5" style="width: ${st.pctStudied}%"></div>
+                                <div class="bg-[#005ca9] h-1.5" style="width: ${st.pctStudied}%"></div>
                             </div>
                         </td>
                         <td class="text-center">
-                            <span class="inline-block px-2 py-0.5 rounded-full text-xs font-semibold ${st.totalSessions > 0 ? "bg-blue-100 text-[#004b8d]" : "bg-gray-100 text-gray-400"}">
+                            <span class="inline-block px-2 py-0.5 rounded-full text-xs font-semibold ${st.totalSessions > 0 ? "bg-blue-100 text-[#005ca9]" : "bg-gray-100 text-gray-400"}">
                                 ${st.totalSessions}
                             </span>
                         </td>
@@ -2013,7 +1826,7 @@
 
             viewport.innerHTML = `
                 <div class="p-4 bg-gray-50 border-b border-gray-300">
-                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
                         <div class="bg-white p-3.5 rounded-md border border-gray-300 shadow-sm">
                             <p class="text-[11px] font-bold uppercase text-gray-500">Total de Questões</p>
                             <p class="text-2xl font-extrabold text-gray-900 mt-0.5">${grandQ}</p>
@@ -2030,21 +1843,16 @@
                             <p class="text-[11px] text-gray-500">Questões incorretas</p>
                         </div>
                         <div class="bg-white p-3.5 rounded-md border border-blue-300 shadow-sm">
-                            <p class="text-[11px] font-bold uppercase text-[#004b8d]">% Acerto Geral</p>
-                            <p class="text-2xl font-extrabold text-[#004b8d] mt-0.5">
+                            <p class="text-[11px] font-bold uppercase text-[#005ca9]">% de Acerto Geral</p>
+                            <p class="text-2xl font-extrabold text-[#005ca9] mt-0.5">
                                 ${grandPctAccuracy !== null ? grandPctAccuracy.toFixed(1).replace(".", ",") + "%" : "0,0%"}
                             </p>
                             <p class="text-[11px] text-gray-500">Aproveitamento médio</p>
                         </div>
                         <div class="bg-white p-3.5 rounded-md border border-indigo-300 shadow-sm">
-                            <p class="text-[11px] font-bold uppercase text-indigo-700">Progresso do Edital</p>
+                            <p class="text-[11px] font-bold uppercase text-indigo-700">Progresso / Passagens</p>
                             <p class="text-2xl font-extrabold text-indigo-800 mt-0.5">${grandPctStudied.toFixed(1).replace(".", ",")}%</p>
-                            <p class="text-[11px] text-gray-600">${grandStudiedTopics}/${grandTotalTopics} tópicos</p>
-                        </div>
-                        <div class="bg-white p-3.5 rounded-md border border-sky-300 shadow-sm">
-                            <p class="text-[11px] font-bold uppercase text-sky-700">Total de Passagens</p>
-                            <p class="text-2xl font-extrabold text-sky-800 mt-0.5">${grandSessions}</p>
-                            <p class="text-[11px] text-gray-600">Registros por data</p>
+                            <p class="text-[11px] text-gray-600">${grandStudiedTopics}/${grandTotalTopics} tópicos • ${grandSessions} passagens</p>
                         </div>
                     </div>
                 </div>
@@ -2052,7 +1860,7 @@
                 <div class="p-3 bg-white">
                     <div class="mb-2 flex items-center justify-between flex-wrap gap-2">
                         <h3 class="text-xs font-bold uppercase tracking-wider text-gray-600">
-                            📋 Desempenho Consolidado por Matéria (Clique em qualquer matéria para abrir os assuntos)
+                            📋 Desempenho por Matéria (Clique em qualquer matéria para abrir os assuntos)
                         </h3>
                     </div>
                     <table class="sheet-table">
@@ -2060,9 +1868,9 @@
                             <tr>
                                 <th class="w-10 text-center">Nº</th>
                                 <th class="text-left">Matéria / Disciplina</th>
-                                <th class="w-40 text-center">Bloco / Peso</th>
-                                <th class="w-32 text-center">Prova (% Nota)</th>
-                                <th class="w-40 text-left">Assuntos Estudados</th>
+                                <th class="w-48 text-center">Bloco</th>
+                                <th class="w-28 text-center">Prova</th>
+                                <th class="w-40 text-left">Progresso</th>
                                 <th class="w-24 text-center">Passagens</th>
                                 <th class="w-24 text-center">Questões</th>
                                 <th class="w-24 text-center text-emerald-800">Acertos</th>
@@ -2076,7 +1884,7 @@
                         <tfoot>
                             <tr class="bg-gray-200 font-bold text-gray-900 border-t-2 border-gray-400">
                                 <td colspan="3" class="text-right uppercase text-xs tracking-wider">TOTAL GERAL</td>
-                                <td class="text-center">${grandExamQ} (100%)</td>
+                                <td class="text-center">${grandExamQ} + Red.</td>
                                 <td>
                                     <div class="flex items-center justify-between text-xs">
                                         <span>${grandStudiedTopics} / ${grandTotalTopics}</span>
@@ -2098,7 +1906,7 @@
         }
 
         // ============================================================================
-        // 10. ABAS DAS 9 MATÉRIAS E SUBMENU DE PASSAGENS POR DATA
+        // 10. ABAS DAS MATÉRIAS (EXATAMENTE 7 COLUNAS) + SUBMENU DE PASSAGENS
         // ============================================================================
         function updateToggleAllButton(subjId) {
             const btn = document.getElementById("toggle-all-btn");
@@ -2124,7 +1932,7 @@
 
             document.getElementById("subject-badge").textContent = `MATÉRIA ${subj.code}`;
             document.getElementById("subject-title").textContent = subj.name;
-            document.getElementById("subject-meta").textContent = `(${subj.block} • Peso ${subj.weight} • ${subj.examQuestions} questões na prova • ${subj.scoreShare} da nota)`;
+            document.getElementById("subject-meta").textContent = `(${subj.block} • ${subj.examLabel})`;
             updateSubjectSummaryBar(subjId);
             updateToggleAllButton(subjId);
 
@@ -2135,22 +1943,38 @@
             const viewport = document.getElementById("sheet-viewport");
             let rowsHtml = "";
             let visibleCount = 0;
+            let lastRenderedGroup = null;
 
-            subj.topics.forEach((topicTitle, idx) => {
+            subj.topics.forEach((topicObj, idx) => {
+                const topicTitle = topicObj.text;
+                const topicGroup = topicObj.group || "";
                 const rowData = userProgress[subjId][idx];
                 const m = getTopicMetrics(rowData);
                 const isExpanded = Boolean(expandedTopics[`${subjId}-${idx}`]);
 
-                if (searchQuery && !topicTitle.toLowerCase().includes(searchQuery)) return;
+                const matchesSearch = !searchQuery
+                    || topicTitle.toLowerCase().includes(searchQuery)
+                    || topicGroup.toLowerCase().includes(searchQuery);
+                if (!matchesSearch) return;
                 if (filterMode === "pending" && m.isStudied) return;
                 if (filterMode === "done" && !m.isStudied) return;
                 if (filterMode === "low" && (m.total === 0 || m.pct >= 70)) return;
 
-                visibleCount++;
-                const isSubtopic = /^\d+\.\d+/.test(topicTitle.trim());
+                // Linha agrupadora em negrito para os 15 tópicos principais de Tecnologia da Informação
+                if (topicGroup && topicGroup !== lastRenderedGroup) {
+                    lastRenderedGroup = topicGroup;
+                    rowsHtml += `
+                        <tr class="bg-blue-50/90">
+                            <td colspan="7" class="font-bold text-[#005ca9] text-xs sm:text-sm py-2 px-3 border-t-2 border-blue-200">
+                                ${escapeHtml(topicGroup)}
+                            </td>
+                        </tr>
+                    `;
+                }
 
-                // Se tiver 1 ou mais passagens: linha principal exibe soma automática somente leitura.
-                // Se tiver 0 passagens: usuário pode digitar direto na linha principal (mesma lógica sem duplicação).
+                visibleCount++;
+                const isSubtopic = Boolean(topicGroup);
+
                 const totalCellHtml = m.hasSessions
                     ? `<div id="main-total-${subjId}-${idx}" class="text-center font-bold text-gray-900 py-1 select-none" title="Soma automática das passagens abaixo">${m.total}</div>`
                     : `<input type="number" min="0" inputmode="numeric" value="${m.total}" id="main-total-${subjId}-${idx}"
@@ -2174,17 +1998,17 @@
                         <td class="text-center w-11 align-top pt-2.5">
                             <input type="checkbox" ${rowData.studied ? "checked" : ""}
                                 data-role="topic-studied" data-subj="${subjId}" data-idx="${idx}"
-                                class="w-4 h-4 accent-[#004b8d] rounded cursor-pointer" title="Marcar assunto como estudado">
+                                class="w-4 h-4 accent-[#005ca9] rounded cursor-pointer" title="Marcar assunto como concluído">
                         </td>
-                        <td class="${isSubtopic ? "pl-7 text-gray-700" : "font-semibold text-gray-900"} align-top">
+                        <td class="${isSubtopic ? "pl-6 text-gray-800" : "font-medium text-gray-900"} align-top">
                             <div class="flex items-start justify-between gap-2">
                                 <div data-action="toggle-expand" data-subj="${subjId}" data-idx="${idx}"
                                     class="flex items-start gap-1.5 flex-1 cursor-pointer select-none group">
-                                    <span class="text-[11px] text-[#004b8d] mt-0.5 w-5 h-5 flex items-center justify-center rounded bg-blue-50 group-hover:bg-blue-100 shrink-0 font-bold">
+                                    <span class="text-[11px] text-[#005ca9] mt-0.5 w-5 h-5 flex items-center justify-center rounded bg-blue-50 group-hover:bg-blue-100 shrink-0 font-bold">
                                         ${isExpanded ? "▼" : "▶"}
                                     </span>
                                     <div class="flex-1 min-w-0">
-                                        <div id="topic-title-txt-${subjId}-${idx}" class="group-hover:text-[#004b8d] transition-colors ${rowData.studied ? "line-through text-gray-400" : ""}">
+                                        <div id="topic-title-txt-${subjId}-${idx}" class="group-hover:text-[#005ca9] transition-colors ${rowData.studied ? "line-through text-gray-400" : ""}">
                                             ${escapeHtml(topicTitle)}
                                         </div>
                                         <div class="flex items-center flex-wrap gap-1.5 mt-1" id="badges-${subjId}-${idx}">
@@ -2193,7 +2017,7 @@
                                     </div>
                                 </div>
                                 <button type="button" data-action="add-session" data-subj="${subjId}" data-idx="${idx}"
-                                    class="shrink-0 px-2.5 h-7 rounded bg-blue-50 hover:bg-[#004b8d] text-[#004b8d] hover:text-white border border-blue-200 font-semibold text-xs flex items-center gap-1 transition cursor-pointer"
+                                    class="shrink-0 px-2.5 h-7 rounded bg-blue-50 hover:bg-[#005ca9] text-[#005ca9] hover:text-white border border-blue-200 font-semibold text-xs flex items-center gap-1 transition cursor-pointer"
                                     title="Adicionar passagem / data neste assunto">
                                     <span>+</span><span>Passagem</span>
                                 </button>
@@ -2317,7 +2141,7 @@
                                     </div>
                                     <div class="mt-2.5 flex items-center justify-between flex-wrap gap-2">
                                         <button type="button" data-action="add-session" data-subj="${subjId}" data-idx="${idx}"
-                                            class="inline-flex items-center gap-1.5 bg-[#004b8d] hover:bg-blue-800 text-white text-xs font-semibold px-3 py-1.5 rounded shadow-sm transition cursor-pointer">
+                                            class="inline-flex items-center gap-1.5 bg-[#005ca9] hover:bg-blue-800 text-white text-xs font-semibold px-3 py-1.5 rounded shadow-sm transition cursor-pointer">
                                             <span>+</span> Adicionar passagem / data
                                         </button>
                                         <span class="text-[11px] text-gray-500">
@@ -2345,7 +2169,7 @@
                 <table class="sheet-table">
                     <thead>
                         <tr>
-                            <th class="w-11 text-center" title="Estudado">✓</th>
+                            <th class="w-11 text-center" title="Concluído">✓</th>
                             <th class="text-left">Assunto / Tópico do Edital <span class="font-normal text-gray-500 text-xs">(clique no assunto para expandir/recolher passagens)</span></th>
                             <th class="w-20 text-center">Questões</th>
                             <th class="w-20 text-center text-emerald-800">Acertos</th>
@@ -2401,7 +2225,6 @@
             updateTabPillSurgically(subjId);
             renderSubjectSheet(subjId);
 
-            // Coloca foco selecionado no campo Questões para o fluxo rápido: Questões -> Tab -> Acertos
             requestAnimationFrame(() => {
                 const targetInput = document.getElementById(`p-total-${subjId}-${idx}-${newIndex}`);
                 if (targetInput) {
@@ -2430,7 +2253,6 @@
             const wrongEl = document.getElementById(`p-wrong-${subjId}-${idx}-${sIdx}`);
             syncSiblingInputsSurgically(session, totalEl, correctEl, wrongEl);
 
-            // Atualiza badge % Dia desta passagem
             const spct = calcPercent(session.correct, session.total);
             const pctSpan = document.getElementById(`p-pct-${subjId}-${idx}-${sIdx}`);
             if (pctSpan) {
@@ -2439,7 +2261,6 @@
                 pctSpan.textContent = b.text;
             }
 
-            // Atualiza cirurgicamente a linha-pai do assunto, rodapé e resumo da matéria
             const m = getTopicMetrics(item);
             const mainTotal = document.getElementById(`main-total-${subjId}-${idx}`);
             const mainCorrect = document.getElementById(`main-correct-${subjId}-${idx}`);
@@ -2587,17 +2408,18 @@
         // ============================================================================
         function exportCSV() {
             let csv = "\uFEFF";
-            csv += "Codigo Materia;Materia;Bloco;Peso;Topico;Tipo Registro;Data;Etapa/Passagem;Concluido;Questoes;Acertos;Erros;% Acerto;Anotacoes\n";
+            csv += "Codigo Materia;Materia;Bloco;Grupo;Topico;Tipo Registro;Data;Etapa/Passagem;Concluido;Questoes;Acertos;Erros;% Acerto;Anotacoes\n";
 
             EDITAL_DATA.forEach(subj => {
-                subj.topics.forEach((topic, idx) => {
+                subj.topics.forEach((topicObj, idx) => {
                     const r = userProgress[subj.id][idx];
                     const m = getTopicMetrics(r);
                     const pct = m.total > 0 ? m.pct.toFixed(1).replace(".", ",") + "%" : "0%";
-                    const cleanTopic = topic.replace(/;/g, ",");
+                    const cleanGroup = (topicObj.group || "").replace(/;/g, ",");
+                    const cleanTopic = topicObj.text.replace(/;/g, ",");
                     const cleanNote = (r.notes || "").replace(/;/g, ",").replace(/\n/g, " | ");
 
-                    csv += `${subj.code};"${subj.name}";${subj.block};${subj.weight};"${cleanTopic}";RESUMO;${m.lastDate || ""};"${m.sessionsCount} passagens";${m.isStudied ? "SIM" : "NAO"};${m.total};${m.correct};${m.wrong};${pct};"${cleanNote}"\n`;
+                    csv += `${subj.code};"${subj.name}";"${subj.block}";"${cleanGroup}";"${cleanTopic}";RESUMO;${m.lastDate || ""};"${m.sessionsCount} passagens";${m.isStudied ? "SIM" : "NAO"};${m.total};${m.correct};${m.wrong};${pct};"${cleanNote}"\n`;
 
                     if (Array.isArray(r.sessions) && r.sessions.length > 0) {
                         r.sessions.forEach(s => {
@@ -2608,7 +2430,7 @@
                             const spct = sp !== null ? sp.toFixed(1).replace(".", ",") + "%" : "0%";
                             const sLabel = (s.label || "").replace(/;/g, ",");
                             const sNote = (s.notes || "").replace(/;/g, ",").replace(/\n/g, " | ");
-                            csv += `${subj.code};"${subj.name}";${subj.block};${subj.weight};"${cleanTopic}";PASSAGEM;${s.date || ""};"${sLabel}";SIM;${st};${sc};${sw};${spct};"${sNote}"\n`;
+                            csv += `${subj.code};"${subj.name}";"${subj.block}";"${cleanGroup}";"${cleanTopic}";PASSAGEM;${s.date || ""};"${sLabel}";SIM;${st};${sc};${sw};${spct};"${sNote}"\n`;
                         });
                     }
                 });
@@ -2618,7 +2440,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = "Planilha_Banestes_Tecnico_Bancario.csv";
+            a.download = "Planilha_CAIXA_TBN_TI.csv";
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -2631,7 +2453,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = "backup_edital_banestes.json";
+            a.download = "backup_edital_caixa_ti.json";
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -2726,7 +2548,6 @@
             if (!viewport) return;
 
             viewport.addEventListener("click", (e) => {
-                // Nunca intercepta cliques em inputs, textareas ou selects
                 if (e.target.closest("input, textarea, select")) {
                     e.stopPropagation();
                     return;
@@ -2787,7 +2608,7 @@
                 }
             });
 
-            // Eventos change (checkbox de estudado e seletor de data)
+            // Eventos change (checkbox de concluído e seletor de data)
             viewport.addEventListener("change", (e) => {
                 const el = e.target;
                 const role = el.dataset?.role;
@@ -2808,7 +2629,7 @@
                 }
             });
 
-            // Reconciliação no blur (focusout) + aplicação de atualização remota pendente
+            // Reconciliação no blur + aplicação segura de snapshot remoto pendente
             viewport.addEventListener("focusout", (e) => {
                 const el = e.target;
                 const role = el.dataset?.role;
@@ -2837,8 +2658,6 @@
             loadLocalProgress();
             renderTabs();
             renderCurrentView();
-
-            // Inicializa Firebase em background dentro de try/catch
             initFirebaseSafely();
         }
 
